@@ -1,0 +1,7 @@
+{% extends 'layout/sign_in_up.html.twig' %}
+
+{% block title %}Sign in to GeekHub{% endblock %}
+
+{% block content %}
+    {{ include('@FOSUser/Security/login_content.html.twig') }}
+{% endblock %}

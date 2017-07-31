@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block layout %}
+
+<main class="main" role="main">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-5 col-sm-10 col-xs-10 form-wrapper">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+  </div>
+</main>
+
+{% endblock %}

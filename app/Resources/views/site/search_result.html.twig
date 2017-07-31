@@ -1,0 +1,74 @@
+{% extends 'layout/default.html.twig' %}
+
+{% block title %}{{ results.for }} - GeekHub{% endblock %}
+
+{% block content %}
+
+{% if results.users is defined %}
+  {% set resultsNumber = results.users|length %}
+{% else %}
+  {% set resultsNumber = results.posts|length %}
+{% endif %}
+
+<h2 class="page-header">
+  {{ resultsNumber }}
+  {% if resultsNumber == 1 %}
+  result
+  {% else %}
+  results
+  {% endif %}
+  for {{ results.for }}
+</h2>
+
+<ul class="nav nav-tabs">
+  <li role="presentation"
+  {% if results.posts is defined %}
+    class="active"
+  {% endif %}
+  ><a href="{{ path('search') }}">Posts</a></li>
+  <li role="presentation"
+  {% if results.users is defined %}
+    class="active"
+  {% endif %}
+  ><a href="{{ path('search', {'type': 'users'}) }}">Users</a></li>
+  <li role="presentation" class="dropdown pull-right
+  {% if resultsNumber < 2 %}
+    disabled
+  {% endif %}
+  ">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+      Sort by
+      <span class="caret"></span>
+    </a>
+    <ul class="dropdown-menu">
+      {% if results.posts is defined %}
+        <li><a href="{{ path('search', {'sortby': 'createDate'}) }}">Creation date</a></li>
+        <li><a href="{{ path('search', {'sortby': 'rating'}) }}">Rating</a></li>
+        <li><a href="{{ path('search', {'sortby': 'views'}) }}">Views</a></li>
+      {% endif %}
+      {% if results.users is defined %}
+        <li><a href="{{ path('search', {'type': 'users', 'sortby': 'createDate'}) }}">Creation date</a></li>
+        <li><a href="{{ path('search', {'type': 'users', 'sortby': 'reputation'}) }}">Reputation</a></li>
+      {% endif %}
+    </ul>
+  </li>
+</ul>
+
+<ul class="list-group">
+  {% if results.users is defined %}
+    {% for user in results.users %}
+      <li class="list-group-item">
+        <h3>{{ user.username }}</h3>
+        <span>{{ user.forename }} {{ user.surname }}, joined {{ user.createDate|date('F j, Y, g:i a') }}</span>
+      </li>
+    {% endfor %}
+  {% else %}
+    {% for post in results.posts %}
+      <li class="list-group-item">
+        <h3>{{ post.title }}</h3>
+        <span>Posted {{ post.createDate|date('F j, Y, g:i a') }} by <strong>{{ post.author }}</strong></span>
+      </li>
+    {% endfor %}
+  {% endif %}
+</ul>
+{% endblock %}

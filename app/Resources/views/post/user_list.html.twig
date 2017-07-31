@@ -1,0 +1,16 @@
+{% extends 'layout/default.html.twig' %}
+
+{% block title %}My posts{% endblock %}
+
+{% block content %}
+  <h2 class="page-header">My posts</h2>
+  <ul class="list-group" id="popular-posts">
+    {% for post in posts %}
+      <li class="list-group-item">
+        <h3>{{ post.title }}</h3>
+        <p>Category: {{ post.category.name }}</p>
+        <span>Posted {{ post.createDate|date('F j, Y, g:i a') }}</span>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

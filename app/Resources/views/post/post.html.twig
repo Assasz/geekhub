@@ -1,0 +1,14 @@
+{% extends 'layout/default.html.twig' %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block content %}
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h2 class="panel-title">{{ post.title }}</h2>
+    </div>
+    <div class="panel-body">
+      <p>{{ post.content }}</p>
+    </div>
+  </div>
+{% endblock %}

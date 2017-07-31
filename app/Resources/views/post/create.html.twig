@@ -1,0 +1,30 @@
+{% extends 'layout/default.html.twig' %}
+
+{% block title %}Add post{% endblock %}
+
+{% form_theme form 'form/custom.html.twig' %}
+
+{% block content %}
+    <h2 class="page-header">Add post</h2>
+    <div class="form-wrapper">
+      {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+      {{ form_label(form.title) }}
+      {{ form_widget(form.title) }}
+      {{ form_errors(form.title) }}
+
+      {{ form_label(form.category) }}
+      {{ form_widget(form.category) }}
+      {{ form_errors(form.category) }}
+
+      {{ form_label(form.tags) }}
+      {{ form_widget(form.tags) }}
+      {{ form_errors(form.tags) }}
+
+      {{ form_label(form.content) }}
+      {{ form_widget(form.content) }}
+      {{ form_errors(form.content) }}
+
+      {{ form_end(form) }}
+    </div>
+{% endblock %}

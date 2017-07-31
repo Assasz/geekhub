@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block layout %}
+
+{{ include('navbar.html.twig') }}
+
+<main class="main" role="main">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        {% for label, messages in app.flashes %}
+          {% for message in messages %}
+            <div class="alert alert-{{ label }}">
+              {{ message }}
+            </div>
+          {% endfor %}
+        {% endfor %}
+
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+  </div>
+</main>
+
+{{ include('footer.html.twig') }}
+
+{% endblock %}

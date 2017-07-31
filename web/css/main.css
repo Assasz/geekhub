@@ -1,0 +1,114 @@
+body {
+  background-color: #ECEFF1;
+  position: relative;
+  font-family: "Varela Round", sans-serif; }
+  body a {
+    color: #00aeee;
+    text-decoration: none;
+    transition: all .3s ease; }
+    body a:hover {
+      color: #337ab7;
+      text-decoration: none; }
+    body a:focus {
+      text-decoration: none;
+      outline: none; }
+
+.navbar-inverse {
+  background-color: #263238; }
+  .navbar-inverse a {
+    color: #ECEFF1 !important;
+    transition: all .3s ease; }
+    .navbar-inverse a:hover {
+      opacity: 0.6; }
+  .navbar-inverse .dropdown-menu {
+    background-color: #263238; }
+    .navbar-inverse .dropdown-menu li {
+      height: 40px; }
+      .navbar-inverse .dropdown-menu li a {
+        line-height: 40px; }
+        .navbar-inverse .dropdown-menu li a:hover {
+          background-color: #263238; }
+  .navbar-inverse .profile-picture {
+    border-radius: 4px;
+    margin-right: 10px; }
+  .navbar-inverse .dropdown-toggle {
+    padding: 0 10px;
+    line-height: 50px; }
+
+.main {
+  margin-top: 70px; }
+  .main h1 {
+    text-align: center; }
+  .main .form-wrapper {
+    float: none;
+    margin: 0 auto;
+    padding: 50px;
+    border-radius: 2px;
+    background-color: #E0E0E0;
+    color: #263238;
+    margin-bottom: 50px; }
+    .main .form-wrapper .form-header {
+      text-align: center;
+      margin-bottom: 40px; }
+  .main .form-control {
+    margin-bottom: 15px;
+    border-radius: 2px; }
+    .main .form-control:focus {
+      border-color: #00aeee; }
+  .main .btn-primary {
+    background-color: #00aeee;
+    border-radius: 2px;
+    transition: all .3s ease;
+    border-color: #337ab7; }
+    .main .btn-primary:hover, .main .btn-primary:focus {
+      background-color: #337ab7;
+      outline: none; }
+
+.search-field {
+  background-color: #424242;
+  color: #ECEFF1;
+  border-radius: 2px;
+  border: none;
+  font-weight: bold;
+  transition: all .3s ease;
+  -webkit-transition: all .3s ease;
+  width: 200px;
+  height: 35px;
+  padding: 6px 12px;
+  font-size: 14px;
+  line-height: 1.42857143; }
+  .search-field:focus {
+    box-shadow: none;
+    width: 250px; }
+
+.footer {
+  width: 100%;
+  padding: 40px 0; }
+
+.footer-homepage {
+  margin-top: 40px;
+  background-color: #263238;
+  color: #ECEFF1; }
+
+.form-error {
+  color: #E53935; }
+  .form-error span {
+    margin-right: 5px; }
+
+.visually-hidden {
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  padding: 0 !important;
+  border: 0 !important;
+  height: 1px !important;
+  width: 1px !important;
+  overflow: hidden; }
+
+@media (max-width: 767px) {
+  .search-field {
+    width: 100%; }
+    .search-field:focus {
+      width: 100%; } }
+
+/*# sourceMappingURL=main.css.map */

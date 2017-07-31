@@ -1,0 +1,55 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{{ path('home') }}">GeekHub</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse navbar-right">
+      <form action="{{ path('search') }}" method="POST" class="navbar-form navbar-left" novalidate>
+        <label for="search_input">
+          <span class="visually-hidden">Search</span>
+        </label>
+        <input type="text" id="search_input" name="search_input" class="search-field" placeholder="Search">
+      </form>
+      <ul class="nav navbar-nav">
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        <li>
+          <a href="{{ path('post_create') }}">
+            <span class="fa fa-fw fa-lg fa-pencil" aria-hidden="true" title="Add post"></span>
+            <span class="visually-hidden">Add post</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <span class="fa fa-fw fa-lg fa-bell" aria-hidden="true" title="Notifications"></span>
+            <span class="visually-hidden">Notifications</span>
+          </a>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+            <img src="{{ asset(app.user.profilePicturePath) }}" alt="{{ app.user.username }} profile picture" class="profile-picture" width="40px" height="40px">
+            {{ app.user.username }}
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li><a href="{{ path('user_post_list') }}">My posts</a></li>
+            <li><a href="{{ path('fos_user_profile_show') }}">My profile</a></li>
+            <li><a href="{{ path('fos_user_security_logout') }}">
+                {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+            </a></li>
+          </ul>
+        </li>
+      </ul>
+      {% else %}
+      <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
+      <li><a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a></li>
+      {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
