@@ -7,6 +7,8 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\Util\SecureRandom;
 use AppBundle\Entity\Rank;
+use AppBundle\Entity\Post;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
@@ -74,9 +76,14 @@ class User extends BaseUser
      */
     private $rank;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Post", mappedBy="author")
+     */
+    private $posts;
+
     public function __construct()
     {
-        parent::__construct();
+        $this->posts = new ArrayCollection();
     }
 
     /**
@@ -444,5 +451,39 @@ class User extends BaseUser
     public function getRank()
     {
         return $this->rank;
+    }
+
+    /**
+     * Add post
+     *
+     * @param Post $post
+     *
+     * @return User
+     */
+    public function addPost(Post $post)
+    {
+        $this->posts[] = $post;
+
+        return $this;
+    }
+
+    /**
+     * Remove post
+     *
+     * @param Post $post
+     */
+    public function removePost(Post $post)
+    {
+        $this->posts->removeElement($post);
+    }
+
+    /**
+     * Get posts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPosts()
+    {
+        return $this->posts;
     }
 }

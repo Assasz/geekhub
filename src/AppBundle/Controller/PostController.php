@@ -14,11 +14,11 @@ class PostController extends Controller
     /**
      * @Route("/posts", name="post_list")
      */
-    public function listAction($sort = ['createDate' => 'DESC'])
+    public function listAction()
     {
         $posts = $this->getDoctrine()
           ->getRepository(Post::class)
-          ->findBy([], $sort);
+          ->findAll();
 
         return $this->render('post/list.html.twig', [
           'posts' => $posts
@@ -32,7 +32,7 @@ class PostController extends Controller
           ->findPopularPosts($number);
 
         return $this->render('post/popular_posts.html.twig', [
-          'popularPosts' => $posts
+          'posts' => $posts
         ]);
     }
 
@@ -43,7 +43,7 @@ class PostController extends Controller
         ->findLastPosts($number);
 
         return $this->render('post/last_posts.html.twig', [
-          'lastPosts' => $posts
+          'posts' => $posts
         ]);
     }
 
@@ -82,11 +82,9 @@ class PostController extends Controller
           if($form->isSubmitted() && $form->isValid())
           {
             $post = $form->getData();
-
             $user = $this->getUser();
-            $username = $user->getUsername();
 
-            $post->setAuthor($username);
+            $post->setAuthor($user);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($post);

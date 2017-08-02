@@ -11,7 +11,6 @@ use AppBundle\Entity\Category;
  *
  * @ORM\Table(name="post")
  * @ORM\HasLifecycleCallbacks() @ORM\Entity(repositoryClass="AppBundle\Repository\PostRepository")
- * @ORM\EntityListeners({"AppBundle\EntityListener\PostListener"})
  */
 class Post
 {
@@ -367,29 +366,5 @@ class Post
     public function getAuthor()
     {
         return $this->author;
-    }
-
-    /**
-     * Set totalRating
-     *
-     * @param integer $totalRating
-     *
-     * @return Post
-     */
-    public function setTotalRating($totalRating)
-    {
-        $this->totalRating = $totalRating;
-
-        return $this;
-    }
-
-    /**
-     * Get totalRating
-     *
-     * @return integer
-     */
-    public function getTotalRating()
-    {
-        return $this->totalRating;
     }
 }

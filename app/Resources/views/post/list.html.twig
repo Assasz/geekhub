@@ -1,0 +1,15 @@
+<li class="list-group-item">
+  <div class="row">
+    <div class="col-md-2 col-xs-4">
+      <img src="{{ asset(post.author.profilePicturePath) }}" alt="{{ post.author.username }}" class="img-rounded img-responsive">
+    </div>
+    <div class="col-md-10 col-xs-8">
+      <a href="{{ path('post', {'id': post.id}) }}">
+        <h3>{{ post.title }}</h3>
+      </a>
+      <span class="label label-primary">{{ post.rating }}</span>
+      <p>Category: {{ post.category.name }}</p>
+      <span>Posted {{ post.createDate|date('F j, Y, g:i a') }} by <strong>{{ post.author }}</strong></span>
+    </div>
+  </div>
+</li>

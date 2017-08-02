@@ -1,10 +1,6 @@
 <h2 class="page-header">Popular posts</h2>
 <ul class="list-group" id="popular-posts">
-  {% for post in popularPosts %}
-    <li class="list-group-item">
-      <h3>{{ post.title }}</h3>
-      <p>Category: {{ post.category.name }}</p>
-      <span>Posted {{ post.createDate|date('F j, Y, g:i a') }} by <strong>{{ post.author }}</strong></span>
-    </li>
+  {% for post in posts %}
+    {{ include('post/list.html.twig') }}
   {% endfor %}
 </ul>
