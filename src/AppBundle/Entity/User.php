@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Security\Core\Util\SecureRandom;
 use AppBundle\Entity\Rank;
 use AppBundle\Entity\Post;
+use AppBundle\Entity\Comment;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -81,9 +82,15 @@ class User extends BaseUser
      */
     private $posts;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="author")
+     */
+    private $comments;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
     /**
@@ -485,5 +492,39 @@ class User extends BaseUser
     public function getPosts()
     {
         return $this->posts;
+    }
+
+    /**
+     * Add comment
+     *
+     * @param Comment $comment
+     *
+     * @return User
+     */
+    public function addComment(Comment $comment)
+    {
+        $this->comments[] = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Remove comment
+     *
+     * @param Comment $comment
+     */
+    public function removeComment(Comment $comment)
+    {
+        $this->comments->removeElement($comment);
+    }
+
+    /**
+     * Get comments
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }
