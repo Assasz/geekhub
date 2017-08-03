@@ -1,0 +1,30 @@
+<ul class="list-group">
+  <li class="list-group-item">
+    <h3>Comments ({{ comments|length }}):</h3>
+    {% if comments|length == 0 %}
+      <p>No comments yet</p>
+    {% endif %}
+  </li>
+  {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    {{ render(controller('AppBundle:Comment:create', {'post': post})) }}
+  {% else %}
+    <li class="list-group-item">
+      <p>Sign in to add comment</p>
+    </li>
+  {% endif %}
+  {% for comment in comments %}
+    <li id="{{ comment.id }}" class="list-group-item">
+      <div class="row">
+        <div class="col-md-2 col-xs-4">
+          <a href="#">
+            <img src="{{ asset(comment.author.profilePicturePath) }}" alt="{{ comment.author.username }}" class="img-rounded img-responsive">
+          </a>
+        </div>
+        <div class="col-md-10 col-xs-8">
+          <p><a href="#">{{ comment.author.username }}</a>, {{ comment.createDate|date('F j, Y, g:i a')}}</p>
+          <p>{{ comment.content }}</p>
+        </div>
+      </div>
+    </li>
+  {% endfor %}
+</ul>

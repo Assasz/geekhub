@@ -60,7 +60,7 @@ class Comment
      *
      * @ORM\Column(name="parent_id", type="integer", nullable=true)
      */
-    private $parentId;
+    private $parent;
 
     /**
      * @var int
@@ -193,27 +193,27 @@ class Comment
     }
 
     /**
-     * Set parentId
+     * Set parent
      *
-     * @param integer $parentId
+     * @param integer $parent
      *
-     * @return Comment
+     * @return int
      */
-    public function setParentId($parentId)
+    public function setParent($parent)
     {
-        $this->parentId = $parentId;
+        $this->parent = $parent;
 
         return $this;
     }
 
     /**
-     * Get parentId
+     * Get parent
      *
      * @return int
      */
-    public function getParentId()
+    public function getParent()
     {
-        return $this->parentId;
+        return $this->parent;
     }
 
     /**

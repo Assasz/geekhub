@@ -11,4 +11,6 @@
       <p>{{ post.content }}</p>
     </div>
   </div>
+
+  {{ render(controller('AppBundle:Comment:list', {'post': post})) }}
 {% endblock %}

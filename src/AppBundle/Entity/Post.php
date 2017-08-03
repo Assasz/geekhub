@@ -56,7 +56,7 @@ class Post
     private $content;
 
     /**
-     * @var string
+     * @var int
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="posts")
      * @ORM\JoinColumn(name="author_id", referencedColumnName="id")
