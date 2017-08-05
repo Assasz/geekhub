@@ -16,20 +16,34 @@ class CommentController extends Controller
     {
         $comments = $this->getDoctrine()->getRepository(Comment::class)
           ->findBy([
-            'post' => $post,
-            'parent' => null
-          ], ['createDate' => 'DESC']);
+              'post' => $post,
+              'parent' => null
+            ],
+            ['createDate' => 'DESC']
+          );
 
         return $this->render('comment/list.html.twig', [
-          'comments' => $comments,
-          'post' => $post
+          'comments' => $comments
+        ]);
+    }
+
+    public function listRepliesAction(Comment $parent)
+    {
+        $replies = $this->getDoctrine()->getRepository(Comment::class)
+          ->findBy(
+            ['parent' => $parent],
+            ['createDate' => 'ASC']
+          );
+
+        return $this->render('comment/list_replies.html.twig', [
+          'replies' => $replies
         ]);
     }
 
     /**
-     * @Route("/comment/create/{post}/{parent}", name="comment_create", requirements={"post": "\d+", "parent": "\d+"})
+     * @Route("/comment/create/{post}/{parent}",  name="comment_create", requirements={"post": "\d+", "parent": "\d+"})
      */
-    public function createAction(Request $request, Post $post, Comment $parent = null)
+    public function createAction(Request $request, Post $post, $parent = null)
     {
         $comment = new Comment;
 

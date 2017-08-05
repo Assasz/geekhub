@@ -1,13 +1,13 @@
 {% form_theme form 'form/custom.html.twig' %}
 
-<li class="list-group-item">
+<div class="panel panel-default comment-form">
   <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-2 col-xs-2">
       <a href="#">
         <img src="{{ asset(app.user.profilePicturePath) }}" alt="{{ app.user.username }}" class="img-rounded img-responsive">
       </a>
     </div>
-    <div class="col-md-10">
+    <div class="col-md-10 col-xs-10">
       {{ form_start(form, {'attr': {'action': path('comment_create', {'post': post.id}), 'novalidate': 'novalidate'}}) }}
 
       {{ form_widget(form.content, {'attr': {'placeholder': 'Type comment here!'}}) }}
@@ -16,4 +16,4 @@
       {{ form_end(form) }}
     </div>
   </div>
-</li>
+</div>

@@ -12,5 +12,13 @@
     </div>
   </div>
 
+  {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    {{ render(controller('AppBundle:Comment:create', {'post': post})) }}
+  {% else %}
+    <div class="panel panel-default">
+      <p>Sign in to add comment</p>
+    </div>
+  {% endif %}
+
   {{ render(controller('AppBundle:Comment:list', {'post': post})) }}
 {% endblock %}

@@ -102,6 +102,11 @@ body
     @extend .default-container;
   }
 
+  .panel-default
+  {
+    @extend .default-container;
+  }
+
   h2, h3
   {
     margin-top: 0;

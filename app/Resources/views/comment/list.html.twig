@@ -1,30 +1,29 @@
-<ul class="list-group">
+<ul class="list-group comments">
   <li class="list-group-item">
-    <h3>Comments ({{ comments|length }}):</h3>
-    {% if comments|length == 0 %}
-      <p>No comments yet</p>
-    {% endif %}
+    <h3 class="list-group-item-heading">
+      {{ comments|length }}
+      {% if comments|length == 1 %}
+      comment
+      {% else %}
+      comments
+      {% endif %}
+    </h3>
   </li>
-  {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-    {{ render(controller('AppBundle:Comment:create', {'post': post})) }}
-  {% else %}
-    <li class="list-group-item">
-      <p>Sign in to add comment</p>
-    </li>
-  {% endif %}
   {% for comment in comments %}
     <li id="{{ comment.id }}" class="list-group-item">
       <div class="row">
-        <div class="col-md-2 col-xs-4">
+        <div class="col-md-2 col-xs-2">
           <a href="#">
             <img src="{{ asset(comment.author.profilePicturePath) }}" alt="{{ comment.author.username }}" class="img-rounded img-responsive">
           </a>
         </div>
-        <div class="col-md-10 col-xs-8">
+        <div class="col-md-10 col-xs-10">
           <p><a href="#">{{ comment.author.username }}</a>, {{ comment.createDate|date('F j, Y, g:i a')}}</p>
+          <button type="button" class="btn btn-primary pull-right btn-reply" reply-to="{{ comment.id }}">Reply</button>
           <p>{{ comment.content }}</p>
         </div>
       </div>
+      {{ render(controller('AppBundle:Comment:listReplies', {'parent': comment.id})) }}
     </li>
   {% endfor %}
 </ul>
