@@ -5,6 +5,7 @@ namespace AppBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Entity\User;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Comment
@@ -56,6 +57,15 @@ class Comment
     private $votes;
 
     /**
+     * @ORM\ManyToMany(targetEntity="User")
+     * @ORM\JoinTable(name="voters",
+     *      joinColumns={@ORM\JoinColumn(name="comment_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
+     *      )
+     */
+    private $voters;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="parent_id", type="integer", nullable=true)
@@ -69,6 +79,11 @@ class Comment
      * @ORM\JoinColumn(name="post_id", referencedColumnName="id")
      */
     private $post;
+
+    public function __construct()
+    {
+        $this->voters = new ArrayCollection();
+    }
 
     /**
      * @ORM\PrePersist
@@ -238,5 +253,39 @@ class Comment
     public function getPost()
     {
         return $this->post;
+    }
+
+    /**
+     * Add voter
+     *
+     * @param User $voter
+     *
+     * @return Comment
+     */
+    public function addVoter(User $voter)
+    {
+        $this->voters[] = $voter;
+
+        return $this;
+    }
+
+    /**
+     * Remove voter
+     *
+     * @param User $voter
+     */
+    public function removeVoter(User $voter)
+    {
+        $this->voters->removeElement($voter);
+    }
+
+    /**
+     * Get voters
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVoters()
+    {
+        return $this->voters;
     }
 }

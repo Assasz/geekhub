@@ -6,6 +6,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Form\CommentType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Entity\Post;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Comment;
@@ -36,9 +37,30 @@ class CommentController extends Controller
           );
 
         return $this->render('comment/list_replies.html.twig', [
-          'replies' => $replies
+          'comments' => $replies,
+          'parent' => $parent
         ]);
     }
+
+    /**
+     * @Route("/comment/vote/{comment}",  name="comment_vote", options={"expose"=true}, requirements={"comment": "\d+"})
+     */
+     public function voteAction(Request $request, Comment $comment)
+     {
+         if($request->isXmlHttpRequest())
+         {
+           $votes = $comment->getVotes()+1;;
+           $comment->setVotes($votes);
+           $comment->addVoter($this->getUser());
+
+           $em = $this->getDoctrine()->getManager();
+           $em->flush();
+
+           return new JsonResponse(['votes' => $votes]);
+         }
+
+         throw new \Exception('This action is forbidden');
+     }
 
     /**
      * @Route("/comment/create/{post}/{parent}",  name="comment_create", requirements={"post": "\d+", "parent": "\d+"})
@@ -50,8 +72,15 @@ class CommentController extends Controller
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid())
+        if($form->isSubmitted())
         {
+          if(!$form->isValid())
+          {
+            $this->addFlash('danger', 'Did you try to post empty comment?');
+
+            return $this->redirectToRoute('post', ['id' => $post->getId()]);
+          }
+
           $comment = $form->getData();
           $user = $this->getUser();
 

@@ -10,20 +10,6 @@
     </h3>
   </li>
   {% for comment in comments %}
-    <li id="{{ comment.id }}" class="list-group-item">
-      <div class="row">
-        <div class="col-md-2 col-xs-2">
-          <a href="#">
-            <img src="{{ asset(comment.author.profilePicturePath) }}" alt="{{ comment.author.username }}" class="img-rounded img-responsive">
-          </a>
-        </div>
-        <div class="col-md-10 col-xs-10">
-          <p><a href="#">{{ comment.author.username }}</a>, {{ comment.createDate|date('F j, Y, g:i a')}}</p>
-          <button type="button" class="btn btn-primary pull-right btn-reply" reply-to="{{ comment.id }}">Reply</button>
-          <p>{{ comment.content }}</p>
-        </div>
-      </div>
-      {{ render(controller('AppBundle:Comment:listReplies', {'parent': comment.id})) }}
-    </li>
+    {{ include('comment/content.html.twig') }}
   {% endfor %}
 </ul>

@@ -1,0 +1,41 @@
+<li id="comment-{{ comment.id }}" class="list-group-item">
+  <div class="row">
+    <div class="col-md-2 col-xs-2">
+      <a href="#">
+        <img src="{{ asset(comment.author.profilePicturePath) }}" alt="{{ comment.author.username }}" class="img-rounded img-responsive">
+      </a>
+    </div>
+    <div class="col-md-10 col-xs-10">
+      <p><a href="#">{{ comment.author.username }}</a>, {{ comment.createDate|date('F j, Y, g:i a')}}</p>
+      <p>
+        <span id="votes-comment-{{ comment.id }}">{{ comment.votes }}</span>
+        {% set allowed = true %}
+        {% if app.user == comment.author or not is_granted("IS_AUTHENTICATED_REMEMBERED")%}
+          {% set allowed = false %}
+        {% endif %}
+        {% for voter in comment.voters %}
+          {% if app.user == voter %}
+            {% set allowed = false %}
+          {% endif %}
+        {% endfor %}
+        {% if allowed == true %}
+          <button type="button" class="vote-button" comment-id="{{ comment.id }}">
+            <span class="fa fa-fw fa-plus" aria-hidden="true"></span>
+            <span class="visually-hidden">Vote for this comment</span>
+          </button>
+        {% endif %}
+      </p>
+      <button type="button" class="btn btn-primary pull-right btn-reply"
+      {% if parent is defined %}
+        comment-id="{{ parent.id }}"
+      {% else %}
+        comment-id="{{ comment.id }}"
+      {% endif %}
+      >Reply</button>
+      <p>{{ comment.content }}</p>
+    </div>
+  </div>
+  {% if parent is not defined %}
+    {{ render(controller('AppBundle:Comment:listReplies', {'parent': comment.id})) }}
+  {% endif %}
+</li>

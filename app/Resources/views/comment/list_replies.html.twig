@@ -1,19 +1,7 @@
-{% if replies|length > 0 %}
+{% if comments|length > 0 %}
   <ul class="replies">
-    {% for reply in replies %}
-        <li id="{{ reply.id }}" class="list-group-item">
-          <div class="row">
-            <div class="col-md-2 col-xs-2">
-              <a href="#">
-                <img src="{{ asset(reply.author.profilePicturePath) }}" alt="{{ reply.author.username }}" class="img-rounded img-responsive">
-              </a>
-            </div>
-            <div class="col-md-10 col-xs-10">
-              <p><a href="#">{{ reply.author.username }}</a>, {{ reply.createDate|date('F j, Y, g:i a')}}</p>
-              <p>{{ reply.content }}</p>
-            </div>
-          </div>
-        </li>
+    {% for comment in comments %}
+        {{ include('comment/content.html.twig') }}
     {% endfor %}
   </ul>
 {% endif %}
