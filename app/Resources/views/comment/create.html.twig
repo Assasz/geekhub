@@ -1,6 +1,6 @@
 {% form_theme form 'form/custom.html.twig' %}
 
-<div class="panel panel-default comment-form">
+<div id="comment-panel" class="default-container">
   <div class="row">
     <div class="col-md-2 col-xs-2">
       <a href="#">
@@ -8,7 +8,7 @@
       </a>
     </div>
     <div class="col-md-10 col-xs-10">
-      {{ form_start(form, {'attr': {'action': path('comment_create', {'post': post.id}), 'novalidate': 'novalidate'}}) }}
+      {{ form_start(form, {'attr': {'action': path('comment_create', {'post': post.id}), 'novalidate': 'novalidate', 'class': 'comment-form'}}) }}
 
       {{ form_widget(form.content, {'attr': {'placeholder': 'Type comment here!'}}) }}
       {{ form_errors(form.content) }}

@@ -35,7 +35,8 @@ body {
     line-height: 50px; }
 
 .main {
-  margin-top: 70px; }
+  margin-top: 70px;
+  min-height: 100vh; }
   .main .default-container, .main .page-header, .main .panel-default, .main .list-group {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     padding: 20px;

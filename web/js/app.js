@@ -1,11 +1,19 @@
 $(document).ready(function(){
-  $('.main').css('min-height', $(window).innerHeight()+'px');
-
   $('.btn-reply').click(function(){
-    var id = $(this).attr('comment-id');
-    var replyForm = $('.comment-form').clone().addClass('reply');
-    var form = replyForm.find('form');
+    if($('#reply-panel').length){
+      $('#reply-panel').remove();
+    }
+
+    var id = $(this).attr('comment-id'),
+      author = $(this).attr('comment-author'),
+      replyForm = $('#comment-panel').clone().attr('id', 'reply-panel'),
+      form = replyForm.find('form'),
+      textarea = form.find('textarea');
+
     form.attr('action', form.attr('action')+'/'+id);
+    textarea.attr('autofocus', 'autofocus');
+    textarea.val('@'+author+' ');
+    form.find('button').html('Add reply');
 
     if($('#comment-'+id+' .replies').length){
       replyForm.appendTo('#comment-'+id+' .replies');
@@ -13,9 +21,13 @@ $(document).ready(function(){
     else {
       replyForm.insertAfter('#comment-'+id);
     }
+
+    $('html, body').animate({
+        scrollTop: $("#reply-panel").offset().top-$("#reply-panel").outerHeight(true)
+    }, 1000);
   });
 
-  $('.vote-button').click(function(){
+  $('.btn-vote').click(function(){
     var id = $(this).attr('comment-id');
 
     $.ajax({
@@ -25,6 +37,29 @@ $(document).ready(function(){
     .done(function( data ) {
       $('#votes-comment-'+id).html(data.votes);
       $('.vote-button[comment-id='+id+']').remove();
+    });
+  });
+
+  $(document).on('submit', '.comment-form', function(event){
+    event.preventDefault();
+    var data = $(this).serialize();
+
+    $.ajax({
+      url: $(this).attr('action'),
+      dataType: "json",
+      data: data,
+      type: $(this).attr('method'),
+    })
+    .done(function( response ) {
+        if(response.parent == null) {
+          $(response.comment).insertAfter('.comments li:eq(0)');
+
+          var commentsNumber = parseFloat($('#comments-number').html());
+          $('#comments-number').html(commentsNumber+1);
+        }
+        else {
+          $(response.comment).insertBefore('#comment-'+response.parent+' #reply-panel');
+        }
     });
   });
 });

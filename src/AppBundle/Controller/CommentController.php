@@ -72,15 +72,8 @@ class CommentController extends Controller
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
 
-        if($form->isSubmitted())
+        if($form->isSubmitted() && $form->isValid() &&  $request->isXmlHttpRequest())
         {
-          if(!$form->isValid())
-          {
-            $this->addFlash('danger', 'Did you try to post empty comment?');
-
-            return $this->redirectToRoute('post', ['id' => $post->getId()]);
-          }
-
           $comment = $form->getData();
           $user = $this->getUser();
 
@@ -92,9 +85,14 @@ class CommentController extends Controller
           $em->persist($comment);
           $em->flush();
 
-          $this->addFlash('success', 'Comment added successfuly');
+          $response = $this->renderView('comment/content.html.twig', [
+            'comment' => $comment
+          ]);
 
-          return $this->redirectToRoute('post', ['id' => $post->getId()]);
+          return new JsonResponse([
+            'comment' => $response,
+            'parent' => $parent
+          ]);
         }
 
         return $this->render('comment/create.html.twig', [

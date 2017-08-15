@@ -19,15 +19,15 @@
           {% endif %}
         {% endfor %}
         {% if allowed == true %}
-          <button type="button" class="vote-button" comment-id="{{ comment.id }}">
+          <button type="button" class="btn btn-default btn-vote" comment-id="{{ comment.id }}">
             <span class="fa fa-fw fa-plus" aria-hidden="true"></span>
             <span class="visually-hidden">Vote for this comment</span>
           </button>
         {% endif %}
       </p>
-      <button type="button" class="btn btn-primary pull-right btn-reply"
-      {% if parent is defined %}
-        comment-id="{{ parent.id }}"
+      <button type="button" class="btn btn-primary pull-right btn-reply" comment-author="{{ comment.author }}" 
+      {% if comment.parent is not null %}
+        comment-id="{{ comment.parent }}"
       {% else %}
         comment-id="{{ comment.id }}"
       {% endif %}
@@ -35,7 +35,7 @@
       <p>{{ comment.content }}</p>
     </div>
   </div>
-  {% if parent is not defined %}
+  {% if comment.parent is null %}
     {{ render(controller('AppBundle:Comment:listReplies', {'parent': comment.id})) }}
   {% endif %}
 </li>
