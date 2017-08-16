@@ -6,8 +6,8 @@ $(document).ready(function(){
 
     var id = $(this).attr('comment-id'),
       author = $(this).attr('comment-author'),
-      replyForm = $('#comment-panel').clone().attr('id', 'reply-panel'),
-      form = replyForm.find('form'),
+      panel = $('#comment-panel').clone().attr('id', 'reply-panel'),
+      form = panel.find('form'),
       textarea = form.find('textarea');
 
     form.attr('action', form.attr('action')+'/'+id);
@@ -16,10 +16,10 @@ $(document).ready(function(){
     form.find('button').html('Add reply');
 
     if($('#comment-'+id+' .replies').length){
-      replyForm.appendTo('#comment-'+id+' .replies');
+      panel.appendTo('#comment-'+id+' .replies');
     }
     else {
-      replyForm.insertAfter('#comment-'+id);
+      panel.insertAfter('#comment-'+id);
     }
 
     $('html, body').animate({
@@ -60,6 +60,18 @@ $(document).ready(function(){
         else {
           $(response.comment).insertBefore('#comment-'+response.parent+' #reply-panel');
         }
+    });
+  });
+
+  $('.btn-show-replies').click(function(){
+    var id = $(this).attr('comment-id');
+
+    $.ajax({
+      url: Routing.generate('comment_list_replies', {parent: id, show: 1}),
+      dataType: "json",
+    })
+    .done(function( response ) {
+      $('#comment-'+id+' .replies').replaceWith(response.replies);
     });
   });
 });

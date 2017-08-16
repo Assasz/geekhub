@@ -28,16 +28,34 @@ class CommentController extends Controller
         ]);
     }
 
-    public function listRepliesAction(Comment $parent)
+    /**
+     * @Route("/comment/list-replies/{parent}/{show}",  name="comment_list_replies", options={"expose"=true}, requirements={"parent": "\d+"})
+     */
+    public function listRepliesAction(Request $request, Comment $parent, $show = false)
     {
-        $replies = $this->getDoctrine()->getRepository(Comment::class)
-          ->findBy(
-            ['parent' => $parent],
-            ['createDate' => 'ASC']
-          );
+        $repository = $this->getDoctrine()->getRepository(Comment::class);
+
+        if($show && $request->isXmlHttpRequest())
+        {
+          $replies = $repository->findBy(
+              ['parent' => $parent],
+              ['createDate' => 'ASC']
+            );
+
+          $repliesNumber = $repository->countReplies($parent);
+
+          $response = $this->renderView('comment/list_replies.html.twig', [
+            'comments' => $replies,
+            'repliesNumber' => $repliesNumber
+          ]);
+
+          return new JsonResponse(['replies' => $response]);
+        }
+
+        $repliesNumber = $repository->countReplies($parent);
 
         return $this->render('comment/list_replies.html.twig', [
-          'comments' => $replies,
+          'repliesNumber' => $repliesNumber,
           'parent' => $parent
         ]);
     }

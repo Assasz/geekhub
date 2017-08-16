@@ -2,6 +2,9 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Post;
+use AppBundle\Entity\Comment;
+
 /**
  * CommentRepository
  *
@@ -10,4 +13,12 @@ namespace AppBundle\Repository;
  */
 class CommentRepository extends \Doctrine\ORM\EntityRepository
 {
+  public function countReplies(Comment $parent)
+  {
+      return $this->createQueryBuilder('c')
+          ->select('COUNT(c)')
+          ->Where('c.parent = :parent')
+          ->setParameter('parent', $parent)
+          ->getQuery()->getSingleScalarResult();
+  }
 }

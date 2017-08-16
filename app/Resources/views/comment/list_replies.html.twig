@@ -1,7 +1,13 @@
-{% if comments|length > 0 %}
+{% if repliesNumber > 0 %}
   <ul class="replies">
-    {% for comment in comments %}
-        {{ include('comment/content.html.twig') }}
-    {% endfor %}
+    {% if comments is defined %}
+      {% for comment in comments %}
+          {{ include('comment/content.html.twig') }}
+      {% endfor %}
+    {% else %}
+      <li class="list-group-item">
+        <button type="button" class="btn btn-default btn-show-replies" comment-id="{{ parent.id }}">Show replies ({{ repliesNumber }})</button>
+      </li>
+    {% endif %}
   </ul>
 {% endif %}
