@@ -10,20 +10,6 @@ use AppBundle\Form\PostType;
 
 class PostController extends Controller
 {
-    /**
-     * @Route("/posts", name="post_list")
-     */
-    public function listAction()
-    {
-        $posts = $this->getDoctrine()
-          ->getRepository(Post::class)
-          ->findAll();
-
-        return $this->render('post/list.html.twig', [
-          'posts' => $posts
-        ]);
-    }
-
     public function popularPostsAction($number)
     {
         $posts = $this->getDoctrine()

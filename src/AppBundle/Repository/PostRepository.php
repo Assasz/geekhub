@@ -33,18 +33,16 @@ class PostRepository extends EntityRepository
     }
 
     //query for posts matching the given input
-    public function searchForPosts($input, $sortby)
+    public function searchForPostsQuery($input, $sortby)
     {
         $tags = explode(" ", $input);
 
-        $query = $this->createQueryBuilder('p')
+        return $query = $this->createQueryBuilder('p')
           ->Where('p.title LIKE :input')
           ->orWhere('p.tags IN(:tags)')
           ->setParameter('input', '%'.$input.'%')
           ->setParameter('tags', $tags)
           ->orderBy('p.'.$sortby, 'DESC')
           ->getQuery();
-
-        return $query->setMaxResults(10)->getResult();
     }
 }

@@ -2,9 +2,9 @@
   <li class="list-group-item">
     <h3 class="list-group-item-heading">
       <span id="comments-number">
-        {{ comments|length }}
+        {{ comments.getTotalItemCount }}
       </span>
-      {% if comments|length == 1 %}
+      {% if comments.getTotalItemCount == 1 %}
       comment
       {% else %}
       comments
@@ -15,3 +15,6 @@
     {{ include('comment/content.html.twig') }}
   {% endfor %}
 </ul>
+<div class="navigation">
+    {{ knp_pagination_render(comments) }}
+</div>

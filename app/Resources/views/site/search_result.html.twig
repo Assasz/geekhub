@@ -5,9 +5,9 @@
 {% block content %}
 
 {% if results.users is defined %}
-  {% set resultsNumber = results.users|length %}
+  {% set resultsNumber = results.users.getTotalItemCount %}
 {% else %}
-  {% set resultsNumber = results.posts|length %}
+  {% set resultsNumber = results.posts.getTotalItemCount %}
 {% endif %}
 
 <h2 class="page-header">
@@ -76,12 +76,17 @@
         </div>
       </div>
     </li>
-
     {% endfor %}
+    <div class="navigation">
+        {{ knp_pagination_render(results.users) }}
+    </div>
   {% else %}
     {% for post in results.posts %}
       {{ include('post/list.html.twig') }}
     {% endfor %}
+    <div class="navigation">
+        {{ knp_pagination_render(results.posts) }}
+    </div>
   {% endif %}
 </ul>
 {% endblock %}

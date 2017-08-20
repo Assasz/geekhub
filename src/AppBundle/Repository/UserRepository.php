@@ -10,16 +10,14 @@ use Doctrine\ORM\EntityRepository;
 class UserRepository extends EntityRepository
 {
     //query for users matching the given input
-    public function searchForUsers($input, $sortby)
+    public function searchForUsersQuery($input, $sortby)
     {
-        $query = $this->createQueryBuilder('p')
+        return $query = $this->createQueryBuilder('p')
           ->Where('p.username LIKE :input')
           ->orWhere('p.surname LIKE :input')
           ->orWhere('p.forename LIKE :input')
           ->setParameter('input', '%'.$input.'%')
           ->orderBy('p.'.$sortby, 'DESC')
           ->getQuery();
-
-        return $query->setMaxResults(10)->getResult();
     }
 }

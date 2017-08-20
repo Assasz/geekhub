@@ -30,17 +30,34 @@ class SiteController extends Controller
         $input = $request->request->get('search_input') ?? $session->get('search_input');
         $session->set('search_input', $input);
 
+        /**
+        * @ var $paginator \Knp\Component\Pager\Paginator
+        */
+        $paginator = $this->get('knp_paginator');
+
         if($type == 'posts')
         {
-          $results['posts'] = $this->getDoctrine()
-            ->getRepository(Post::class)
-            ->searchForPosts($input, $sortby);
+            $postRepository = $this->getDoctrine()->getRepository(Post::class);
+
+            $query = $postRepository->searchForPostsQuery($input, $sortby);
+
+            $results['posts'] = $paginator->paginate(
+              $query,
+              $request->query->getInt('page', 1),
+              $request->query->getInt('limit', 5)
+            );
         }
         else
         {
-          $results['users'] = $this->getDoctrine()
-            ->getRepository(User::class)
-            ->searchForUsers($input, $sortby);
+            $userRepository = $this->getDoctrine()->getRepository(User::class);
+
+            $query = $userRepository->searchForUsersQuery($input, $sortby);
+
+            $results['users'] = $paginator->paginate(
+              $query,
+              $request->query->getInt('page', 1),
+              $request->query->getInt('limit', 5)
+            );
         }
 
         $results['for'] = $input;

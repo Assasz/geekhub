@@ -13,18 +13,24 @@ use AppBundle\Entity\Comment;
 
 class CommentController extends Controller
 {
-    public function listAction(Post $post)
+    public function listAction(Request $request, Post $post)
     {
-        $comments = $this->getDoctrine()->getRepository(Comment::class)
-          ->findBy([
-              'post' => $post,
-              'parent' => null
-            ],
-            ['createDate' => 'DESC']
+        $repository = $this->getDoctrine()->getRepository(Comment::class);
+
+        $query = $repository->listCommentsQuery($post);
+
+        /**
+        * @ var $paginator \Knp\Component\Pager\Paginator
+        */
+        $paginator = $this->get('knp_paginator');
+        $result = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            $request->query->getInt('limit', 5)
           );
 
         return $this->render('comment/list.html.twig', [
-          'comments' => $comments
+          'comments' => $result
         ]);
     }
 
@@ -37,19 +43,19 @@ class CommentController extends Controller
 
         if($show && $request->isXmlHttpRequest())
         {
-          $replies = $repository->findBy(
+            $replies = $repository->findBy(
               ['parent' => $parent],
               ['createDate' => 'ASC']
             );
 
-          $repliesNumber = $repository->countReplies($parent);
+            $repliesNumber = $repository->countReplies($parent);
 
-          $response = $this->renderView('comment/list_replies.html.twig', [
+            $response = $this->renderView('comment/list_replies.html.twig', [
             'comments' => $replies,
             'repliesNumber' => $repliesNumber
-          ]);
+            ]);
 
-          return new JsonResponse(['replies' => $response]);
+            return new JsonResponse(['replies' => $response]);
         }
 
         $repliesNumber = $repository->countReplies($parent);
@@ -67,14 +73,14 @@ class CommentController extends Controller
      {
          if($request->isXmlHttpRequest())
          {
-           $votes = $comment->getVotes()+1;;
-           $comment->setVotes($votes);
-           $comment->addVoter($this->getUser());
+             $votes = $comment->getVotes()+1;;
+             $comment->setVotes($votes);
+             $comment->addVoter($this->getUser());
 
-           $em = $this->getDoctrine()->getManager();
-           $em->flush();
+             $em = $this->getDoctrine()->getManager();
+             $em->flush();
 
-           return new JsonResponse(['votes' => $votes]);
+             return new JsonResponse(['votes' => $votes]);
          }
 
          throw new \Exception('This action is forbidden');
@@ -92,25 +98,25 @@ class CommentController extends Controller
 
         if($form->isSubmitted() && $form->isValid() &&  $request->isXmlHttpRequest())
         {
-          $comment = $form->getData();
-          $user = $this->getUser();
+            $comment = $form->getData();
+            $user = $this->getUser();
 
-          $comment->setAuthor($user);
-          $comment->setPost($post);
-          $comment->setParent($parent);
+            $comment->setAuthor($user);
+            $comment->setPost($post);
+            $comment->setParent($parent);
 
-          $em = $this->getDoctrine()->getManager();
-          $em->persist($comment);
-          $em->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($comment);
+            $em->flush();
 
-          $response = $this->renderView('comment/content.html.twig', [
+            $response = $this->renderView('comment/content.html.twig', [
             'comment' => $comment
-          ]);
+            ]);
 
-          return new JsonResponse([
+            return new JsonResponse([
             'comment' => $response,
             'parent' => $parent
-          ]);
+            ]);
         }
 
         return $this->render('comment/create.html.twig', [

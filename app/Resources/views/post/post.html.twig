@@ -20,5 +20,5 @@
     </div>
   {% endif %}
 
-  {{ render(controller('AppBundle:Comment:list', {'post': post})) }}
+  {{ render(controller('AppBundle:Comment:list', {'request': app.request, 'post': post})) }}
 {% endblock %}
