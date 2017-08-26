@@ -45,7 +45,7 @@ class Comment
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="createDate", type="datetime")
+     * @ORM\Column(name="create_date", type="datetime")
      */
     private $createDate;
 

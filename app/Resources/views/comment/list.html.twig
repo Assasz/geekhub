@@ -14,7 +14,9 @@
   {% for comment in comments %}
     {{ include('comment/content.html.twig') }}
   {% endfor %}
+  {% if comments.getTotalItemCount > 5 %}
+      <li class="list-group-item navigation">
+          {{ knp_pagination_render(comments) }}
+      </li>
+  {% endif %}
 </ul>
-<div class="navigation">
-    {{ knp_pagination_render(comments) }}
-</div>

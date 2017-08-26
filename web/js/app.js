@@ -1,5 +1,5 @@
 $(document).ready(function(){
-  $('.btn-reply').click(function(){
+  $(document).on('click', '.btn-reply', function(){
     if($('#reply-panel').length){
       $('#reply-panel').remove();
     }

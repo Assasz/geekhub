@@ -13,22 +13,22 @@ class PostController extends Controller
     public function popularPostsAction($number)
     {
         $posts = $this->getDoctrine()
-          ->getRepository(Post::class)
-          ->findPopularPosts($number);
+            ->getRepository(Post::class)
+            ->findPopularPosts($number);
 
         return $this->render('post/popular_posts.html.twig', [
-          'posts' => $posts
+            'posts' => $posts
         ]);
     }
 
     public function lastPostsAction($number)
     {
         $posts = $this->getDoctrine()
-        ->getRepository(Post::class)
-        ->findLastPosts($number);
+            ->getRepository(Post::class)
+            ->findLastPosts($number);
 
         return $this->render('post/last_posts.html.twig', [
-          'posts' => $posts
+            'posts' => $posts
         ]);
     }
 
@@ -40,13 +40,13 @@ class PostController extends Controller
         $user = $this->getUser()->getUsername();
 
         $posts = $this->getDoctrine()
-          ->getRepository(Post::class)->findBy(
+            ->getRepository(Post::class)->findBy(
             ['author' => $user],
             ['createDate' => 'DESC']
           );
 
         return $this->render('post/user_list.html.twig', [
-          'posts' => $posts
+            'posts' => $posts
         ]);
     }
 
@@ -59,28 +59,28 @@ class PostController extends Controller
 
         if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
-          $post = new Post;
+            $post = new Post;
 
-          $form = $this->createForm(PostType::class, $post);
-          $form->handleRequest($request);
+            $form = $this->createForm(PostType::class, $post);
+            $form->handleRequest($request);
 
-          if($form->isSubmitted() && $form->isValid())
-          {
-            $post = $form->getData();
-            $user = $this->getUser();
+            if($form->isSubmitted() && $form->isValid())
+            {
+                $post = $form->getData();
+                $user = $this->getUser();
 
-            $post->setAuthor($user);
+                $post->setAuthor($user);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($post);
-            $em->flush();
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($post);
+                $em->flush();
 
-            $this->addFlash('success', 'Post added successfuly');
+                $this->addFlash('success', 'Post added successfuly');
 
-            return $this->redirectToRoute('post', ['id' => $post->getId()]);
-          }
+                return $this->redirectToRoute('post', ['id' => $post->getId()]);
+            }
 
-          return $this->render('post/create.html.twig', ['form' => $form->createView()]);
+            return $this->render('post/create.html.twig', ['form' => $form->createView()]);
         }
 
         return $this->redirectToRoute('home');
@@ -107,7 +107,7 @@ class PostController extends Controller
         }
 
         return $this->render('post/post.html.twig', [
-          'post' => $post
+            'post' => $post
         ]);
     }
 }

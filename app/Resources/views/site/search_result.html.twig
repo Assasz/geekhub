@@ -56,37 +56,41 @@
 
 <ul class="list-group">
   {% if resultsNumber == 0 %}
-  <p class="panel-body">Your search returned no results.</p>
+    <p class="panel-body">Your search returned no results.</p>
   {% endif %}
   {% if results.users is defined %}
     {% for user in results.users %}
-    <li class="list-group-item">
-      <div class="row">
-        <div class="col-md-2 col-xs-4">
-          <a href="#">
-            <img src="{{ asset(user.profilePicturePath) }}" alt="{{ user.username }}" class="img-rounded img-responsive">
-          </a>
-        </div>
-        <div class="col-md-10 col-xs-8">
-          <a href="#">
-            <h3>{{ user.username }}</h3>
-          </a>
-          <span class="label label-primary">{{ user.rank.name }}</span>
-          <p>{{ user.forename }} {{ user.surname }}, member since {{ user.createDate|date('F j, Y, g:i a') }}</p>
-        </div>
-      </div>
-    </li>
+        <li class="list-group-item">
+          <div class="row">
+            <div class="col-md-2 col-xs-4">
+              <a href="#">
+                <img src="{{ asset(user.profilePicturePath) }}" alt="{{ user.username }}" class="img-rounded img-responsive">
+              </a>
+            </div>
+            <div class="col-md-10 col-xs-8">
+              <a href="#">
+                <h3>{{ user.username }}</h3>
+              </a>
+              <span class="label label-primary">{{ user.rank.name }}</span>
+              <p>{{ user.forename }} {{ user.surname }}, member since {{ user.createDate|date('F j, Y, g:i a') }}</p>
+            </div>
+          </div>
+        </li>
     {% endfor %}
-    <div class="navigation">
-        {{ knp_pagination_render(results.users) }}
-    </div>
+    {% if resultsNumber > 5 %}
+        <li class="list-group-item navigation">
+            {{ knp_pagination_render(results.users) }}
+        </li>
+    {% endif %}
   {% else %}
     {% for post in results.posts %}
       {{ include('post/list.html.twig') }}
     {% endfor %}
-    <div class="navigation">
-        {{ knp_pagination_render(results.posts) }}
-    </div>
+    {% if resultsNumber > 5 %}
+        <li class="list-group-item navigation">
+            {{ knp_pagination_render(results.posts) }}
+        </li>
+    {% endif %}
   {% endif %}
 </ul>
 {% endblock %}

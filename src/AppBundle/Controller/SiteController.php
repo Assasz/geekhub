@@ -42,9 +42,9 @@ class SiteController extends Controller
             $query = $postRepository->searchForPostsQuery($input, $sortby);
 
             $results['posts'] = $paginator->paginate(
-              $query,
-              $request->query->getInt('page', 1),
-              $request->query->getInt('limit', 5)
+                $query,
+                $request->query->getInt('page', 1),
+                5
             );
         }
         else
@@ -54,16 +54,16 @@ class SiteController extends Controller
             $query = $userRepository->searchForUsersQuery($input, $sortby);
 
             $results['users'] = $paginator->paginate(
-              $query,
-              $request->query->getInt('page', 1),
-              $request->query->getInt('limit', 5)
+                $query,
+                $request->query->getInt('page', 1),
+                5
             );
         }
 
         $results['for'] = $input;
 
         return $this->render('site/search_result.html.twig', [
-          'results' => $results
+            'results' => $results
         ]);
     }
 

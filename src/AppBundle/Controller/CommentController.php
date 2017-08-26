@@ -5,8 +5,8 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use AppBundle\Form\CommentType;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use AppBundle\Form\CommentType;
 use AppBundle\Entity\Post;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Comment;
@@ -26,11 +26,11 @@ class CommentController extends Controller
         $result = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
-            $request->query->getInt('limit', 5)
+            5
           );
 
         return $this->render('comment/list.html.twig', [
-          'comments' => $result
+            'comments' => $result
         ]);
     }
 
@@ -44,15 +44,15 @@ class CommentController extends Controller
         if($show && $request->isXmlHttpRequest())
         {
             $replies = $repository->findBy(
-              ['parent' => $parent],
-              ['createDate' => 'ASC']
+                ['parent' => $parent],
+                ['createDate' => 'ASC']
             );
 
             $repliesNumber = $repository->countReplies($parent);
 
             $response = $this->renderView('comment/list_replies.html.twig', [
-            'comments' => $replies,
-            'repliesNumber' => $repliesNumber
+                'comments' => $replies,
+                'repliesNumber' => $repliesNumber
             ]);
 
             return new JsonResponse(['replies' => $response]);
@@ -61,8 +61,8 @@ class CommentController extends Controller
         $repliesNumber = $repository->countReplies($parent);
 
         return $this->render('comment/list_replies.html.twig', [
-          'repliesNumber' => $repliesNumber,
-          'parent' => $parent
+            'repliesNumber' => $repliesNumber,
+            'parent' => $parent
         ]);
     }
 
@@ -110,18 +110,18 @@ class CommentController extends Controller
             $em->flush();
 
             $response = $this->renderView('comment/content.html.twig', [
-            'comment' => $comment
+                'comment' => $comment
             ]);
 
             return new JsonResponse([
-            'comment' => $response,
-            'parent' => $parent
+                'comment' => $response,
+                'parent' => $parent
             ]);
         }
 
         return $this->render('comment/create.html.twig', [
-          'form' => $form->createView(),
-          'post' => $post
+            'form' => $form->createView(),
+            'post' => $post
         ]);
     }
 }

@@ -91,3 +91,26 @@ knp_paginator:
     template:
         pagination: 'KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig'
         sortable: 'KnpPaginatorBundle:Pagination:sortable_link.html.twig'
+
+ivory_ck_editor:
+    configs:
+        standard_config:
+            toolbar: "standard_toolbar"
+            extraPlugins: "codesnippet,widget,lineutils,widgetselection"
+            skin: "moono-lisa,/ckeditor/skins/moono-lisa/"
+    toolbars:
+        configs:
+            standard_toolbar: [["Cut", "Copy", "Paste", "PasteText", "PasteTextFromWord", "-", "Undo", "Redo"], ["Bold", "Italic",	"Underline", "Strike", "Subscript", "Superscript", "RemoveFormat"], ["NumberedList", "BulletedList", "Outdent", "Indent", 	"Blockquote"], ["Link", "Unlink", "Anchor"], ["Image", "Table", "HorizontalRule", "Smiley", "SpecialChar", "CodeSnippet"], "/", [	"Styles", "Format", "Font", "FontSize", "TextColor"]]
+    plugins:
+        codesnippet:
+            path: "/ckeditor/plugins/codesnippet/"
+            filename: "plugin.js"
+        widget:
+            path: "/ckeditor/plugins/widget/"
+            filename: "plugin.js"
+        lineutils:
+            path: "/ckeditor/plugins/lineutils/"
+            filename: "plugin.js"
+        widgetselection:
+            path: "/ckeditor/plugins/widgetselection/"
+            filename: "plugin.js"

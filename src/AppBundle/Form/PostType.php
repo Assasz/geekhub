@@ -7,6 +7,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 
 class PostType extends AbstractType
 {
@@ -15,24 +16,29 @@ class PostType extends AbstractType
         $builder
         ->add('title', TextType::class, ['attr' => [
             'class' => 'form-control'
-          ]])
+        ]])
         ->add('category', EntityType::class, [
-          'attr' => [
-            'class' => 'form-control'
-          ],
-          'class' => 'AppBundle:Category',
-          'choice_label' => 'name',
-          'placeholder' => 'Select category'
+            'attr' => [
+                'class' => 'form-control'
+            ],
+            'class' => 'AppBundle:Category',
+            'choice_label' => 'name',
+            'placeholder' => 'Select category'
         ])
         ->add('tags', TextType::class, ['attr' => [
-          'class' => 'form-control'
+            'class' => 'form-control'
         ]])
-        ->add('content', TextareaType::class, ['attr' => [
-          'class' => 'form-control',
-          'rows' => 10
-        ]])
-        ->add('add_post', SubmitType::class, ['label' => 'Add post', 'attr' => [
-          'class' => 'btn btn-primary'
+        ->add('content', CKEditorType::class, [
+            'attr' => [
+                'class' => 'form-control',
+                'rows' => 10
+            ],
+            'config_name' => 'standard_config'
+        ])
+        ->add('add_post', SubmitType::class, [
+            'label' => 'Add post',
+            'attr' => [
+                'class' => 'btn btn-primary'
         ]]);
     }
 }
