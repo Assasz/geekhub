@@ -4,7 +4,7 @@
       <img src="{{ asset(post.author.profilePicturePath) }}" alt="{{ post.author.username }}" class="img-rounded img-responsive">
     </div>
     <div class="col-md-10 col-xs-8">
-      <a href="{{ path('post', {'id': post.id}) }}">
+      <a href="{{ path('post', {'post': post.id}) }}">
         <h3>{{ post.title }}</h3>
       </a>
       <p>Category: {{ post.category.name }}</p>

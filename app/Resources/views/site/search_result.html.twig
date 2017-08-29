@@ -41,15 +41,36 @@
       <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
-      {% if results.posts is defined %}
-        <li><a href="{{ path('search', {'sortby': 'createDate'}) }}">Creation date</a></li>
-        <li><a href="{{ path('search', {'sortby': 'rating'}) }}">Rating</a></li>
-        <li><a href="{{ path('search', {'sortby': 'views'}) }}">Views</a></li>
-      {% endif %}
-      {% if results.users is defined %}
-        <li><a href="{{ path('search', {'type': 'users', 'sortby': 'createDate'}) }}">Creation date</a></li>
-        <li><a href="{{ path('search', {'type': 'users', 'sortby': 'reputation'}) }}">Reputation</a></li>
-      {% endif %}
+        {% set sortby = app.request.get('sortby')|default('createDate') %}
+        {% if results.posts is defined %}
+            <li
+            {% if sortby == 'createDate' %}
+                class="active"
+            {% endif %}
+            ><a href="{{ path('search', {'sortby': 'createDate'}) }}">Creation date</a></li>
+            <li
+            {% if sortby == 'rating' %}
+                class="active"
+            {% endif %}
+            ><a href="{{ path('search', {'sortby': 'rating'}) }}">Rating</a></li>
+            <li
+            {% if sortby == 'views' %}
+                class="active"
+            {% endif %}
+            ><a href="{{ path('search', {'sortby': 'views'}) }}">Views</a></li>
+        {% endif %}
+        {% if results.users is defined %}
+            <li
+            {% if sortby == 'createDate' %}
+                class="active"
+            {% endif %}
+            ><a href="{{ path('search', {'type': 'users', 'sortby': 'createDate'}) }}">Creation date</a></li>
+            <li
+            {% if sortby == 'reputation' %}
+                class="active"
+            {% endif %}
+            ><a href="{{ path('search', {'type': 'users', 'sortby': 'reputation'}) }}">Reputation</a></li>
+        {% endif %}
     </ul>
   </li>
 </ul>

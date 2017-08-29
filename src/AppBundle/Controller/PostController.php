@@ -151,16 +151,17 @@ class PostController extends Controller
     }
 
     /**
-     * @Route("/post/{id}", name="post", requirements={"id": "\d+"})
+     * @Route("/post/{post}", name="post", requirements={"post": "\d+"})
      */
-    public function postAction(Request $request, $id)
+    public function postAction(Request $request, Post $post)
     {
-        $post = $this->getDoctrine()->getRepository('AppBundle:Post')->find($id);
-
         if (!$post)
         {
             throw $this->createNotFoundException('This post does not exist');
         }
+
+        $views = $post->getViews()+1;
+        $post->setViews($views);
 
         return $this->render('post/post.html.twig', [
             'post' => $post
