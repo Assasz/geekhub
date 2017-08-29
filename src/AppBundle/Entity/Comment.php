@@ -58,7 +58,7 @@ class Comment
 
     /**
      * @ORM\ManyToMany(targetEntity="User")
-     * @ORM\JoinTable(name="voters",
+     * @ORM\JoinTable(name="comment_voter",
      *      joinColumns={@ORM\JoinColumn(name="comment_id", referencedColumnName="id")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
      *      )

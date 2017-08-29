@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Comment;
+use AppBundle\Entity\User;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -73,23 +74,23 @@ class Post
     /**
      * @var int
      *
+     * @ORM\Column(name="likes", type="integer")
+     */
+    private $likes;
+
+    /**
+     * @var int
+     *
+     * @ORM\Column(name="dislikes", type="integer")
+     */
+    private $dislikes;
+
+    /**
+     * @var int
+     *
      * @ORM\Column(name="rating", type="integer")
      */
     private $rating;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="total_rating", type="integer")
-     */
-    private $totalRating;
-
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="votes", type="integer")
-     */
-    private $votes;
 
     /**
      * @var int
@@ -109,6 +110,15 @@ class Post
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="post")
      */
     private $comments;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="User")
+     * @ORM\JoinTable(name="post_voter",
+     *      joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
+     *      )
+     */
+    private $voters;
 
     public function __construct()
     {
@@ -134,17 +144,17 @@ class Post
     /**
      * @ORM\PrePersist
      */
-    public function setTotalRatingValue()
+    public function setLikesValue()
     {
-        $this->totalRating = 0;
+        $this->likes = 0;
     }
 
     /**
      * @ORM\PrePersist
      */
-    public function setVotesValue()
+    public function setDislikesValue()
     {
-        $this->votes = 0;
+        $this->dislikes = 0;
     }
 
     /**
@@ -262,51 +272,27 @@ class Post
     }
 
     /**
-     * Set rating
+     * Set likes
      *
-     * @param integer $rating
+     * @param integer $likes
      *
      * @return Post
      */
-    public function setRating($rating)
+    public function setLikes($likes)
     {
-        $this->rating = $rating;
+        $this->likes = $likes;
 
         return $this;
     }
 
     /**
-     * Get rating
+     * Get likes
      *
      * @return int
      */
-    public function getRating()
+    public function getLikes()
     {
-        return $this->rating;
-    }
-
-    /**
-     * Set votes
-     *
-     * @param integer $votes
-     *
-     * @return Post
-     */
-    public function setVotes($votes)
-    {
-        $this->votes = $votes;
-
-        return $this;
-    }
-
-    /**
-     * Get votes
-     *
-     * @return int
-     */
-    public function getVotes()
-    {
-        return $this->votes;
+        return $this->likes;
     }
 
     /**
@@ -382,27 +368,27 @@ class Post
     }
 
     /**
-     * Set totalRating
+     * Set dislikes
      *
-     * @param integer $totalRating
+     * @param integer $dislikes
      *
      * @return Post
      */
-    public function setTotalRating($totalRating)
+    public function setDislikes($dislikes)
     {
-        $this->totalRating = $totalRating;
+        $this->dislikes = $dislikes;
 
         return $this;
     }
 
     /**
-     * Get totalRating
+     * Get dislikes
      *
      * @return integer
      */
-    public function getTotalRating()
+    public function getDislikes()
     {
-        return $this->totalRating;
+        return $this->dislikes;
     }
 
     /**
@@ -437,5 +423,63 @@ class Post
     public function getComments()
     {
         return $this->comments;
+    }
+
+    /**
+     * Add voter
+     *
+     * @param User $voter
+     *
+     * @return Post
+     */
+    public function addVoter(User $voter)
+    {
+        $this->voters[] = $voter;
+
+        return $this;
+    }
+
+    /**
+     * Remove voter
+     *
+     * @param User $voter
+     */
+    public function removeVoter(User $voter)
+    {
+        $this->voters->removeElement($voter);
+    }
+
+    /**
+     * Get voters
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVoters()
+    {
+        return $this->voters;
+    }
+
+    /**
+     * Set rating
+     *
+     * @param integer $rating
+     *
+     * @return Post
+     */
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
+
+        return $this;
+    }
+
+    /**
+     * Get rating
+     *
+     * @return integer
+     */
+    public function getRating()
+    {
+        return $this->rating;
     }
 }

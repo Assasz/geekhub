@@ -9,19 +9,10 @@ class PostListener
     public function postLoad(Post $post, LifecycleEventArgs $event)
     {
         $entityManager = $event->getObjectManager();
-        $totalRating = $post->getTotalRating();
-        $votes = $post->getVotes();
+        $likes = $post->getLikes();
+        $dislikes = $post->getDislikes();
 
-        if($votes > 0)
-        {
-          $rating = $totalRating / $votes;
-        }
-        else 
-        {
-          $rating = 0;
-        }
-
-        $post->setRating($rating);
+        $post->setRating($likes-$dislikes);
         $entityManager->flush();
     }
 }

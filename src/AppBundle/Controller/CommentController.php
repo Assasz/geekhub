@@ -73,7 +73,7 @@ class CommentController extends Controller
      {
          if($request->isXmlHttpRequest())
          {
-             $votes = $comment->getVotes()+1;;
+             $votes = $comment->getVotes()+1;
              $comment->setVotes($votes);
              $comment->addVoter($this->getUser());
 

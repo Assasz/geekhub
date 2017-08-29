@@ -6,6 +6,41 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <h2 class="panel-title">{{ post.title }}</h2>
+      <p>
+            {% set allowed = true %}
+            {% if app.user == post.author or not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+              {% set allowed = false %}
+            {% endif %}
+            {% for voter in post.voters %}
+              {% if app.user == voter %}
+                  {% set allowed = false %}
+              {% endif %}
+            {% endfor %}
+
+            <span id="post-likes">{{ post.likes }}</span>
+            <button type="button" id="btn-like" class="btn-rate" data-post-id="{{ post.id }}"
+            {% if allowed != true %}
+                disabled
+            {% endif %}
+            >
+                <span class="fa fa-fw fa-thumbs-up" aria-hidden="true"></span>
+                <span class="visually-hidden">Like</span>
+            </button>
+
+            <span id="post-dislikes">{{ post.dislikes }}</span>
+            <button type="button" id="btn-dislike" class="btn-rate" data-post-id="{{ post.id }}"
+            {% if allowed != true %}
+                disabled
+            {% endif %}
+            >
+                <span class="fa fa-fw fa-thumbs-down" aria-hidden="true"></span>
+                <span class="visually-hidden">Dislike</span>
+            </button>
+
+            {{ post.views }}
+            <span class="fa fa-fw fa-eye" aria-hidden="true"></span>
+            <span class="visually-hidden">Views</span>
+        </p>
     </div>
     <div class="panel-body">
       <p>{{ post.content|raw }}</p>

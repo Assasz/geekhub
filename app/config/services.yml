@@ -38,14 +38,14 @@ services:
         tags:
             - { name: form.type, alias: app_user_registration }
 
-    user_listener:
-        class: AppBundle\EntityListener\UserListener
+    post_listener:
+        class: AppBundle\EntityListener\PostListener
         tags:
             - { name: doctrine.orm.entity_listener }
             - { name: doctrine.orm.entity_listener, entity_manager: custom }
 
-    post_listener:
-        class: AppBundle\EntityListener\PostListener
+    user_listener:
+        class: AppBundle\EntityListener\UserListener
         tags:
             - { name: doctrine.orm.entity_listener }
             - { name: doctrine.orm.entity_listener, entity_manager: custom }

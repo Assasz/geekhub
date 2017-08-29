@@ -4,8 +4,8 @@ $(document).ready(function(){
       $('#reply-panel').remove();
     }
 
-    var id = $(this).attr('comment-id'),
-      author = $(this).attr('comment-author'),
+    var id = $(this).attr('data-comment-id'),
+      author = $(this).attr('data-comment-author'),
       panel = $('#comment-panel').clone().attr('id', 'reply-panel'),
       form = panel.find('form'),
       textarea = form.find('textarea');
@@ -28,7 +28,7 @@ $(document).ready(function(){
   });
 
   $('.btn-vote').click(function(){
-    var id = $(this).attr('comment-id');
+    var id = $(this).attr('data-comment-id');
 
     $.ajax({
       url: Routing.generate('comment_vote', {comment: id}),
@@ -36,7 +36,7 @@ $(document).ready(function(){
     })
     .done(function( data ) {
       $('#votes-comment-'+id).html(data.votes);
-      $('.vote-button[comment-id='+id+']').remove();
+      $('.btn-vote[data-comment-id='+id+']').remove();
     });
   });
 
@@ -64,7 +64,7 @@ $(document).ready(function(){
   });
 
   $('.btn-show-replies').click(function(){
-    var id = $(this).attr('comment-id');
+    var id = $(this).attr('data-comment-id');
 
     $.ajax({
       url: Routing.generate('comment_list_replies', {parent: id, show: 1}),
@@ -73,5 +73,31 @@ $(document).ready(function(){
     .done(function( response ) {
       $('#comment-'+id+' .replies').replaceWith(response.replies);
     });
+  });
+
+  $('#btn-like').click(function(){
+      var id = $(this).attr('data-post-id');
+
+      $.ajax({
+        url: Routing.generate('post_like', {post: id}),
+        dataType: "json",
+      })
+      .done(function( response ) {
+        $('#post-likes').html(response.likes);
+        $('.btn-rate').prop('disabled', true);
+      });
+  });
+
+  $('#btn-dislike').click(function(){
+      var id = $(this).attr('data-post-id');
+
+      $.ajax({
+        url: Routing.generate('post_dislike', {post: id}),
+        dataType: "json",
+      })
+      .done(function( response ) {
+        $('#post-dislikes').html(response.dislikes);
+        $('.btn-rate').prop('disabled', true);
+      });
   });
 });
