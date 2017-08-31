@@ -473,7 +473,7 @@ CKEDITOR.config.codeSnippet_codeClass = 'hljs';
  *		config.codeSnippet_theme = 'pojoaque';
  *
  * @since 4.4
- * @cfg {String} [codeSnippet_theme='default']
+ * @cfg {String} [codeSnippet_theme='mono']
  * @member CKEDITOR.config
  */
 CKEDITOR.config.codeSnippet_theme = 'monokai_sublime';

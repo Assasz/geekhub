@@ -10,6 +10,15 @@
       comments
       {% endif %}
     </h3>
+    <div class="btn-group pull-right">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Sort by <span class="caret"></span>
+        </button>
+        <ul id="sort-list" class="dropdown-menu" data-post-id="{{ post.id }}">
+            <li class="active" data-sort-by="votes"><a href="#">Votes</a></li>
+            <li data-sort-by="createDate"><a href="#">Creation date</a></li>
+        </ul>
+    </div>
   </li>
   {% for comment in comments %}
     {{ include('comment/content.html.twig') }}

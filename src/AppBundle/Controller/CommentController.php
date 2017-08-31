@@ -13,11 +13,14 @@ use AppBundle\Entity\Comment;
 
 class CommentController extends Controller
 {
-    public function listAction(Request $request, Post $post)
+    /**
+     * @Route("/comment/list/{post}/{sortBy}",  name="comment_list", options={"expose"=true}, requirements={"post": "\d+", "sortBy": "createDate|votes"})
+     */
+    public function listAction(Request $request, Post $post, $sortBy = 'votes')
     {
         $repository = $this->getDoctrine()->getRepository(Comment::class);
 
-        $query = $repository->listCommentsQuery($post);
+        $query = $repository->listCommentsQuery($post, $sortBy);
 
         /**
         * @ var $paginator \Knp\Component\Pager\Paginator
@@ -29,8 +32,18 @@ class CommentController extends Controller
             5
           );
 
+        if($request->isXmlHttpRequest())
+        {
+            $response = $this->renderView('comment/list.html.twig', [
+                'comments' => $result,
+                'post' => $post
+            ]);
+            return new JsonResponse(['comments' => $response]);
+        }
+
         return $this->render('comment/list.html.twig', [
-            'comments' => $result
+            'comments' => $result,
+            'post' => $post
         ]);
     }
 

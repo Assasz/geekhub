@@ -25,9 +25,12 @@ class PostType extends AbstractType
             'choice_label' => 'name',
             'placeholder' => 'Select category'
         ])
-        ->add('tags', TextType::class, ['attr' => [
-            'class' => 'form-control'
-        ]])
+        ->add('tags', TextType::class, [
+            'attr' => [
+                'class' => 'form-control',
+                'placeholder' => 'Optional, separated by space'
+            ]
+        ])
         ->add('content', CKEditorType::class, [
             'attr' => [
                 'class' => 'form-control',
