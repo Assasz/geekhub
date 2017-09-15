@@ -5,10 +5,10 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\Form\SearchType;
 use AppBundle\Entity\Post;
 use AppBundle\Entity\User;
-use Symfony\Component\HttpFoundation\Session\Session;
 
 class SiteController extends Controller
 {
@@ -44,7 +44,7 @@ class SiteController extends Controller
             $results['posts'] = $paginator->paginate(
                 $query,
                 $request->query->getInt('page', 1),
-                5
+                10
             );
         }
         else

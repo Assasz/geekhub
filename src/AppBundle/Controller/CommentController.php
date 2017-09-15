@@ -14,13 +14,13 @@ use AppBundle\Entity\Comment;
 class CommentController extends Controller
 {
     /**
-     * @Route("/comment/list/{post}/{sortBy}",  name="comment_list", options={"expose"=true}, requirements={"post": "\d+", "sortBy": "createDate|votes"})
+     * @Route("/comment/list/{post}",  name="comment_list", options={"expose"=true}, requirements={"post": "\d+"})
      */
-    public function listAction(Request $request, Post $post, $sortBy = 'votes')
+    public function listAction(Request $request, Post $post)
     {
         $repository = $this->getDoctrine()->getRepository(Comment::class);
 
-        $query = $repository->listCommentsQuery($post, $sortBy);
+        $query = $repository->listCommentsQuery($post);
 
         /**
         * @ var $paginator \Knp\Component\Pager\Paginator
@@ -29,21 +29,14 @@ class CommentController extends Controller
         $result = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
-            5
+            10,
+            ['defaultSortFieldName' => ['c.votes', 'c.createDate'], 'defaultSortDirection' => 'desc']
           );
-
-        if($request->isXmlHttpRequest())
-        {
-            $response = $this->renderView('comment/list.html.twig', [
-                'comments' => $result,
-                'post' => $post
-            ]);
-            return new JsonResponse(['comments' => $response]);
-        }
 
         return $this->render('comment/list.html.twig', [
             'comments' => $result,
-            'post' => $post
+            'post' => $post,
+            'request' => $request
         ]);
     }
 

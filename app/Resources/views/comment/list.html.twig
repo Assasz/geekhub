@@ -18,16 +18,27 @@
             " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Sort by <span class="caret"></span>
             </button>
-            <ul id="sort-list" class="dropdown-menu" data-action="comments-sort" data-post-id="{{ post.id }}">
-                <li class="active" data-sort-type="votes"><a href="#">Votes</a></li>
-                <li data-sort-type="createDate"><a href="#">Creation date</a></li>
+            <ul id="sort-list" class="dropdown-menu">
+                <li
+                {% set sortCriteria = request.query.get('sort')|default('c.votes+c.createDate') %}
+                {% if sortCriteria == 'c.votes+c.createDate' %}
+                    class="active"
+                {% endif %}>
+                    {{ knp_pagination_sortable(comments, 'Votes', ['c.votes', 'c.createDate'], {'direction':'desc'}) }}
+                </li>
+                <li
+                {% if sortCriteria == 'c.createDate+c.votes' %}
+                    class="active"
+                {% endif %}>
+                    {{ knp_pagination_sortable(comments, 'Creation date', ['c.createDate', 'c.votes'], {'direction':'desc'}) }}
+                </li>
             </ul>
         </div>
     </li>
     {% for comment in comments %}
         {{ include('comment/content.html.twig') }}
     {% endfor %}
-    {% if comments.getTotalItemCount > 5 %}
+    {% if comments.getTotalItemCount > 10 %}
         <li class="list-group-item navigation">
             {{ knp_pagination_render(comments) }}
         </li>

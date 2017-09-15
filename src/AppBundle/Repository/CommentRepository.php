@@ -14,16 +14,12 @@ use Doctrine\ORM\EntityRepository;
  */
 class CommentRepository extends EntityRepository
 {
-    public function listCommentsQuery(Post $post, $sortBy)
+    public function listCommentsQuery(Post $post)
     {
-        $sortByThen = ($sortBy == 'createDate') ? 'votes' : 'createDate';
-
         return $this->createQueryBuilder('c')
             ->Where('c.post = :post')
             ->andWhere('c.parent is null')
             ->setParameter('post', $post)
-            ->orderBy('c.'.$sortBy, 'DESC')
-            ->addOrderBy('c.'.$sortByThen, 'DESC')
             ->getQuery();
     }
 

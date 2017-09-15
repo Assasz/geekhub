@@ -109,13 +109,12 @@ class PostController extends Controller
             throw $this->createAccessDeniedException();
         }
 
-        if(!$request->isXmlHttpRequest())
+        $user = $this->getUser();
+
+        if(!$request->isXmlHttpRequest() || $user == $post->getAuthor())
         {
             throw new \Exception('This action is forbidden');
         }
-
-        $user = $this->getUser();
-        $likes = $post->getLikes()+1;
 
         $voters = [];
         foreach ($post->getVoters() as $voter) {
@@ -127,6 +126,7 @@ class PostController extends Controller
             throw new \Exception('This action is forbidden');
         }
 
+        $likes = $post->getLikes()+1;
         $post->setLikes($likes);
 
         $voter = new PostVoter();
@@ -161,7 +161,6 @@ class PostController extends Controller
         }
 
         $user = $this->getUser();
-        $dislikes = $post->getDislikes()+1;
 
         $voters = [];
         foreach ($post->getVoters() as $voter) {
@@ -173,6 +172,7 @@ class PostController extends Controller
             throw new \Exception('This action is forbidden');
         }
 
+        $dislikes = $post->getDislikes()+1;
         $post->setDislikes($dislikes);
 
         $voter = new PostVoter();

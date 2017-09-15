@@ -101,19 +101,19 @@ $(document).ready(function(){
       });
   });
 
-  $('[data-action="comments-sort"] a').click(function(event){
-      event.preventDefault();
-      var sortType = $(this).parent().data('sort-type'),
-        id = $('#sort-list').data('post-id');
-
-      $.ajax({
-        url: Routing.generate('comment_list', {post: id, sortBy: sortType}),
-        dataType: "json",
-      })
-      .done(function( response ) {
-        $('.comments').replaceWith(response.comments);
-        $('#sort-list .active').removeClass('active');
-        $('#sort-list li[data-sort-type='+sortType+']').addClass('active');
-      });
-  });
+  // $('[data-action="comments-sort"] a').click(function(event){
+  //     event.preventDefault();
+  //     var sortCriteria = $(this).parent().data('sort-criteria'),
+  //       id = $('#sort-list').data('post-id');
+  //
+  //     $.ajax({
+  //       url: Routing.generate('comment_list', {post: id, sortCriteria: sortCriteria}),
+  //       dataType: "json",
+  //     })
+  //     .done(function( response ) {
+  //       $('.comments').replaceWith(response.comments);
+  //       $('#sort-list .active').removeClass('active');
+  //       $('#sort-list li[data-sort-criteria='+sortCriteria+']').addClass('active');
+  //     });
+  // });
 });
