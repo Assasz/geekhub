@@ -8,7 +8,7 @@
       </a>
     </div>
     <div class="col-md-10 col-xs-10">
-      {{ form_start(form, {'attr': {'action': path('comment_create', {'post': post.id}), 'novalidate': 'novalidate', 'class': 'comment-form'}}) }}
+      {{ form_start(form, {'attr': {'action': path('comment_create', {'post': post.id}), 'novalidate': 'novalidate', 'class':'comment-form', 'data-action': 'comment-post'}}) }}
 
       {{ form_widget(form.content, {'attr': {'placeholder': 'Type comment here!'}}) }}
       {{ form_errors(form.content) }}

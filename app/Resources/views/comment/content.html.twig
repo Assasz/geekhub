@@ -8,7 +8,9 @@
     <div class="col-md-10 col-xs-10">
       <p><a href="#">{{ comment.author.username }}</a>, {{ comment.createDate|date('F j, Y, g:i a')}}</p>
       <p>
-        <span id="votes-comment-{{ comment.id }}">{{ comment.votes }}</span>
+        <span data-comment-votes-indicator data-comment-id="{{ comment.id }}">
+            {{ comment.votes }}
+        </span>
 
         {% set allowed = true %}
         {% if app.user == comment.author or not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -21,14 +23,14 @@
         {% endfor %}
 
         {% if allowed == true %}
-          <button type="button" class="btn btn-default btn-vote" data-comment-id="{{ comment.id }}">
+          <button type="button" class="btn btn-default" data-action="comment-vote" data-comment-id="{{ comment.id }}">
             <span class="fa fa-fw fa-plus" aria-hidden="true"></span>
             <span class="visually-hidden">Vote for this comment</span>
           </button>
         {% endif %}
       </p>
       {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-          <button type="button" class="btn btn-primary pull-right btn-reply" data-comment-author="{{ comment.author }}"
+          <button type="button" class="btn btn-primary pull-right" data-action="comment-reply" data-comment-author="{{ comment.author }}"
           {% if comment.parent is not null %}
             data-comment-id="{{ comment.parent }}"
           {% else %}

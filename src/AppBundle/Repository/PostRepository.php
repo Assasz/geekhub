@@ -16,7 +16,7 @@ class PostRepository extends EntityRepository
     public function findPopularPosts($number)
     {
         $query = $this->createQueryBuilder('p')
-          ->orderBy('p.views', 'ASC')
+          ->orderBy('p.views', 'DESC')
           ->getQuery();
 
         return $query->setMaxResults($number)->getResult();

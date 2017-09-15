@@ -84,19 +84,33 @@ class CommentController extends Controller
      */
      public function voteAction(Request $request, Comment $comment)
      {
-         if($request->isXmlHttpRequest())
+         $securityChecker = $this->get('security.authorization_checker');
+
+         if(!$securityChecker->isGranted('IS_AUTHENTICATED_REMEMBERED'))
          {
-             $votes = $comment->getVotes()+1;
-             $comment->setVotes($votes);
-             $comment->addVoter($this->getUser());
-
-             $em = $this->getDoctrine()->getManager();
-             $em->flush();
-
-             return new JsonResponse(['votes' => $votes]);
+             throw $this->createAccessDeniedException();
          }
 
-         throw new \Exception('This action is forbidden');
+         if(!$request->isXmlHttpRequest())
+         {
+             throw new \Exception('This action is forbidden');
+         }
+
+         $user = $this->getUser();
+
+         if($user == $comment->getAuthor() || in_array($user, $comment->getVoters()->toArray()))
+         {
+             throw new \Exception('This action is forbidden');
+         }
+
+         $votes = $comment->getVotes()+1;
+         $comment->setVotes($votes);
+         $comment->addVoter($user);
+
+         $em = $this->getDoctrine()->getManager();
+         $em->flush();
+
+         return new JsonResponse(['votes' => $votes]);
      }
 
     /**
@@ -104,6 +118,13 @@ class CommentController extends Controller
      */
     public function createAction(Request $request, Post $post, $parent = null)
     {
+        $securityChecker = $this->get('security.authorization_checker');
+
+        if(!$securityChecker->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+        {
+            throw $this->createAccessDeniedException();
+        }
+
         $comment = new Comment;
 
         $form = $this->createForm(CommentType::class, $comment);

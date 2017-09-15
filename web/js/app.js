@@ -1,11 +1,11 @@
 $(document).ready(function(){
-  $(document).on('click', '.btn-reply', function(){
+  $(document).on('click', '[data-action="comment-reply"]', function(){
     if($('#reply-panel').length){
       $('#reply-panel').remove();
     }
 
-    var id = $(this).attr('data-comment-id'),
-      author = $(this).attr('data-comment-author'),
+    var id = $(this).data('comment-id'),
+      author = $(this).data('comment-author'),
       panel = $('#comment-panel').clone().attr('id', 'reply-panel'),
       form = panel.find('form'),
       textarea = form.find('textarea');
@@ -27,20 +27,20 @@ $(document).ready(function(){
     }, 1000);
   });
 
-  $('.btn-vote').click(function(){
-    var id = $(this).attr('data-comment-id');
+  $(document).on('click', '[data-action="comment-vote"]', function(){
+    var id = $(this).data('comment-id');
 
     $.ajax({
       url: Routing.generate('comment_vote', {comment: id}),
       dataType: "json",
     })
     .done(function( data ) {
-      $('#votes-comment-'+id).html(data.votes);
-      $('.btn-vote[data-comment-id='+id+']').remove();
+      $('[data-comment-votes-indicator][data-comment-id='+id+']').html(data.votes);
+      $('[data-action="comment-vote"][data-comment-id='+id+']').remove();
     });
   });
 
-  $(document).on('submit', '.comment-form', function(event){
+  $(document).on('submit', '[data-action="comment-post"]', function(event){
     event.preventDefault();
     var data = $(this).serialize();
 
@@ -54,8 +54,8 @@ $(document).ready(function(){
         if(response.parent == null) {
           $(response.comment).insertAfter('.comments li:eq(0)');
 
-          var commentsNumber = parseFloat($('#comments-number').html());
-          $('#comments-number').html(commentsNumber+1);
+          var commentsNumber = parseFloat($('[data-comments-number-indicator]').html());
+          $('[data-comments-number-indicator]').html(commentsNumber+1);
         }
         else {
           $(response.comment).insertBefore('#comment-'+response.parent+' #reply-panel');
@@ -63,8 +63,8 @@ $(document).ready(function(){
     });
   });
 
-  $('.btn-show-replies').click(function(){
-    var id = $(this).attr('data-comment-id');
+  $(document).on('click', '[data-action="show-comment-replies"]', function(){
+    var id = $(this).data('comment-id');
 
     $.ajax({
       url: Routing.generate('comment_list_replies', {parent: id, show: 1}),
@@ -75,36 +75,36 @@ $(document).ready(function(){
     });
   });
 
-  $('#btn-like').click(function(){
-      var id = $(this).attr('data-post-id');
+  $('[data-action="post-like"]').click(function(){
+      var id = $(this).data('post-id');
 
       $.ajax({
         url: Routing.generate('post_like', {post: id}),
         dataType: "json",
       })
       .done(function( response ) {
-        $('#post-likes').html(response.likes);
+        $('[data-post-dislikes-indicator]').html(response.likes);
         $('.btn-rate').prop('disabled', true);
       });
   });
 
-  $('#btn-dislike').click(function(){
-      var id = $(this).attr('data-post-id');
+  $('[data-action="post-dislike"]').click(function(){
+      var id = $(this).data('post-id');
 
       $.ajax({
         url: Routing.generate('post_dislike', {post: id}),
         dataType: "json",
       })
       .done(function( response ) {
-        $('#post-dislikes').html(response.dislikes);
+        $('[data-post-dislikes-indicator]').html(response.dislikes);
         $('.btn-rate').prop('disabled', true);
       });
   });
 
-  $('#sort-list a').click(function(event){
+  $('[data-action="comments-sort"] a').click(function(event){
       event.preventDefault();
-      var sortType = $(this).parent().attr('data-sort-by'),
-        id = $('#sort-list').attr('data-post-id');
+      var sortType = $(this).parent().data('sort-type'),
+        id = $('#sort-list').data('post-id');
 
       $.ajax({
         url: Routing.generate('comment_list', {post: id, sortBy: sortType}),
@@ -113,7 +113,7 @@ $(document).ready(function(){
       .done(function( response ) {
         $('.comments').replaceWith(response.comments);
         $('#sort-list .active').removeClass('active');
-        $('#sort-list li[data-sort-by='+sortType+']').addClass('active');
+        $('#sort-list li[data-sort-type='+sortType+']').addClass('active');
       });
   });
 });

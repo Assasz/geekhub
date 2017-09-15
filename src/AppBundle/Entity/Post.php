@@ -7,6 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\User;
+use AppBundle\Entity\PostVoter;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -112,11 +113,7 @@ class Post
     private $comments;
 
     /**
-     * @ORM\ManyToMany(targetEntity="User")
-     * @ORM\JoinTable(name="post_voter",
-     *      joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="user_id", referencedColumnName="id")}
-     *      )
+     * @ORM\OneToMany(targetEntity="PostVoter", mappedBy="post")
      */
     private $voters;
 
@@ -426,37 +423,13 @@ class Post
     }
 
     /**
-     * Add voter
-     *
-     * @param User $voter
-     *
-     * @return Post
-     */
-    public function addVoter(User $voter)
-    {
-        $this->voters[] = $voter;
-
-        return $this;
-    }
-
-    /**
-     * Remove voter
-     *
-     * @param User $voter
-     */
-    public function removeVoter(User $voter)
-    {
-        $this->voters->removeElement($voter);
-    }
-
-    /**
      * Get voters
      *
      * @return \Doctrine\Common\Collections\Collection
      */
     public function getVoters()
     {
-        return $this->voters;
+        return $this->voters->toArray();
     }
 
     /**

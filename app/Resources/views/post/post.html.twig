@@ -3,22 +3,33 @@
 {% block title %}{{ post.title }}{% endblock %}
 
 {% block content %}
-  <div class="panel panel-default">
+<div class="panel panel-default">
     <div class="panel-heading">
-      <h2 class="panel-title">{{ post.title }}</h2>
-      <p>
-            {% set allowed = true %}
+        <h2 class="panel-title">{{ post.title }}</h2>
+        <p>
+            {% set allowed, choice = true, null %}
             {% if app.user == post.author or not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-              {% set allowed = false %}
+                {% set allowed = false %}
             {% endif %}
             {% for voter in post.voters %}
-              {% if app.user == voter %}
-                  {% set allowed = false %}
-              {% endif %}
+                {% if app.user == voter.user %}
+                    {% set allowed = false %}
+                    {% if voter.choice == 'like' %}
+                        {% set choice = 'like' %}
+                    {% else %}
+                        {% set choice = 'dislike' %}
+                    {% endif %}
+                {% endif %}
             {% endfor %}
 
-            <span id="post-likes">{{ post.likes }}</span>
-            <button type="button" id="btn-like" class="btn-rate" data-post-id="{{ post.id }}"
+            <span data-post-dislikes-indicator>
+                {{ post.likes }}
+            </span>
+            <button type="button" class="btn-rate
+            {% if choice == 'like' %}
+                clicked
+            {% endif %}
+            " data-action="post-like" data-post-id="{{ post.id }}"
             {% if allowed != true %}
                 disabled
             {% endif %}
@@ -27,33 +38,41 @@
                 <span class="visually-hidden">Like</span>
             </button>
 
-            <span id="post-dislikes">{{ post.dislikes }}</span>
-            <button type="button" id="btn-dislike" class="btn-rate" data-post-id="{{ post.id }}"
+            <span data-post-dislikes-indicator>
+                {{ post.dislikes }}
+            </span>
+            <button type="button" class="btn-rate
+            {% if choice == 'dislike' %}
+                clicked
+            {% endif %}
+            " data-action="post-dislike" data-post-id="{{ post.id }}"
             {% if allowed != true %}
-                disabled
+            disabled
             {% endif %}
             >
                 <span class="fa fa-fw fa-thumbs-down" aria-hidden="true"></span>
                 <span class="visually-hidden">Dislike</span>
             </button>
 
-            {{ post.views }}
+            <span data-post-views-indicator>
+                {{ post.views }}
+            </span>
             <span class="fa fa-fw fa-eye" aria-hidden="true"></span>
             <span class="visually-hidden">Views</span>
         </p>
     </div>
     <div class="panel-body">
-      <p>{{ post.content|raw }}</p>
+        <p>{{ post.content|raw }}</p>
     </div>
-  </div>
+</div>
 
-  {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
     {{ render(controller('AppBundle:Comment:create', {'post': post})) }}
-  {% else %}
+{% else %}
     <div class="panel panel-default">
-      <p>Sign in to add comment</p>
+        <p>Sign in to add comment</p>
     </div>
-  {% endif %}
+{% endif %}
 
-  {{ render(controller('AppBundle:Comment:list', {'request': app.request, 'post': post})) }}
+{{ render(controller('AppBundle:Comment:list', {'request': app.request, 'post': post})) }}
 {% endblock %}

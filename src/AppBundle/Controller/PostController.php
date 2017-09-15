@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Entity\Post;
+use AppBundle\Entity\PostVoter;
 use AppBundle\Form\PostType;
 use AppBundle\Form\RatingType;
 
@@ -57,35 +58,35 @@ class PostController extends Controller
      */
     public function createAction(Request $request)
     {
-        $securityContext = $this->container->get('security.authorization_checker');
+        $securityChecker = $this->get('security.authorization_checker');
 
-        if ($securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+        if(!$securityChecker->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
-            $post = new Post;
-
-            $form = $this->createForm(PostType::class, $post);
-            $form->handleRequest($request);
-
-            if($form->isSubmitted() && $form->isValid())
-            {
-                $post = $form->getData();
-                $user = $this->getUser();
-
-                $post->setAuthor($user);
-
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($post);
-                $em->flush();
-
-                $this->addFlash('success', 'Post added successfuly');
-
-                return $this->redirectToRoute('post', ['id' => $post->getId()]);
-            }
-
-            return $this->render('post/create.html.twig', ['form' => $form->createView()]);
+            throw $this->createAccessDeniedException();
         }
 
-        return $this->redirectToRoute('home');
+        $post = new Post;
+
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $post = $form->getData();
+            $user = $this->getUser();
+
+            $post->setAuthor($user);
+
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($post);
+            $em->flush();
+
+            $this->addFlash('success', 'Post added successfuly');
+
+            return $this->redirectToRoute('post', ['id' => $post->getId()]);
+        }
+
+        return $this->render('post/create.html.twig', ['form' => $form->createView()]);
     }
 
     /**
@@ -101,26 +102,45 @@ class PostController extends Controller
      */
     public function likeAction(Request $request, Post $post)
     {
-        if($request->isXmlHttpRequest())
+        $securityChecker = $this->get('security.authorization_checker');
+
+        if(!$securityChecker->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
-            $user = $this->getUser();
-            $likes = $post->getLikes()+1;
-
-            if($user == $post->getAuthor() || in_array($user, $post->getVoters()->toArray()))
-            {
-                return false;
-            }
-
-            $post->setLikes($likes);
-            $post->addVoter($user);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->flush();
-
-            return new JsonResponse(['likes' => $likes]);
+            throw $this->createAccessDeniedException();
         }
 
-        throw new \Exception('This action is forbidden');
+        if(!$request->isXmlHttpRequest())
+        {
+            throw new \Exception('This action is forbidden');
+        }
+
+        $user = $this->getUser();
+        $likes = $post->getLikes()+1;
+
+        $voters = [];
+        foreach ($post->getVoters() as $voter) {
+            $voters[] = $voter->getUser();
+        }
+
+        if($user == $post->getAuthor() || in_array($user, $voters))
+        {
+            throw new \Exception('This action is forbidden');
+        }
+
+        $post->setLikes($likes);
+
+        $voter = new PostVoter();
+
+        $voter->setPost($post);
+        $voter->setUser($user);
+        $voter->setChoice('like');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($voter);
+        $em->flush();
+
+        return new JsonResponse(['likes' => $likes]);
+
     }
 
     /**
@@ -128,26 +148,44 @@ class PostController extends Controller
      */
     public function dislikeAction(Request $request, Post $post)
     {
-        if($request->isXmlHttpRequest())
+        $securityChecker = $this->get('security.authorization_checker');
+
+        if(!$securityChecker->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
-            $user = $this->getUser();
-            $dislikes = $post->getDislikes()+1;
-
-            if($user == $post->getAuthor() || in_array($user, $post->getVoters()->toArray()))
-            {
-                return false;
-            }
-
-            $post->setDislikes($dislikes);
-            $post->addVoter($user);
-
-            $em = $this->getDoctrine()->getManager();
-            $em->flush();
-
-            return new JsonResponse(['dislikes' => $dislikes]);
+            throw $this->createAccessDeniedException();
         }
 
-        throw new \Exception('This action is forbidden');
+        if(!$request->isXmlHttpRequest())
+        {
+            throw new \Exception('This action is forbidden');
+        }
+
+        $user = $this->getUser();
+        $dislikes = $post->getDislikes()+1;
+
+        $voters = [];
+        foreach ($post->getVoters() as $voter) {
+            $voters[] = $voter->getUser();
+        }
+
+        if($user == $post->getAuthor() || in_array($user, $voters))
+        {
+            throw new \Exception('This action is forbidden');
+        }
+
+        $post->setDislikes($dislikes);
+
+        $voter = new PostVoter();
+
+        $voter->setPost($post);
+        $voter->setUser($user);
+        $voter->setChoice('dislike');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($voter);
+        $em->flush();
+
+        return new JsonResponse(['dislikes' => $dislikes]);
     }
 
     /**

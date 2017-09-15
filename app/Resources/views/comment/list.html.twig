@@ -1,31 +1,35 @@
 <ul class="list-group comments">
-  <li class="list-group-item">
-    <h3 class="list-group-item-heading">
-      <span id="comments-number">
-        {{ comments.getTotalItemCount }}
-      </span>
-      {% if comments.getTotalItemCount == 1 %}
-      comment
-      {% else %}
-      comments
-      {% endif %}
-    </h3>
-    <div class="btn-group pull-right">
-        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        Sort by <span class="caret"></span>
-        </button>
-        <ul id="sort-list" class="dropdown-menu" data-post-id="{{ post.id }}">
-            <li class="active" data-sort-by="votes"><a href="#">Votes</a></li>
-            <li data-sort-by="createDate"><a href="#">Creation date</a></li>
-        </ul>
-    </div>
-  </li>
-  {% for comment in comments %}
-    {{ include('comment/content.html.twig') }}
-  {% endfor %}
-  {% if comments.getTotalItemCount > 5 %}
-      <li class="list-group-item navigation">
-          {{ knp_pagination_render(comments) }}
-      </li>
-  {% endif %}
+    <li class="list-group-item">
+        <h3 class="list-group-item-heading">
+            <span data-comments-number-indicator>
+                {{ comments.getTotalItemCount }}
+            </span>
+            {% if comments.getTotalItemCount == 1 %}
+                comment
+            {% else %}
+                comments
+            {% endif %}
+        </h3>
+        <div class="btn-group pull-right">
+            <button type="button" class="btn btn-default dropdown-toggle
+            {% if comments.getTotalItemCount < 2 %}
+                disabled
+            {% endif %}
+            " data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Sort by <span class="caret"></span>
+            </button>
+            <ul id="sort-list" class="dropdown-menu" data-action="comments-sort" data-post-id="{{ post.id }}">
+                <li class="active" data-sort-type="votes"><a href="#">Votes</a></li>
+                <li data-sort-type="createDate"><a href="#">Creation date</a></li>
+            </ul>
+        </div>
+    </li>
+    {% for comment in comments %}
+        {{ include('comment/content.html.twig') }}
+    {% endfor %}
+    {% if comments.getTotalItemCount > 5 %}
+        <li class="list-group-item navigation">
+            {{ knp_pagination_render(comments) }}
+        </li>
+    {% endif %}
 </ul>

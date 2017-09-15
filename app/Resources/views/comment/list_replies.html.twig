@@ -6,7 +6,7 @@
       {% endfor %}
     {% else %}
       <li class="list-group-item">
-        <button type="button" class="btn btn-default btn-show-replies" data-comment-id="{{ parent.id }}">Show replies ({{ repliesNumber }})</button>
+        <button type="button" class="btn btn-default" data-action="show-comment-replies" data-comment-id="{{ parent.id }}">Show replies ({{ repliesNumber }})</button>
       </li>
     {% endif %}
   </ul>
