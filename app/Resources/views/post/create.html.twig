@@ -13,10 +13,6 @@
       {{ form_widget(form.title) }}
       {{ form_errors(form.title) }}
 
-      {{ form_label(form.category) }}
-      {{ form_widget(form.category) }}
-      {{ form_errors(form.category) }}
-
       {{ form_label(form.tags) }}
       {{ form_widget(form.tags) }}
       {{ form_errors(form.tags) }}
@@ -27,4 +23,9 @@
 
       {{ form_end(form) }}
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/tokenfield.js') }}"></script>
 {% endblock %}

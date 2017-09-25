@@ -100,20 +100,4 @@ $(document).ready(function(){
         $('.btn-rate').prop('disabled', true);
       });
   });
-
-  // $('[data-action="comments-sort"] a').click(function(event){
-  //     event.preventDefault();
-  //     var sortCriteria = $(this).parent().data('sort-criteria'),
-  //       id = $('#sort-list').data('post-id');
-  //
-  //     $.ajax({
-  //       url: Routing.generate('comment_list', {post: id, sortCriteria: sortCriteria}),
-  //       dataType: "json",
-  //     })
-  //     .done(function( response ) {
-  //       $('.comments').replaceWith(response.comments);
-  //       $('#sort-list .active').removeClass('active');
-  //       $('#sort-list li[data-sort-criteria='+sortCriteria+']').addClass('active');
-  //     });
-  // });
 });

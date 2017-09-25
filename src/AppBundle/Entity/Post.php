@@ -4,10 +4,10 @@ namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use AppBundle\Entity\Category;
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\User;
 use AppBundle\Entity\PostVoter;
+use AppBundle\Entity\Tag;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -42,10 +42,15 @@ class Post
     private $title;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="tags", type="string", length=255, nullable=true)
-     * @Assert\Length(max=255, maxMessage="These tags are too long, max 255 characters are allowed")
+     * @ORM\ManyToMany(targetEntity="Tag", cascade={"persist"})
+     * @ORM\JoinTable(name="post_tag",
+     *      joinColumns={@ORM\JoinColumn(name="post_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="tag_id", referencedColumnName="id")}
+     *      )
+     * @Assert\Regex(
+     *     pattern="/^\s*\S+(?:\s+\S+){0,4}\s*$/",
+     *     message="You cannot add more than 5 tags"
+     * )
      */
     private $tags;
 
@@ -99,13 +104,6 @@ class Post
      * @ORM\Column(name="views", type="integer")
      */
     private $views;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="posts")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
-     * @Assert\NotBlank()
-     */
-    private $category;
 
     /**
      * @ORM\OneToMany(targetEntity="Comment", mappedBy="post")
@@ -194,30 +192,6 @@ class Post
     public function getTitle()
     {
         return $this->title;
-    }
-
-    /**
-     * Set tags
-     *
-     * @param string $tags
-     *
-     * @return Post
-     */
-    public function setTags($tags)
-    {
-        $this->tags = $tags;
-
-        return $this;
-    }
-
-    /**
-     * Get tags
-     *
-     * @return string
-     */
-    public function getTags()
-    {
-        return $this->tags;
     }
 
     /**
@@ -314,30 +288,6 @@ class Post
     public function getViews()
     {
         return $this->views;
-    }
-
-    /**
-     * Set category
-     *
-     * @param Category $category
-     *
-     * @return Post
-     */
-    public function setCategory(Category $category)
-    {
-        $this->category = $category;
-
-        return $this;
-    }
-
-    /**
-     * Get category
-     *
-     * @return Category
-     */
-    public function getCategory()
-    {
-        return $this->category;
     }
 
     /**
@@ -454,5 +404,63 @@ class Post
     public function getRating()
     {
         return $this->rating;
+    }
+
+    /**
+     * Add tag
+     *
+     * @param Tag $tag
+     *
+     * @return Post
+     */
+    public function addTag(Tag $tag)
+    {
+        $this->tags[] = $tag;
+
+        return $this;
+    }
+
+    /**
+     * Remove tag
+     *
+     * @param Tag $tag
+     */
+    public function removeTag(Tag $tag)
+    {
+        $this->tags->removeElement($tag);
+    }
+
+    /**
+     * Get tags
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getTags()
+    {
+        return $this->tags;
+    }
+
+    /**
+     * Add voter
+     *
+     * @param \AppBundle\Entity\PostVoter $voter
+     *
+     * @return Post
+     */
+    public function addVoter(PostVoter $voter)
+    {
+        $this->voters[] = $voter;
+
+        return $this;
+    }
+
+    /**
+     * Remove voter
+     *
+     * @param \AppBundle\Entity\PostVoter $voter
+     */
+    public function removeVoter(PostVoter $voter)
+    {
+        $this->voters->removeElement($voter);
     }
 }

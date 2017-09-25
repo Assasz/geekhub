@@ -5,7 +5,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 
@@ -17,19 +16,12 @@ class PostType extends AbstractType
         ->add('title', TextType::class, ['attr' => [
             'class' => 'form-control'
         ]])
-        ->add('category', EntityType::class, [
-            'attr' => [
-                'class' => 'form-control'
-            ],
-            'class' => 'AppBundle:Category',
-            'choice_label' => 'name',
-            'placeholder' => 'Select category'
-        ])
         ->add('tags', TextType::class, [
             'attr' => [
-                'class' => 'form-control',
-                'placeholder' => 'Optional, separated by space'
-            ]
+                'class' => 'form-control tokenfield',
+                'placeholder' => 'Type tag and hit space or enter to add, up to 5 tags'
+            ],
+            'mapped' => false
         ])
         ->add('content', CKEditorType::class, [
             'attr' => [

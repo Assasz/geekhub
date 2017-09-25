@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Entity\Post;
 use AppBundle\Entity\PostVoter;
+use AppBundle\Entity\Tag;
 use AppBundle\Form\PostType;
 use AppBundle\Form\RatingType;
 
@@ -77,13 +78,32 @@ class PostController extends Controller
 
             $post->setAuthor($user);
 
+            $tags = explode(' ', $form['tags']->getData());
+            foreach ($tags as $tag)
+            {
+                $duplicate = $this->getDoctrine()
+                    ->getRepository(Tag::class)
+                    ->findOneByName($tag);
+
+                if($duplicate)
+                {
+                    $post->addTag($duplicate);
+                }
+                else
+                {
+                    $newTag = new Tag();
+                    $newTag->setName($tag);
+                    $post->addTag($newTag);
+                }
+            }
+
             $em = $this->getDoctrine()->getManager();
             $em->persist($post);
             $em->flush();
 
             $this->addFlash('success', 'Post added successfuly');
 
-            return $this->redirectToRoute('post', ['id' => $post->getId()]);
+            return $this->redirectToRoute('post', ['post' => $post->getId()]);
         }
 
         return $this->render('post/create.html.twig', ['form' => $form->createView()]);

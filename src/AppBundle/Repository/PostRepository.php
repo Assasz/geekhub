@@ -39,7 +39,8 @@ class PostRepository extends EntityRepository
 
         return $query = $this->createQueryBuilder('p')
           ->Where('p.title LIKE :input')
-          ->orWhere('p.tags IN(:tags)')
+          ->leftJoin('p.tags', 't')
+          ->orWhere('t.name IN(:tags)')
           ->setParameter('input', '%'.$input.'%')
           ->setParameter('tags', $tags)
           ->orderBy('p.'.$sortby, 'DESC')
