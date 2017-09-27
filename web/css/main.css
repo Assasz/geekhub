@@ -68,8 +68,9 @@ body {
     .main .form-wrapper .form-header {
       text-align: center;
       margin-bottom: 40px; }
+  .main label {
+    margin-top: 15px; }
   .main .form-control {
-    margin-bottom: 15px;
     border-radius: 2px; }
     .main .form-control:focus {
       border-color: #00aeee; }

@@ -11,6 +11,7 @@ use AppBundle\Entity\PostVoter;
 use AppBundle\Entity\Tag;
 use AppBundle\Form\PostType;
 use AppBundle\Form\RatingType;
+use AppBundle\Service\FileUploader;
 
 class PostController extends Controller
 {
@@ -57,7 +58,7 @@ class PostController extends Controller
     /**
      * @Route("/post/create", name="post_create")
      */
-    public function createAction(Request $request)
+    public function createAction(Request $request, FileUploader $fileUploader)
     {
         $securityChecker = $this->get('security.authorization_checker');
 
@@ -75,25 +76,34 @@ class PostController extends Controller
         {
             $post = $form->getData();
             $user = $this->getUser();
+            $file = $post->getImage();
+            $fileName = $fileUploader->upload($file);
 
+            $post->setImage($fileName);
             $post->setAuthor($user);
 
-            $tags = explode(' ', $form['tags']->getData());
-            foreach ($tags as $tag)
-            {
-                $duplicate = $this->getDoctrine()
-                    ->getRepository(Tag::class)
-                    ->findOneByName($tag);
+            $tagsInput = $form['tags']->getData();
 
-                if($duplicate)
+            if(!empty($tagsInput))
+            {
+                $tags = explode(' ', $tagsInput);
+
+                foreach ($tags as $tag)
                 {
-                    $post->addTag($duplicate);
-                }
-                else
-                {
-                    $newTag = new Tag();
-                    $newTag->setName($tag);
-                    $post->addTag($newTag);
+                    $duplicate = $this->getDoctrine()
+                        ->getRepository(Tag::class)
+                        ->findOneByName($tag);
+
+                    if($duplicate)
+                    {
+                        $post->addTag($duplicate);
+                    }
+                    else
+                    {
+                        $newTag = new Tag();
+                        $newTag->setName($tag);
+                        $post->addTag($newTag);
+                    }
                 }
             }
 

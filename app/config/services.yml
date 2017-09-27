@@ -44,8 +44,6 @@ services:
             - { name: doctrine.orm.entity_listener }
             - { name: doctrine.orm.entity_listener, entity_manager: custom }
 
-    user_listener:
-        class: AppBundle\EntityListener\UserListener
-        tags:
-            - { name: doctrine.orm.entity_listener }
-            - { name: doctrine.orm.entity_listener, entity_manager: custom }
+    AppBundle\Service\FileUploader:
+        arguments:
+            $targetDir: '%upload_directory%'

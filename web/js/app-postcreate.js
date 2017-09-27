@@ -18,4 +18,8 @@ $(document).ready(function(){
         limit: 5,
         delimiter: ' '
     });
+
+    $("#post_image").fileinput({
+        showUpload: false,
+    });
 });

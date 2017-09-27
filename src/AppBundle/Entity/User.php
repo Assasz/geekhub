@@ -13,7 +13,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
- * @ORM\EntityListeners({"AppBundle\EntityListener\UserListener"})
+ *
  * @ORM\HasLifecycleCallbacks()
  * @ORM\Table(name="`user`")
  */
@@ -65,19 +65,6 @@ class User extends BaseUser
     private $createDate;
 
     /**
-     * @var int
-     *
-     * @ORM\Column(name="reputation", type="integer")
-     */
-    private $reputation;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Rank", inversedBy="users")
-     * @ORM\JoinColumn(name="rank_id", referencedColumnName="id")
-     */
-    private $rank;
-
-    /**
      * @ORM\OneToMany(targetEntity="Post", mappedBy="author")
      */
     private $posts;
@@ -107,22 +94,6 @@ class User extends BaseUser
     public function setProfilePicturePathValue()
     {
         $this->profilePicturePath = 'images/user/default.png';
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function setReputationValue()
-    {
-        $this->reputation = 0;
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function setRankValue()
-    {
-        $this->rank = 1;
     }
 
     /**
@@ -356,8 +327,6 @@ class User extends BaseUser
         }
     }
 
-
-
     /**
      * Set lastEdited
      *
@@ -412,52 +381,6 @@ class User extends BaseUser
     public function getCreateDate()
     {
         return $this->createDate;
-    }
-
-    /**
-     * Set reputation
-     *
-     * @param integer $reputation
-     *
-     * @return User
-     */
-    public function setReputation($reputation)
-    {
-        $this->reputation = $reputation;
-
-        return $this;
-    }
-
-    /**
-     * Get reputation
-     *
-     * @return integer
-     */
-    public function getReputation()
-    {
-        return $this->reputation;
-    }
-
-    /**
-     * Set rank
-     *
-     * @param integer $rank
-     */
-    public function setRank($rank)
-    {
-        $this->rank = $rank;
-
-        return $this;
-    }
-
-    /**
-     * Get rank
-     *
-     * @return Rank
-     */
-    public function getRank()
-    {
-        return $this->rank;
     }
 
     /**

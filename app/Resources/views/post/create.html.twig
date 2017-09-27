@@ -13,6 +13,14 @@
       {{ form_widget(form.title) }}
       {{ form_errors(form.title) }}
 
+      {{ form_label(form.description) }}
+      {{ form_widget(form.description) }}
+      {{ form_errors(form.description) }}
+
+      {{ form_label(form.image) }}
+      {{ form_widget(form.image) }}
+      {{ form_errors(form.image) }}
+
       {{ form_label(form.tags) }}
       {{ form_widget(form.tags) }}
       {{ form_errors(form.tags) }}
@@ -25,7 +33,18 @@
     </div>
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="{{ asset('css/bootstrap-tokenfield.min.css' )}}" rel="stylesheet">
+    <link href="{{ asset('css/fileinput.min.css') }}" media="all" rel="stylesheet">
+{% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('js/tokenfield.js') }}"></script>
+    <script src="{{ asset('js/plugins/piexif.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/purify.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/sortable.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-tokenfield.min.js' )}}"></script>
+    <script src="{{ asset('js/fileinput.min.js') }}"></script>
+    <script src="{{ asset('js/app-postcreate.js') }}"></script>
 {% endblock %}

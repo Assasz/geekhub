@@ -16,7 +16,8 @@ class CommentType extends AbstractType
           'rows' => 5
         ]])
         ->add('add_comment', SubmitType::class, ['label' => 'Add comment', 'attr' => [
-          'class' => 'btn btn-primary'
+          'class' => 'btn btn-primary',
+          'disabled' => 'disabled'
         ]]);
     }
 }

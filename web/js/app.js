@@ -63,6 +63,16 @@ $(document).ready(function(){
     });
   });
 
+  $(document).on('input propertychange', '[data-action="comment-post"] textarea', function(){
+      var button = $('[data-action="comment-post"] button[type="submit"]');
+      
+      if(!$(this).val()){
+          button.prop('disabled', true);
+      } else {
+          button.prop('disabled', false);
+      }
+  });
+
   $(document).on('click', '[data-action="show-comment-replies"]', function(){
     var id = $(this).data('comment-id');
 

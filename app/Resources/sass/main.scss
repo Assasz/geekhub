@@ -154,9 +154,13 @@ body
     }
   }
 
+  label
+  {
+      margin-top: 15px;
+  }
+
   .form-control
   {
-    margin-bottom: 15px;
     border-radius: 2px;
 
     &:focus
