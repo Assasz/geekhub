@@ -91,6 +91,7 @@ class Post
      * @ORM\Column(name="image_path", type="string")
      *
      * @Assert\NotBlank(message="Please, upload the post image.")
+     * @Assert\File(maxSize="4096k")
      * @Assert\Image(
      *     minWidth = 1000,
      *     minHeight = 300,

@@ -6,3 +6,8 @@
   {{ include("@FOSUser/Registration/register_content.html.twig")
   }}
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/app-signup-validation.js') }}"></script>
+{% endblock %}

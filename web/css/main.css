@@ -74,6 +74,9 @@ body {
     border-radius: 2px; }
     .main .form-control:focus {
       border-color: #00aeee; }
+  .main .form-info-wrapper {
+    margin: 20px 0;
+    font-size: 12px; }
   .main .btn-primary {
     background-color: #00aeee;
     border-radius: 2px;
@@ -110,9 +113,17 @@ body {
   color: #ECEFF1; }
 
 .form-error {
-  color: #E53935; }
+  color: #E53935;
+  margin-top: 2px;
+  font-size: 12px; }
   .form-error span {
-    margin-right: 5px; }
+    margin-right: 4px; }
+
+.valid {
+  border-color: #00C851; }
+
+.invalid {
+  border-color: #E53935; }
 
 .visually-hidden {
   position: absolute !important;
