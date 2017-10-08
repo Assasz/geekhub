@@ -21,5 +21,14 @@ $(document).ready(function(){
 
     $("#post_image").fileinput({
         showUpload: false,
+        required: true,
+        allowedFileTypes: ['image'],
+        minImageHeight: 400,
+        minImageWidth: 1200,
+        maxFileSize: 4096,
+        maxFileCount: 1,
+        msgPlaceholder: 'Select image (min. 1200x400)...',
+        msgValidationErrorClass: 'form-error',
+        msgErrorClass: 'form-error'
     });
 });

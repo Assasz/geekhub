@@ -93,10 +93,8 @@ class Post
      * @Assert\NotBlank(message="Please, upload the post image.")
      * @Assert\File(maxSize="4096k")
      * @Assert\Image(
-     *     minWidth = 1000,
-     *     minHeight = 300,
-     *     allowPortrait = false,
-     *     allowSquare = false
+     *     minWidth = 1200,
+     *     minHeight = 400
      * )
      */
     private $image;
