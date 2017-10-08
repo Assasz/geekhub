@@ -36,8 +36,8 @@ class Post
      * @Assert\Length(
      *    min=3,
      *    max=255,
-     *    minMessage="This title is too short, min 3 characters are required",
-     *    maxMessage="This title is too long, max 255 characters are allowed")
+     *    minMessage="This title is too short, min 3 characters are required.",
+     *    maxMessage="This title is too long, max 255 characters are allowed.")
      */
     private $title;
 
@@ -49,7 +49,7 @@ class Post
      *      )
      * @Assert\Regex(
      *     pattern="/^\s*\S+(?:\s+\S+){0,4}\s*$/",
-     *     message="You cannot add more than 5 tags"
+     *     message="You cannot add more than 5 tags."
      * )
      */
     private $tags;
@@ -68,7 +68,7 @@ class Post
      * @ORM\Column(name="description", type="string", length=255)
      * @Assert\Length(
      *    max=255,
-     *    maxMessage="This description is too long, max 255 characters are allowed")
+     *    maxMessage="This description is too long, max 255 characters are allowed.")
      */
     private $description;
 

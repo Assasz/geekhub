@@ -39,7 +39,7 @@ $(document).ready(function(){
         var field = $(this),
             error = $('<p id="description_form_error" class="form-error"></p>'),
             errorSelector = $('#description_form_error'),
-            errorContent = 'This description is too long, max 255 characters allowed.';
+            errorContent = 'This description is too long, max 255 characters are allowed.';
 
         timeout = setTimeout(function(){
             if(field.val().length != 0 && field.val().length > 255){
