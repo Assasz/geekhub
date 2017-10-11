@@ -18,7 +18,7 @@ class FileUploader
 
         $file->move($this->getTargetDir(), $fileName);
 
-        return $fileName;
+        return 'uploads/'.$fileName;
     }
 
     public function getTargetDir()
