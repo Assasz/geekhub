@@ -17,10 +17,6 @@ class PostType extends AbstractType
         ->add('title', TextType::class, ['attr' => [
             'class' => 'form-control'
         ]])
-        ->add('description', TextType::class, ['attr' => [
-            'class' => 'form-control',
-            'placeholder' => 'Optional. Use one sentence to get people interested.'
-        ]])
         ->add('image', FileType::class, [
             'label' => 'Post image'
         ])

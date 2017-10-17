@@ -63,16 +63,6 @@ class Post
     private $content;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="description", type="string", length=255)
-     * @Assert\Length(
-     *    max=255,
-     *    maxMessage="This description is too long, max 255 characters are allowed.")
-     */
-    private $description;
-
-    /**
      * @var int
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="posts")
@@ -140,17 +130,6 @@ class Post
     public function __construct()
     {
         $this->comments = new ArrayCollection();
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function setDescriptionValue()
-    {
-        if(empty($this->description))
-        {
-            $this->description = 'No description';
-        }
     }
 
     /**
@@ -495,30 +474,6 @@ class Post
     public function removeVoter(PostVoter $voter)
     {
         $this->voters->removeElement($voter);
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return Post
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
     }
 
     /**

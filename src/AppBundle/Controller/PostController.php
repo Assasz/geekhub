@@ -82,7 +82,7 @@ class PostController extends Controller
             $post->setImage($fileName);
             $post->setAuthor($user);
 
-            $tagsInput = $form['tags']->getData();
+            $tagsInput = mb_strtolower($form['tags']->getData());
 
             if(!empty($tagsInput))
             {
