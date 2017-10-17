@@ -231,6 +231,9 @@ class PostController extends Controller
         $views = $post->getViews()+1;
         $post->setViews($views);
 
+        $em = $this->getDoctrine()->getManager();
+        $em->flush();
+
         return $this->render('post/post.html.twig', [
             'post' => $post
         ]);
