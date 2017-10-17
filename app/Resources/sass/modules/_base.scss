@@ -1,0 +1,136 @@
+body
+{
+    background-color: $bright;
+    position: relative;
+    font-family: "Varela Round", sans-serif;
+
+    a
+    {
+        color: $blue;
+        text-decoration: none;
+        transition: all .3s ease;
+
+        &:hover
+        {
+            color: $dark-blue;
+            text-decoration: none;
+        }
+
+        &:focus
+        {
+            text-decoration: none;
+            outline: none;
+        }
+    }
+}
+
+.navbar-inverse
+{
+    background-color: $dark;
+
+    a
+    {
+        color: $bright !important;
+        transition: all .3s ease;
+
+        &:hover
+        {
+            opacity: 0.6;
+        }
+    }
+
+    .dropdown-menu
+    {
+    background-color: $dark;
+
+        li
+        {
+            height: 40px;
+
+            a
+            {
+                line-height: 40px;
+
+                &:hover
+                {
+                    background-color: $dark;
+                }
+            }
+        }
+    }
+
+    img
+    {
+        margin-right: 10px;
+    }
+
+    .dropdown-toggle
+    {
+        padding: 0 10px;
+        line-height: 50px;
+    }
+
+    .search-field
+    {
+        background-color: $semi-dark;
+        color: $bright;
+        border-radius: 2px;
+        border: none;
+        font-weight: bold;
+        transition: all .3s ease;
+        -webkit-transition: all .3s ease;
+        width: 200px;
+        height: 35px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+
+        &:focus
+        {
+            box-shadow: none;
+            width: 250px;
+        }
+    }
+}
+
+.main
+{
+    margin-top: 70px;
+    min-height: 100vh;
+
+    .default-container
+    {
+        box-shadow: 0 1px 2px rgba(0,0,0,.1);
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 2px;
+        border: none;
+        background-color: #fff;
+    }
+
+    .page-header
+    {
+        @extend .default-container;
+    }
+
+    .panel-default
+    {
+        @extend .default-container;
+    }
+
+    h2, h3
+    {
+        margin-top: 0;
+    }
+
+    .nav-tabs
+    {
+        margin-bottom: -20px;
+    }
+}
+
+.footer
+{
+    width: 100%;
+    padding: 40px 0;
+}

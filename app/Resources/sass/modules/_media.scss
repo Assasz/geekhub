@@ -1,0 +1,12 @@
+@media(max-width:767px)
+{
+    .search-field
+    {
+        width: 100%;
+
+        &:focus
+        {
+            width: 100%;
+        }
+    }
+}
