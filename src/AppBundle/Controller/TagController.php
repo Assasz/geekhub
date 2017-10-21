@@ -48,7 +48,7 @@ class TagController extends Controller
         $posts = $paginator->paginate(
             $query,
             $request->query->getInt('page', 1),
-            10
+            9
         );
 
         return $this->render('tag/search.html.twig', [

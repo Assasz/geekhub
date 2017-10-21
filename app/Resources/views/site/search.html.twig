@@ -82,8 +82,8 @@
   {% if results.users is defined %}
     {% for user in results.users %}
     <div class="col col-md-4 col-xs-6">
-        <div class="user-card-container">
-            <a href="{{ path('user', {'user': user.id}) }}">
+        <a href="{{ path('user', {'user': user.id}) }}">
+            <div class="user-card-container">
                 <img src="{{ asset(user.profilePicturePath) }}" alt="{{ user.username }}" class="img-rounded img-responsive user-card-image">
                 <div class="user-card-caption">
                     <h3 class="user-card-username">
@@ -96,11 +96,11 @@
                         {{ user.getPosts|length}}
                         <span class="fa fa-fw fa-users space-left" aria-hidden="true"></span>
                         <span class="visually-hidden">Followers</span>
-                        0
+                        {{ user.getFollowers|length }}
                     </p>
                 </div>
-            </a>
-        </div>
+            </div>
+        </a>
     </div>
     {% endfor %}
     {% if resultsNumber > 5 %}
