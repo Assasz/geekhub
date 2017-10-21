@@ -25,7 +25,9 @@
                     <span class="fa fa-fw fa-tags space-left" aria-hidden="true"></span>
                     <span class="visually-hidden">Tags</span>
                     {% for tag in post.tags %}
-                        {{ tag.name|lower }}
+                        <a href="{{ path('tag_search', {'tag': tag.id }) }}">
+                            {{ tag.name }}
+                        </a>
                     {% endfor %}
                 {% endif %}
             </p>

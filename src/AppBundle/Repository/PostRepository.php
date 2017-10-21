@@ -33,7 +33,7 @@ class PostRepository extends EntityRepository
     }
 
     //query for posts matching the given input
-    public function searchForPostsQuery($input, $sortby)
+    public function searchForPostsQuery($input, $sort)
     {
         $tags = explode(" ", $input);
 
@@ -43,7 +43,17 @@ class PostRepository extends EntityRepository
           ->orWhere('t.name IN(:tags)')
           ->setParameter('input', '%'.$input.'%')
           ->setParameter('tags', $tags)
-          ->orderBy('p.'.$sortby, 'DESC')
+          ->orderBy('p.'.$sort, 'DESC')
+          ->getQuery();
+    }
+
+    public function searchByTagQuery($tag, $sort)
+    {
+        return $query = $this->createQueryBuilder('p')
+          ->leftJoin('p.tags', 't')
+          ->Where('t.name = :tag')
+          ->setParameter('tag', $tag)
+          ->orderBy('p.'.$sort, 'DESC')
           ->getQuery();
     }
 }

@@ -21,9 +21,9 @@ class SiteController extends Controller
     }
 
     /**
-     * @Route("/search/{type}/{sortby}", name="search", requirements={"type": "posts|users"})
+     * @Route("/search/{type}/{sort}", name="search", requirements={"type": "posts|users"})
      */
-    public function searchAction(Request $request, $type = 'posts', $sortby = 'createDate')
+    public function searchAction(Request $request, $type = 'posts', $sort = 'createDate')
     {
         $session = new Session();
 
@@ -39,7 +39,7 @@ class SiteController extends Controller
         {
             $postRepository = $this->getDoctrine()->getRepository(Post::class);
 
-            $query = $postRepository->searchForPostsQuery($input, $sortby);
+            $query = $postRepository->searchForPostsQuery($input, $sort);
 
             $results['posts'] = $paginator->paginate(
                 $query,
@@ -51,7 +51,7 @@ class SiteController extends Controller
         {
             $userRepository = $this->getDoctrine()->getRepository(User::class);
 
-            $query = $userRepository->searchForUsersQuery($input, $sortby);
+            $query = $userRepository->searchForUsersQuery($input, $sort);
 
             $results['users'] = $paginator->paginate(
                 $query,
@@ -62,7 +62,7 @@ class SiteController extends Controller
 
         $results['for'] = $input;
 
-        return $this->render('site/search_result.html.twig', [
+        return $this->render('site/search.html.twig', [
             'results' => $results
         ]);
     }

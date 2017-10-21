@@ -41,35 +41,35 @@
       <span class="caret"></span>
     </a>
     <ul class="dropdown-menu">
-        {% set sortby = app.request.get('sortby')|default('createDate') %}
+        {% set sort = app.request.get('sort')|default('createDate') %}
         {% if results.posts is defined %}
             <li
-            {% if sortby == 'createDate' %}
+            {% if sort == 'createDate' %}
                 class="active"
             {% endif %}
-            ><a href="{{ path('search', {'sortby': 'createDate'}) }}">Creation date</a></li>
+            ><a href="{{ path('search', {'sort': 'createDate'}) }}">Creation date</a></li>
             <li
-            {% if sortby == 'rating' %}
+            {% if sort == 'rating' %}
                 class="active"
             {% endif %}
-            ><a href="{{ path('search', {'sortby': 'rating'}) }}">Rating</a></li>
+            ><a href="{{ path('search', {'sort': 'rating'}) }}">Rating</a></li>
             <li
-            {% if sortby == 'views' %}
+            {% if sort == 'views' %}
                 class="active"
             {% endif %}
-            ><a href="{{ path('search', {'sortby': 'views'}) }}">Views</a></li>
+            ><a href="{{ path('search', {'sort': 'views'}) }}">Views</a></li>
         {% endif %}
         {% if results.users is defined %}
             <li
-            {% if sortby == 'createDate' %}
+            {% if sort == 'createDate' %}
                 class="active"
             {% endif %}
-            ><a href="{{ path('search', {'type': 'users', 'sortby': 'createDate'}) }}">Creation date</a></li>
+            ><a href="{{ path('search', {'type': 'users', 'sort': 'createDate'}) }}">Creation date</a></li>
             <li
-            {% if sortby == 'reputation' %}
+            {% if sort == 'reputation' %}
                 class="active"
             {% endif %}
-            ><a href="{{ path('search', {'type': 'users', 'sortby': 'reputation'}) }}">Reputation</a></li>
+            ><a href="{{ path('search', {'type': 'users', 'sort': 'reputation'}) }}">Reputation</a></li>
         {% endif %}
     </ul>
   </li>

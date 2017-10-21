@@ -1,0 +1,64 @@
+{% extends 'layout/default.html.twig' %}
+
+{% block title %}{{ tag.name }} - GeekHub{% endblock %}
+
+{% block content %}
+
+{% set resultsNumber = posts.getTotalItemCount %}
+
+<h2 class="page-header">
+    {{ resultsNumber }}
+    {% if resultsNumber == 1 %}
+        result
+    {% else %}
+        results
+    {% endif %}
+    for {{ tag.name }}
+</h2>
+
+<ul class="nav nav-tabs">
+    <li role="presentation" class="dropdown
+        {% if resultsNumber < 2 %}
+        disabled
+        {% endif %}
+    ">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+            Sort by
+            <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            {% set sort = app.request.get('sort')|default('createDate') %}
+            <li
+            {% if sort == 'createDate' %}
+                class="active"
+            {% endif %}
+            ><a href="{{ path('tag_search', {'tag': tag.id, 'sort': 'createDate'}) }}">Creation date</a></li>
+            <li
+            {% if sort == 'rating' %}
+                class="active"
+            {% endif %}
+            ><a href="{{ path('tag_search', {'tag': tag.id, 'sort': 'rating'}) }}">Rating</a></li>
+            <li
+            {% if sort == 'views' %}
+                class="active"
+            {% endif %}
+            ><a href="{{ path('tag_search', {'tag': tag.id, 'sort': 'views'}) }}">Views</a></li>
+        </ul>
+    </li>
+</ul>
+
+<div class="post-group">
+    {% if resultsNumber == 0 %}
+        <p class="panel-body">Your search returned no results.</p>
+    {% endif %}
+    {% for post in posts %}
+        {{ include('post/list.html.twig') }}
+    {% endfor %}
+    {% if resultsNumber > 5 %}
+        <div class="navigation col-md-12">
+            {{ knp_pagination_render(posts) }}
+        </div>
+    {% endif %}
+</div>
+
+{% endblock %}

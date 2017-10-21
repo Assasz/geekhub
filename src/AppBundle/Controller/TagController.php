@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Entity\Tag;
+use AppBundle\Entity\Post;
 
 class TagController extends Controller
 {
@@ -31,5 +32,28 @@ class TagController extends Controller
         }
 
         return new JsonResponse(['tags' => $response]);
+    }
+
+    /**
+     * @Route("/tag/search/{tag}/{sort}", name="tag_search", requirements={"tag": "\d+", "sort": "createDate|rating|views"})
+     */
+    public function searchAction(Request $request, Tag $tag, $sort = 'createDate')
+    {
+        $paginator = $this->get('knp_paginator');
+
+        $postRepository = $this->getDoctrine()->getRepository(Post::class);
+
+        $query = $postRepository->searchByTagQuery($tag->getName(), $sort);
+
+        $posts = $paginator->paginate(
+            $query,
+            $request->query->getInt('page', 1),
+            10
+        );
+
+        return $this->render('tag/search.html.twig', [
+            'posts' => $posts,
+            'tag' => $tag
+        ]);
     }
 }
