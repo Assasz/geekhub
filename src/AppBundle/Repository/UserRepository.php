@@ -12,12 +12,12 @@ class UserRepository extends EntityRepository
     //query for users matching the given input
     public function searchForUsersQuery($input, $sortby)
     {
-        return $query = $this->createQueryBuilder('p')
-          ->Where('p.username LIKE :input')
-          ->orWhere('p.surname LIKE :input')
-          ->orWhere('p.forename LIKE :input')
-          ->setParameter('input', '%'.$input.'%')
-          ->orderBy('p.'.$sortby, 'DESC')
-          ->getQuery();
+        return $query = $this->createQueryBuilder('u')
+            ->Where('u.username LIKE :input')
+            ->orWhere('u.surname LIKE :input')
+            ->orWhere('u.forename LIKE :input')
+            ->setParameter('input', '%'.$input.'%')
+            ->orderBy('u.'.$sortby, 'DESC')
+            ->getQuery();
     }
 }

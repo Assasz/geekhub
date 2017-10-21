@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Entity\Tag;
 
-class TagsController extends Controller
+class TagController extends Controller
 {
     /**
      * @Route("/tag/list", name="tag_list", options={"expose"=true})

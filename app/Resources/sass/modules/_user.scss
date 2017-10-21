@@ -1,0 +1,36 @@
+.user-card-container
+{
+    @extend .default-container;
+    overflow: hidden;
+
+    .user-card-image
+    {
+        width: 100px;
+        height: 100px;
+        float: left;
+    }
+
+    .user-card-caption
+    {
+        float: left;
+        margin-left: 10px;
+
+        .user-card-username
+        {
+            padding-top: 15px;
+            font-size: 20px;
+
+            small
+            {
+                display: block;
+                padding-top: 5px;
+            }
+        }
+
+        p
+        {
+            color: $dark;
+            padding-top: 5px;
+        }
+    }
+}

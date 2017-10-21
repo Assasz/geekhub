@@ -8,7 +8,7 @@
             <span class="post-card-date">{{ post.createDate|date('j M') }}</span>
         </div>
         <div class="post-card-image">
-            <a href="{{ path('post', {'post': post.id}) }}" style="background-image: url('{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset(post.image) }}')" role="image"></a>
+            <a href="{{ path('post', {'post': post.id}) }}" style="background-image: url('{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset(post.image) }}')" role="image" title="{{ post.title }}"></a>
         </div>
         <div class="post-card-footer">
             <a href="{{ path('post', {'post': post.id}) }}" title="{{ post.title }}">
