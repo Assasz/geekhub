@@ -58,14 +58,15 @@ $(document).ready(function(){
           $('[data-comments-number-indicator]').html(commentsNumber+1);
         }
         else {
-          $(response.comment).insertBefore('#comment-'+response.parent+' #reply-panel');
+          $('<ul class="replies"></ul>').appendTo('#comment-'+response.parent);
+          $(response.comment).appendTo('#comment-'+response.parent+' .replies');
         }
     });
   });
 
   $(document).on('input propertychange', '[data-action="comment-post"] textarea', function(){
       var button = $('[data-action="comment-post"] button[type="submit"]');
-      
+
       if(!$(this).val()){
           button.prop('disabled', true);
       } else {
