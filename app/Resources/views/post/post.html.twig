@@ -2,77 +2,119 @@
 
 {% block title %}{{ post.title }}{% endblock %}
 
+{% set allowed, choice = true, null %}
+{% if app.user == post.author or not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    {% set allowed = false %}
+{% endif %}
+{% for voter in post.voters %}
+    {% if app.user == voter.user %}
+        {% set allowed = false %}
+        {% if voter.choice == 'like' %}
+            {% set choice = 'like' %}
+        {% else %}
+            {% set choice = 'dislike' %}
+        {% endif %}
+    {% endif %}
+{% endfor %}
+
 {% block content %}
-<div class="panel panel-default">
-    <div class="panel-heading">
-        <h2 class="panel-title">{{ post.title }}</h2>
-        <p>
-            {% set allowed, choice = true, null %}
-            {% if app.user == post.author or not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                {% set allowed = false %}
-            {% endif %}
-            {% for voter in post.voters %}
-                {% if app.user == voter.user %}
-                    {% set allowed = false %}
-                    {% if voter.choice == 'like' %}
-                        {% set choice = 'like' %}
-                    {% else %}
-                        {% set choice = 'dislike' %}
-                    {% endif %}
+<div class="col col-md-12">
+    <div class="post-header-container">
+        <div class="post-image" style="background-image: url('{{ asset(post.image) }}');"></div>
+        <div class="post-header">
+            <h2>{{ post.title }}</h2>
+            <p>
+                <button type="button" class="btn-rate
+                {% if choice == 'like' %}
+                    clicked
                 {% endif %}
-            {% endfor %}
-
-            <span data-post-dislikes-indicator>
-                {{ post.likes }}
-            </span>
-            <button type="button" class="btn-rate
-            {% if choice == 'like' %}
-                clicked
-            {% endif %}
-            " data-action="post-like" data-post-id="{{ post.id }}"
-            {% if allowed != true %}
+                " data-action="post-like" data-post-id="{{ post.id }}"
+                {% if allowed != true %}
                 disabled
-            {% endif %}
-            >
-                <span class="fa fa-fw fa-thumbs-up" aria-hidden="true"></span>
-                <span class="visually-hidden">Like</span>
-            </button>
+                {% endif %}
+                >
+                    <span class="fa fa-fw fa-thumbs-up" aria-hidden="true"></span>
+                    <span class="visually-hidden">Like</span>
+                    <span data-post-likes>
+                        {{ post.likes }}
+                    </span>
+                </button>
 
-            <span data-post-dislikes-indicator>
-                {{ post.dislikes }}
-            </span>
-            <button type="button" class="btn-rate
-            {% if choice == 'dislike' %}
-                clicked
-            {% endif %}
-            " data-action="post-dislike" data-post-id="{{ post.id }}"
-            {% if allowed != true %}
-            disabled
-            {% endif %}
-            >
-                <span class="fa fa-fw fa-thumbs-down" aria-hidden="true"></span>
-                <span class="visually-hidden">Dislike</span>
-            </button>
+                <button type="button" class="btn-rate space-left
+                {% if choice == 'dislike' %}
+                    clicked
+                {% endif %}
+                " data-action="post-dislike" data-post-id="{{ post.id }}"
+                {% if allowed != true %}
+                    disabled
+                {% endif %}
+                >
+                    <span class="fa fa-fw fa-thumbs-down" aria-hidden="true"></span>
+                    <span class="visually-hidden">Dislike</span>
+                    <span data-post-dislikes>
+                        {{ post.dislikes }}
+                    </span>
+                </button>
 
-            <span data-post-views-indicator>
-                {{ post.views }}
-            </span>
-            <span class="fa fa-fw fa-eye" aria-hidden="true"></span>
-            <span class="visually-hidden">Views</span>
-        </p>
-    </div>
-    <div class="panel-body">
-        <p>{{ post.content|raw }}</p>
+                <span class="fa fa-fw fa-eye space-left" aria-hidden="true"></span>
+                <span class="visually-hidden">Views</span>
+                <span data-post-views>
+                    {{ post.views }}
+                </span>
+            </p>
+        </div>
     </div>
 </div>
 
-{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-    {{ render(controller('AppBundle:Comment:create', {'post': post})) }}
-{% else %}
-    <div class="panel panel-default">
-        <p>Sign in to add comment</p>
+<div class="col col-md-8 col-xs-12">
+    <div class="post-container">
+        <div class="post-body">
+            <p>{{ post.content|raw }}</p>
+        </div>
+        <div class="post-footer">
+            <hr>
+            <span class="fa fa-fw fa-tags" aria-hidden="true"></span>
+            <span class="visually-hidden">Like</span>
+            {% for tag in post.tags %}
+                <a href="{{ path('tag_search', {'tag': tag.id }) }}" class="tag">
+                    {{ tag.name }}
+                </a>
+            {% endfor %}
+        </div>
     </div>
-{% endif %}
 
-{{ render(controller('AppBundle:Comment:list', {'request': app.request, 'post': post})) }}
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        {{ render(controller('AppBundle:Comment:create', {'post': post})) }}
+    {% else %}
+        <div class="text-container">
+            <p><a href="{{ path('fos_user_security_login') }}">Sign in</a> to add comment</p>
+        </div>
+    {% endif %}
+
+    {{ render(controller('AppBundle:Comment:list', {'request': app.request, 'post': post})) }}
+</div>
+
+<div class="col col-md-4 col-xs-12">
+    <div class="post-author-container">
+        <p>Published {{ post.createDate|date('d M Y') }} by</p>
+        <a href="{{ path('user', {'user': post.author.id}) }}">
+            <img src="{{ asset(post.author.profilePicturePath) }}" alt="{{ post.author.username }}" class="img-rounded img-responsive post-author-image">
+        </a>
+        <div class="post-author-caption">
+            <a href="{{ path('user', {'user': post.author.id}) }}">
+                <h3 class="post-author-username">
+                    {{ post.author.username }}
+                    <small>{{ post.author.forename }} {{ post.author.surname }}</small>
+                </h3>
+            </a>
+            <p class="post-author-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+        </div>
+    </div>
+    {{ render(controller('AppBundle:Post:related', {'post': post.id})) }}
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/app-post.js') }}"></script>
 {% endblock %}

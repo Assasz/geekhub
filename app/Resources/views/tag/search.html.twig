@@ -6,7 +6,7 @@
 
 {% set resultsNumber = posts.getTotalItemCount %}
 
-<h2 class="page-header">
+<h3 class="page-header">
     {{ resultsNumber }}
     {% if resultsNumber == 1 %}
         result
@@ -14,7 +14,7 @@
         results
     {% endif %}
     for {{ tag.name }}
-</h2>
+</h3>
 
 <ul class="nav nav-tabs">
     <li role="presentation" class="dropdown

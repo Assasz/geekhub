@@ -13,11 +13,12 @@ class CommentType extends AbstractType
         $builder
         ->add('content', TextareaType::class, ['attr' => [
           'class' => 'form-control',
-          'rows' => 5
+          'rows' => 4
         ]])
         ->add('add_comment', SubmitType::class, ['label' => 'Add comment', 'attr' => [
           'class' => 'btn btn-primary',
-          'disabled' => 'disabled'
+          'disabled' => 'disabled',
+          'style' => 'margin-top: 10px;'
         ]]);
     }
 }

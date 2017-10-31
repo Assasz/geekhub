@@ -57,8 +57,9 @@ class CommentController extends Controller
             $repliesNumber = $repository->countReplies($parent);
 
             $response = $this->renderView('comment/list_replies.html.twig', [
-                'comments' => $replies,
-                'repliesNumber' => $repliesNumber
+                'repliesNumber' => $repliesNumber,
+                'parent' => $parent,
+                'replies' => $replies
             ]);
 
             return new JsonResponse(['replies' => $response]);

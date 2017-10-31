@@ -1,47 +1,58 @@
-<li id="comment-{{ comment.id }}" class="list-group-item">
-  <div class="row">
-    <div class="col-md-2 col-xs-2">
-      <a href="#">
-        <img src="{{ asset(comment.author.profilePicturePath) }}" alt="{{ comment.author.username }}" class="img-rounded img-responsive">
-      </a>
-    </div>
-    <div class="col-md-10 col-xs-10">
-      <p><a href="#">{{ comment.author.username }}</a>, {{ comment.createDate|date('F j, Y, g:i a')}}</p>
-      <p>
-        <span data-comment-votes-indicator data-comment-id="{{ comment.id }}">
-            {{ comment.votes }}
-        </span>
+{% set allowed, voted = true, null %}
+{% if app.user == comment.author or not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+    {% set allowed = false %}
+{% endif %}
+{% for voter in comment.voters %}
+    {% if app.user == voter %}
+        {% set allowed, voted = false, true %}
+    {% endif %}
+{% endfor %}
 
-        {% set allowed = true %}
-        {% if app.user == comment.author or not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-          {% set allowed = false %}
-        {% endif %}
-        {% for voter in comment.voters %}
-          {% if app.user == voter %}
-            {% set allowed = false %}
-          {% endif %}
-        {% endfor %}
+<div id="comment-{{ comment.id }}" class="comment-container">
+    <a href="{{ path('user', {'user': comment.author.id}) }}">
+        <img src="{{ asset(comment.author.profilePicturePath) }}" alt="{{ comment.author.username }}" class="img-rounded img-responsive comment-author-image">
+    </a>
+    <div class="comment-body">
+        <div class="comment-body-header">
+            <a href="{{ path('user', {'user': comment.author.id}) }}">{{ comment.author.username }}</a>
+            <span class="comment-date">{{ comment.createDate|date('d M G:i')}}</span>
+        </div>
+        <p>{{ comment.content }}</p>
+        <div class="comment-body-footer">
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                <a href="#" class="separated-link" data-action="comment-reply" data-comment-author="{{ comment.author }}"
+                {% if comment.parent is not null %}
+                    data-comment-id="{{ comment.parent }}"
+                {% else %}
+                    data-comment-id="{{ comment.id }}"
+                {% endif %}
+                >Reply</a>
+            {% endif %}
 
-        {% if allowed == true %}
-          <button type="button" class="btn btn-default" data-action="comment-vote" data-comment-id="{{ comment.id }}">
-            <span class="fa fa-fw fa-plus" aria-hidden="true"></span>
-            <span class="visually-hidden">Vote for this comment</span>
-          </button>
-        {% endif %}
-      </p>
-      {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-          <button type="button" class="btn btn-primary pull-right" data-action="comment-reply" data-comment-author="{{ comment.author }}"
-          {% if comment.parent is not null %}
-            data-comment-id="{{ comment.parent }}"
-          {% else %}
-            data-comment-id="{{ comment.id }}"
-          {% endif %}
-          >Reply</button>
-      {% endif %}
-      <p>{{ comment.content }}</p>
+            {% if comment.parent is null %}
+                {{ render(controller('AppBundle:Comment:listReplies', {'parent': comment.id})) }}
+            {% endif %}
+
+            {% if allowed == true %}
+                <button type="button" class="btn-rate" data-action="comment-vote" data-comment-id="{{ comment.id }}">
+            {% else %}
+                <button type="button" class="btn-rate
+                {% if voted == true %}
+                    clicked
+                {% endif %}
+                " data-action="comment-vote" data-comment-id="{{ comment.id }}" disabled>
+            {% endif %}
+                <span class="fa fa-fw fa-thumbs-up" aria-hidden="true"></span>
+                <span class="visually-hidden">Vote for this comment</span>
+            </button>
+
+            <span data-comment-votes data-comment-id="{{ comment.id }}"
+            {% if comment.votes < 1 %}
+                class="hidden"
+            {% endif %}
+            >
+                {{ comment.votes }}
+            </span>
+        </div>
     </div>
-  </div>
-  {% if comment.parent is null %}
-    {{ render(controller('AppBundle:Comment:listReplies', {'parent': comment.id})) }}
-  {% endif %}
-</li>
+</div>

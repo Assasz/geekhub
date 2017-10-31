@@ -10,7 +10,7 @@
   {% set resultsNumber = results.posts.getTotalItemCount %}
 {% endif %}
 
-<h2 class="page-header">
+<h3 class="page-header">
   {{ resultsNumber }}
   {% if resultsNumber == 1 %}
   result
@@ -18,7 +18,7 @@
   results
   {% endif %}
   for {{ results.for }}
-</h2>
+</h3>
 
 <ul class="nav nav-tabs">
   <li role="presentation"

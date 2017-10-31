@@ -1,19 +1,12 @@
 {% form_theme form 'form/custom.html.twig' %}
 
-<div id="comment-panel" class="default-container">
-  <div class="row">
-    <div class="col-md-2 col-xs-2">
-      <a href="#">
-        <img src="{{ asset(app.user.profilePicturePath) }}" alt="{{ app.user.username }}" class="img-rounded img-responsive">
-      </a>
-    </div>
-    <div class="col-md-10 col-xs-10">
-      {{ form_start(form, {'attr': {'action': path('comment_create', {'post': post.id}), 'novalidate': 'novalidate', 'class':'comment-form', 'data-action': 'comment-post'}}) }}
+<div class="comment-panel">
+    <img src="{{ asset(app.user.profilePicturePath) }}" alt="{{ app.user.username }}" class="img-rounded img-responsive comment-author-image">
 
-      {{ form_widget(form.content, {'attr': {'placeholder': 'Type comment here!'}}) }}
-      {{ form_errors(form.content) }}
+    {{ form_start(form, {'attr': {'action': path('comment_create', {'post': post.id}), 'novalidate': 'novalidate', 'class':'comment-form', 'data-action': 'comment-post'}}) }}
 
-      {{ form_end(form) }}
-    </div>
-  </div>
+    {{ form_widget(form.content, {'attr': {'placeholder': 'Type comment here!'}}) }}
+    {{ form_errors(form.content) }}
+
+    {{ form_end(form) }}
 </div>

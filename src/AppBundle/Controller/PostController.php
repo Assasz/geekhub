@@ -238,4 +238,9 @@ class PostController extends Controller
             'post' => $post
         ]);
     }
+
+    public function relatedAction(Request $request, Post $post)
+    {
+        return $this->render('post/related.html.twig');
+    }
 }

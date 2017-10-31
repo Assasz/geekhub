@@ -53,10 +53,10 @@ body {
 .main {
   margin-top: 70px;
   min-height: 100vh; }
-  .main .default-container, .main .page-header, .main .panel-default, .main .post-group .post-card-container, .post-group .main .post-card-container, .main .user-card-container {
+  .main .default-container, .main .page-header, .main .post-group .post-card-container, .post-group .main .post-card-container, .main .post-container, .main .post-header-container, .main .post-author-container, .main .post-related-container, .main .comment-panel, .main .comment-group, .main .user-card-container, .main .text-container {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-    padding: 10px;
-    margin-bottom: 20px;
+    padding: 20px;
+    margin-bottom: 14px;
     border-radius: 2px;
     border: none;
     background-color: #fff; }
@@ -64,6 +64,24 @@ body {
     margin-top: 0; }
   .main .navigation {
     padding: 0 7px; }
+
+.tag {
+  background-color: #E0E0E0;
+  padding: 5px;
+  border-radius: 2px;
+  margin: 0 3px; }
+
+.btn-rate {
+  background: transparent;
+  border: none;
+  opacity: 0.7;
+  transition: all .3s ease;
+  padding: 0; }
+  .btn-rate:hover {
+    opacity: 1;
+    cursor: pointer; }
+  .btn-rate:focus {
+    outline: none; }
 
 .footer {
   width: 100%;
@@ -107,7 +125,8 @@ label {
   overflow: hidden;
   margin: 0 -7px; }
   .post-group .post-card-container {
-    overflow: hidden; }
+    overflow: hidden;
+    padding: 10px !important; }
     .post-group .post-card-container .post-card-header {
       overflow: hidden; }
     .post-group .post-card-container .post-card-author-img {
@@ -138,6 +157,78 @@ label {
       font-size: 20px;
       height: 60px; }
 
+.post-container .post-footer {
+  padding-top: 40px; }
+
+.post-header-container .post-image {
+  height: 400px;
+  background-size: cover;
+  background-position: center;
+  margin: -20px; }
+.post-header-container .post-header {
+  padding-top: 40px; }
+  .post-header-container .post-header h2 {
+    margin-bottom: 10px; }
+  .post-header-container .post-header span {
+    font-size: 18px; }
+
+.post-author-container {
+  overflow: hidden;
+  text-align: center; }
+  .post-author-container .post-author-image {
+    width: 80px;
+    height: 80px;
+    margin: 20px auto; }
+  .post-author-container .post-author-caption small {
+    display: block;
+    margin-top: 5px; }
+  .post-author-container .post-author-caption .post-author-description {
+    padding: 20px 40px; }
+
+.comment-panel .comment-author-image, .reply-panel .comment-author-image {
+  width: 60px;
+  height: 60px;
+  margin-right: 20px;
+  float: left; }
+.comment-panel .comment-form, .reply-panel .comment-form {
+  overflow: hidden; }
+
+.comment-panel {
+  overflow: hidden; }
+
+.reply-panel {
+  padding-left: 40px;
+  padding-top: 20px;
+  overflow: hidden; }
+
+.replies {
+  padding-left: 40px; }
+
+.comment-group .comment-group-header h3 {
+  display: inline-block; }
+.comment-group .comment-container {
+  padding: 20px 0;
+  border-bottom: 1px solid #E0E0E0;
+  overflow: hidden; }
+  .comment-group .comment-container:last-child {
+    border: none; }
+  .comment-group .comment-container .comment-author-image {
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+    float: left; }
+  .comment-group .comment-container .comment-body {
+    overflow: hidden; }
+    .comment-group .comment-container .comment-body .comment-body-header {
+      padding-bottom: 5px; }
+      .comment-group .comment-container .comment-body .comment-body-header .comment-date {
+        font-size: 13px;
+        line-height: 14px;
+        margin-left: 10px; }
+    .comment-group .comment-container .comment-body .comment-body-footer {
+      padding-top: 10px;
+      font-size: 12px; }
+
 .user-card-container {
   overflow: hidden; }
   .user-card-container .user-card-image {
@@ -146,7 +237,7 @@ label {
     float: left; }
   .user-card-container .user-card-caption {
     float: left;
-    margin-left: 10px; }
+    margin-left: 20px; }
     .user-card-container .user-card-caption .user-card-username {
       padding-top: 15px;
       font-size: 20px; }
@@ -187,8 +278,24 @@ label {
 .space-left {
   margin-left: 10px; }
 
+.space-right {
+  margin-right: 10px; }
+
 .no-padding {
   padding: 0 !important; }
+
+.clicked {
+  opacity: 1 !important; }
+
+.text-container p {
+  margin: 0; }
+
+.separated-link::after {
+  content: '\2022';
+  margin: 0 10px;
+  color: #424242;
+  opacity: 0.7;
+  font-size: 10px; }
 
 @media (max-width: 767px) {
   .search-field {

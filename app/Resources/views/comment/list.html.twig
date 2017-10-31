@@ -1,7 +1,7 @@
-<ul class="list-group comments">
-    <li class="list-group-item">
-        <h3 class="list-group-item-heading">
-            <span data-comments-number-indicator>
+<div class="comment-group">
+    <div class="comment-group-header">
+        <h3>
+            <span data-comments-number>
                 {{ comments.getTotalItemCount }}
             </span>
             {% if comments.getTotalItemCount == 1 %}
@@ -34,13 +34,13 @@
                 </li>
             </ul>
         </div>
-    </li>
+    </div>
     {% for comment in comments %}
         {{ include('comment/content.html.twig') }}
     {% endfor %}
     {% if comments.getTotalItemCount > 10 %}
-        <li class="list-group-item navigation">
+        <div class="navigation">
             {{ knp_pagination_render(comments) }}
-        </li>
+        </div>
     {% endif %}
-</ul>
+</div>
