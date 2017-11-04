@@ -3,6 +3,8 @@
 namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
+use AppBundle\Entity\Post;
+use AppBundle\Entity\Tag;
 
 /**
  * PostRepository
@@ -12,7 +14,6 @@ use Doctrine\ORM\EntityRepository;
  */
 class PostRepository extends EntityRepository
 {
-    // returns posts with the biggest number of views
     public function findPopularPosts($number)
     {
         $query = $this->createQueryBuilder('p')
@@ -22,7 +23,6 @@ class PostRepository extends EntityRepository
         return $query->setMaxResults($number)->getResult();
     }
 
-    // returns the newest posts
     public function findLastPosts($number)
     {
         $query = $this->createQueryBuilder('p')
@@ -32,7 +32,6 @@ class PostRepository extends EntityRepository
         return $query->setMaxResults($number)->getResult();
     }
 
-    //query for posts matching the given input
     public function searchForPostsQuery($input, $sort)
     {
         $tags = explode(" ", $input);
@@ -55,5 +54,34 @@ class PostRepository extends EntityRepository
           ->setParameter('tag', $tag)
           ->orderBy('p.'.$sort, 'DESC')
           ->getQuery();
+    }
+
+    public function findRelated(Post $post)
+    {
+        $entity = Tag::class;
+        $tags = $post->getTags()->map(function($entity){
+                return $entity->getId();
+            })->toArray();
+        $tags = implode(', ', $tags);
+        $id = $post->getId();
+        $title = $post->getTitle();
+        $author = $post->getAuthor()->getId();
+
+        return $query = $this->createQueryBuilder('p')
+            ->select('p, sum(case when t.id in (:tags) then 1 else 0 end) as tags_num')
+            ->leftJoin('p.tags', 't')
+            ->where('t.id in (:tags) or p.author = :author or p.title like :title')
+            ->andWhere('p.id != :id')
+            ->setParameters([
+                'tags' => $tags,
+                'title' => '%'.$title.'%',
+                'id' => $id,
+                'author' => $author
+            ])
+            ->groupBy('p.id')
+            ->orderBy('tags_num', 'DESC')
+            ->getQuery()
+            ->setMaxResults(4)
+            ->getResult();
     }
 }

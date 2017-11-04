@@ -241,6 +241,11 @@ class PostController extends Controller
 
     public function relatedAction(Request $request, Post $post)
     {
-        return $this->render('post/related.html.twig');
+        $posts = $this->getDoctrine()->getRepository(Post::class)
+            ->findRelated($post);
+
+        return $this->render('post/related.html.twig', [
+            'posts' => $posts
+        ]);
     }
 }

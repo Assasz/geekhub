@@ -53,7 +53,7 @@ body {
 .main {
   margin-top: 70px;
   min-height: 100vh; }
-  .main .default-container, .main .page-header, .main .post-group .post-card-container, .post-group .main .post-card-container, .main .post-container, .main .post-header-container, .main .post-author-container, .main .post-related-container, .main .comment-panel, .main .comment-group, .main .user-card-container, .main .text-container {
+  .main .default-container, .main .page-header, .main .post-card-container, .main .post-container, .main .post-header-container, .main .post-author-container, .main .post-related-container, .main .comment-panel, .main .comment-group, .main .user-card-container, .main .text-container {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     padding: 20px;
     margin-bottom: 14px;
@@ -124,38 +124,39 @@ label {
 .post-group {
   overflow: hidden;
   margin: 0 -7px; }
-  .post-group .post-card-container {
-    overflow: hidden;
-    padding: 10px !important; }
-    .post-group .post-card-container .post-card-header {
-      overflow: hidden; }
-    .post-group .post-card-container .post-card-author-img {
-      width: 30px;
-      height: 30px;
-      float: left;
-      margin-bottom: 10px; }
-    .post-group .post-card-container .post-card-author-username {
-      float: left;
-      margin-left: 10px;
-      padding-top: 5px; }
-    .post-group .post-card-container .post-card-date {
-      float: right;
-      padding-top: 5px; }
-    .post-group .post-card-container .post-card-image {
-      margin: 0 -10px; }
-      .post-group .post-card-container .post-card-image a {
-        height: 150px;
-        width: 100%;
-        display: block;
-        background-position: center;
-        background-size: cover; }
-    .post-group .post-card-container .post-card-footer p {
-      margin: 0;
-      font-size: 12px; }
-    .post-group .post-card-container .post-card-footer h3 {
-      margin-top: 14px;
-      font-size: 20px;
-      height: 60px; }
+
+.post-card-container {
+  overflow: hidden;
+  padding: 10px !important; }
+  .post-card-container .post-card-header {
+    overflow: hidden; }
+  .post-card-container .post-card-author-img {
+    width: 30px;
+    height: 30px;
+    float: left;
+    margin-bottom: 10px; }
+  .post-card-container .post-card-author-username {
+    float: left;
+    margin-left: 10px;
+    padding-top: 5px; }
+  .post-card-container .post-card-date {
+    float: right;
+    padding-top: 5px; }
+  .post-card-container .post-card-image {
+    margin: 0 -10px; }
+    .post-card-container .post-card-image a {
+      height: 150px;
+      width: 100%;
+      display: block;
+      background-position: center;
+      background-size: cover; }
+  .post-card-container .post-card-footer p {
+    margin: 0;
+    font-size: 12px; }
+  .post-card-container .post-card-footer h3 {
+    margin-top: 14px;
+    font-size: 20px;
+    height: 60px; }
 
 .post-container .post-footer {
   padding-top: 40px; }
