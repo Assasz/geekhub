@@ -1,18 +1,18 @@
 body
 {
-    background-color: $bright;
+    background-color: $porcelain;
     position: relative;
     font-family: "Varela Round", sans-serif;
 
     a
     {
-        color: $blue;
+        color: $chambray;
         text-decoration: none;
         transition: all .3s ease;
 
         &:hover
         {
-            color: $dark-blue;
+            color: $mariner;
             text-decoration: none;
         }
 
@@ -27,10 +27,18 @@ body
 .navbar-inverse
 {
     background-color: $dark;
+    padding: 5px 0;
+
+    .container
+    {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+    }
 
     a
     {
-        color: $bright !important;
+        color: $porcelain !important;
         transition: all .3s ease;
 
         &:hover
@@ -39,9 +47,63 @@ body
         }
     }
 
+    .dropdown a
+    {
+        padding-right: 0;
+
+        &:focus
+        {
+            background-color: $dark !important;
+        }
+    }
+
     .dropdown-menu
     {
-    background-color: $dark;
+        background-color: $dark;
+        width: 300px;
+
+        span
+        {
+            margin-right: 10px;
+            font-size: 18px;
+            line-height: 40px;
+        }
+
+        .profile
+        {
+            padding: 10px 0;
+            background-color: $tundora;
+            height: 70px;
+
+            .profile-img
+            {
+                float: left;
+                margin-left: 20px;
+            }
+
+            .img-caption
+            {
+                float: left;
+                margin-left: 20px;
+                color: $porcelain;
+                height: 50px;
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+
+                p
+                {
+                    font-size: 16px;
+                    margin: 0;
+
+                    small
+                    {
+                        font-size: 13px;
+                        display: block;
+                    }
+                }
+            }
+        }
 
         li
         {
@@ -59,43 +121,63 @@ body
         }
     }
 
-    img
-    {
-        margin-right: 10px;
-    }
-
     .dropdown-toggle
     {
         padding: 0 10px;
         line-height: 50px;
     }
 
-    .search-field
+    .navbar-header
     {
-        background-color: $semi-dark;
-        color: $bright;
-        border-radius: 2px;
-        border: none;
-        font-weight: bold;
-        transition: all .3s ease;
-        -webkit-transition: all .3s ease;
-        width: 200px;
-        height: 35px;
-        padding: 6px 12px;
-        font-size: 14px;
-        line-height: 1.42857143;
+        order: 1;
+    }
 
-        &:focus
+    .navbar-right
+    {
+        order: 3;
+        align-self: flex-end;
+    }
+
+    .navbar-form
+    {
+        order: 2;
+        flex-grow: 2;
+        position: relative;
+        height: 35px;
+
+        .search-field
         {
-            box-shadow: none;
-            width: 250px;
+            background-color: $tundora;
+            color: $porcelain;
+            border-radius: 2px;
+            border: none;
+            transition: all .3s ease;
+            -webkit-transition: all .3s ease;
+            width: 50%;
+            height: 100%;
+            padding: 6px 12px;
+            font-size: 14px;
+            line-height: 1.42857143;
+            outline-color: $chambray;
+
+            &:focus
+            {
+                box-shadow: none;
+                width: 70%;
+            }
         }
+    }
+
+    .navbar-toggle
+    {
+        order: 3;
+        align-self: flex-end;
     }
 }
 
 .main
 {
-    margin-top: 70px;
+    margin-top: 74px;
     min-height: 100vh;
 
     .default-container
@@ -126,7 +208,7 @@ body
 
 .tag
 {
-    background-color: $semi-bright;
+    background-color: $alto;
     padding: 5px;
     border-radius: 2px;
     margin: 0 3px;

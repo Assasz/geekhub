@@ -1,21 +1,21 @@
 <nav class="navbar navbar-inverse navbar-fixed-top">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+      <a class="navbar-brand" href="{{ path('home') }}">GeekHub</a>
+    </div>
+    <form action="{{ path('search') }}" method="POST" class="navbar-form navbar-left" novalidate role="search">
+        <label for="search_input">
+            <span class="visually-hidden">Search</span>
+        </label>
+        <input type="text" id="search_input" name="search_input" class="search-field" placeholder="Search">
+    </form>
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="{{ path('home') }}">GeekHub</a>
-    </div>
+    </button>
     <div id="navbar" class="navbar-collapse collapse navbar-right">
-      <form action="{{ path('search') }}" method="POST" class="navbar-form navbar-left" novalidate>
-        <label for="search_input">
-          <span class="visually-hidden">Search</span>
-        </label>
-        <input type="text" id="search_input" name="search_input" class="search-field" placeholder="Search">
-      </form>
       <ul class="nav navbar-nav">
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
         <li>
@@ -33,15 +33,33 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <img src="{{ asset(app.user.profilePicturePath) }}" alt="{{ app.user.username }} profile picture" class="img-rounded" width="40px" height="40px">
-            {{ app.user.username }}
-            <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
-            <li><a href="{{ path('user_post_list') }}">My posts</a></li>
-            <li><a href="{{ path('fos_user_profile_show') }}">My profile</a></li>
-            <li><a href="{{ path('fos_user_security_logout') }}">
-                {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-            </a></li>
+            <li class="profile">
+                <img src="{{ asset(app.user.profilePicturePath) }}" alt="{{ app.user.username }} profile picture" class="img-rounded profile-img" width="50px" height="50px">
+                <div class="img-caption">
+                    <p>{{ app.user.username }}
+                    <small>{{ app.user.forename }} {{ app.user.surname }}</small></p>
+                </div>
+            </li>
+            <li>
+                <a href="{{ path('user_post_list') }}">
+                    <span class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></span>
+                    My posts
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('fos_user_profile_show') }}">
+                    <span class="fa fa-fw fa-user" aria-hidden="true"></span>
+                    My profile
+                </a>
+            </li>
+            <li>
+                <a href="{{ path('fos_user_security_logout') }}">
+                    <span class="fa fa-fw fa-sign-out" aria-hidden="true"></span>
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            </li>
           </ul>
         </li>
       </ul>

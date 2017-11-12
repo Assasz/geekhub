@@ -27,7 +27,7 @@ label
 
     &:focus
     {
-        border-color: $blue;
+        border-color: $chambray;
     }
 }
 
@@ -39,14 +39,14 @@ label
 
 .btn-primary
 {
-    background-color: $blue;
+    background-color: $chambray;
     border-radius: 2px;
     transition: all .3s ease;
-    border-color: $dark-blue;
+    border-color: $mariner;
 
     &:hover, &:focus
     {
-        background-color: $dark-blue;
+        background-color: $mariner;
         outline: none;
     }
 }
