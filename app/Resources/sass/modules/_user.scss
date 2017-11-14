@@ -34,3 +34,31 @@
         }
     }
 }
+
+.profile-container
+{
+    @extend .default-container;
+    overflow: hidden;
+
+    .profile-body
+    {
+        float: left;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+
+        .about
+        {
+            width: 80%;
+        }
+    }
+
+    .profile-picture
+    {
+        width: 250px;
+        height: 250px;
+        margin: -20px 40px -20px -20px;
+        float: left;
+    }
+}

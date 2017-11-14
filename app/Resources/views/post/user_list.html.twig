@@ -1,12 +1,5 @@
-{% extends 'layout/default.html.twig' %}
-
-{% block title %}My posts{% endblock %}
-
-{% block content %}
-  <h3 class="page-header">My posts</h3>
-  <div class="post-group" id="user-posts">
+<div class="post-group">
     {% for post in posts %}
       {{ include('post/list.html.twig') }}
     {% endfor %}
 </div>
-{% endblock %}

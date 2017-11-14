@@ -5,6 +5,7 @@
     </div>
     <form action="{{ path('search') }}" method="POST" class="navbar-form navbar-left" novalidate role="search">
         <label for="search_input">
+            <span class="fa fa-fw fa-search" aria-hidden="true"></span>
             <span class="visually-hidden">Search</span>
         </label>
         <input type="text" id="search_input" name="search_input" class="search-field" placeholder="Search">
@@ -43,15 +44,15 @@
                 </div>
             </li>
             <li>
-                <a href="{{ path('user_post_list') }}">
-                    <span class="fa fa-fw fa-pencil-square-o" aria-hidden="true"></span>
-                    My posts
-                </a>
-            </li>
-            <li>
                 <a href="{{ path('fos_user_profile_show') }}">
                     <span class="fa fa-fw fa-user" aria-hidden="true"></span>
                     My profile
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <span class="fa fa-fw fa-cog" aria-hidden="true"></span>
+                    Account settings
                 </a>
             </li>
             <li>

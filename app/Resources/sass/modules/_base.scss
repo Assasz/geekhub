@@ -145,6 +145,14 @@ body
         position: relative;
         height: 35px;
 
+        label
+        {
+            position: absolute;
+            bottom: 3px;
+            left: 25px;
+            color: $alto;
+        }
+
         .search-field
         {
             background-color: $tundora;
@@ -155,7 +163,7 @@ body
             -webkit-transition: all .3s ease;
             width: 50%;
             height: 100%;
-            padding: 6px 12px;
+            padding: 6px 12px 6px 37px;
             font-size: 14px;
             line-height: 1.42857143;
             outline-color: $chambray;

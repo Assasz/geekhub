@@ -3,5 +3,27 @@
 {% block title %}{{ user.username }}{% endblock %}
 
 {% block content %}
-    test
+    <div class="profile-container">
+        <img src="{{ asset(user.profilePicturePath) }}" alt="{{ user.username }}" class="img-responsive profile-picture">
+        <div class="profile-body">
+            <h3 class="username">
+                {{ user.username }}
+                <small>{{ user.forename }} {{ user.surname }}</small>
+            </h3>
+            <p class="about">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            <div class="profile-dates">
+                <span>Last visit {{ user.lastLogin|time_diff }}</span>
+                <span>Joined {{ user.createDate|time_diff }}</span>
+            </div>
+            <div class="profile-stats">
+                <span class="stat">{{ user.getPosts|length }}</span>
+                <span class="label">Posts</span>
+                <span class="stat">{{ user.getFollowers|length }}</span>
+                <span class="label">Followers</span>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="page-header">{{ user.username }}'s posts</h3>
+    {{ render(controller('AppBundle:Post:userList', {'user': user.id})) }}
 {% endblock %}

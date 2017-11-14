@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Entity\Post;
+use AppBundle\Entity\User;
 use AppBundle\Entity\PostVoter;
 use AppBundle\Entity\Tag;
 use AppBundle\Form\PostType;
@@ -38,11 +39,14 @@ class PostController extends Controller
     }
 
     /**
-     * @Route("/my-posts", name="user_post_list")
+     * @Route("/user/{user}/posts", name="user_post_list", requirements={"user": "\d+"})
      */
-    public function userListAction(Request $request)
+    public function userListAction(Request $request, User $user)
     {
-        $user = $this->getUser();
+        if(!$user)
+        {
+            throw $this->createNotFoundException('User does not exist');
+        }
 
         $posts = $this->getDoctrine()
             ->getRepository(Post::class)->findBy(

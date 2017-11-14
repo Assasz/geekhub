@@ -47,3 +47,8 @@ services:
     AppBundle\Service\FileUploader:
         arguments:
             $targetDir: '%upload_directory%'
+
+    app.twig.extension.date:
+        class:        Twig_Extensions_Extension_Date
+        tags:
+             - { name: 'twig.extension' }
