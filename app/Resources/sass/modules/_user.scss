@@ -42,15 +42,69 @@
 
     .profile-body
     {
+        margin-left: 60px;
         float: left;
         position: relative;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
+
+        .username small
+        {
+            margin-left: 20px;
+        }
 
         .about
         {
+            margin-top: 20px;
             width: 80%;
+        }
+
+        .profile-dates
+        {
+            font-size: 14px;
+            color: $tundora;
+            position: absolute;
+            top: 0;
+            right: 0;
+
+            span
+            {
+                margin-left: 20px;
+            }
+        }
+
+        .profile-stats
+        {
+            margin-top: 40px;
+
+            .stat-wrapper
+            {
+                margin-right: 40px;
+                display: inline-block;
+
+                .stat
+                {
+                    font-size: 24px;
+                    font-weight: bold;
+                    display: block;
+                }
+
+                .label
+                {
+                    font-size: 16px;
+                    margin-top: 5px;
+                    display: block;
+                    color: $dark;
+                    text-align: left;
+                    padding: 0;
+                }
+            }
+
+            .btn
+            {
+                float: right;
+                width: 200px;
+                height: 55px;
+                font-size: 18px;
+            }
         }
     }
 
@@ -58,7 +112,7 @@
     {
         width: 250px;
         height: 250px;
-        margin: -20px 40px -20px -20px;
+        margin: -20px;
         float: left;
     }
 }

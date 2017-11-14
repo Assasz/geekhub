@@ -5,6 +5,7 @@ namespace AppBundle\Repository;
 use Doctrine\ORM\EntityRepository;
 use AppBundle\Entity\Post;
 use AppBundle\Entity\Tag;
+use AppBundle\Entity\User;
 
 /**
  * PostRepository
@@ -83,5 +84,14 @@ class PostRepository extends EntityRepository
             ->getQuery()
             ->setMaxResults(4)
             ->getResult();
+    }
+
+    public function findByUserQuery(User $user)
+    {
+        return $query = $this->createQueryBuilder('p')
+            ->where('p.author = :user')
+            ->orderBy('p.createDate', 'DESC')
+            ->setParameter('user', $user)
+            ->getQuery();
     }
 }

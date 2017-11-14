@@ -107,7 +107,9 @@
                     <small>{{ post.author.forename }} {{ post.author.surname }}</small>
                 </h3>
             </a>
-            <p class="post-author-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+            {% if post.author.about is not null %}
+                <p class="post-author-about">{{ post.author.about }}</p>
+            {% endif %}
         </div>
     </div>
     {{ render(controller('AppBundle:Post:related', {'post': post.id})) }}

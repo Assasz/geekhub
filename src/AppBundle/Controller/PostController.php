@@ -48,11 +48,16 @@ class PostController extends Controller
             throw $this->createNotFoundException('User does not exist');
         }
 
-        $posts = $this->getDoctrine()
-            ->getRepository(Post::class)->findBy(
-            ['author' => $user],
-            ['createDate' => 'DESC']
-          );
+        $query = $this->getDoctrine()
+            ->getRepository(Post::class)
+            ->findByUserQuery($user);
+
+        $paginator = $this->get('knp_paginator');
+        $posts = $paginator->paginate(
+          $query,
+          $request->query->getInt('page', 1),
+          9
+        );
 
         return $this->render('post/user_list.html.twig', [
             'posts' => $posts

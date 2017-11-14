@@ -236,7 +236,7 @@ label {
   .post-author-container .post-author-caption small {
     display: block;
     margin-top: 5px; }
-  .post-author-container .post-author-caption .post-author-description {
+  .post-author-container .post-author-caption .post-author-about {
     padding: 20px 40px; }
 
 .comment-panel .comment-author-image, .reply-panel .comment-author-image {
@@ -305,17 +305,47 @@ label {
 .profile-container {
   overflow: hidden; }
   .profile-container .profile-body {
+    margin-left: 60px;
     float: left;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    flex-direction: column; }
+    position: relative; }
+    .profile-container .profile-body .username small {
+      margin-left: 20px; }
     .profile-container .profile-body .about {
+      margin-top: 20px;
       width: 80%; }
+    .profile-container .profile-body .profile-dates {
+      font-size: 14px;
+      color: #424242;
+      position: absolute;
+      top: 0;
+      right: 0; }
+      .profile-container .profile-body .profile-dates span {
+        margin-left: 20px; }
+    .profile-container .profile-body .profile-stats {
+      margin-top: 40px; }
+      .profile-container .profile-body .profile-stats .stat-wrapper {
+        margin-right: 40px;
+        display: inline-block; }
+        .profile-container .profile-body .profile-stats .stat-wrapper .stat {
+          font-size: 24px;
+          font-weight: bold;
+          display: block; }
+        .profile-container .profile-body .profile-stats .stat-wrapper .label {
+          font-size: 16px;
+          margin-top: 5px;
+          display: block;
+          color: #263238;
+          text-align: left;
+          padding: 0; }
+      .profile-container .profile-body .profile-stats .btn {
+        float: right;
+        width: 200px;
+        height: 55px;
+        font-size: 18px; }
   .profile-container .profile-picture {
     width: 250px;
     height: 250px;
-    margin: -20px 40px -20px -20px;
+    margin: -20px;
     float: left; }
 
 .form-error {
@@ -389,8 +419,7 @@ label {
     box-shadow: none; }
     .navbar-inverse .navbar-form .search-field {
       width: 90%;
-      height: 100%;
-      padding: 6px 12px; }
+      height: 100%; }
       .navbar-inverse .navbar-form .search-field:focus {
         width: 90%; } }
 

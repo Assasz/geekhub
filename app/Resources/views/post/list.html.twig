@@ -5,7 +5,7 @@
                     <img src="{{ asset(post.author.profilePicturePath) }}" alt="{{ post.author.username }}" class="img-rounded img-responsive post-card-author-img">
                     <span class="post-card-author-username">{{ post.author.username }}</span>
             </a>
-            <span class="post-card-date">{{ post.createDate|date('j M') }}</span>
+            <span class="post-card-date">{{ post.createDate|time_diff }}</span>
         </div>
         <div class="post-card-image">
             <a href="{{ path('post', {'post': post.id}) }}" style="background-image: url('{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset(post.image) }}')" role="image" title="{{ post.title }}"></a>

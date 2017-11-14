@@ -2,4 +2,9 @@
     {% for post in posts %}
       {{ include('post/list.html.twig') }}
     {% endfor %}
+    {% if posts.getTotalItemCount > 9 %}
+        <div class="navigation col-md-12">
+            {{ knp_pagination_render(posts) }}
+        </div>
+    {% endif %}
 </div>

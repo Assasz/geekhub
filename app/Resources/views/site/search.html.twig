@@ -88,7 +88,7 @@
     {% for user in results.users %}
         {{ include('user/list.html.twig') }}
     {% endfor %}
-    {% if resultsNumber > 5 %}
+    {% if resultsNumber > 9 %}
         <div class="navigation col-md-12">
             {{ knp_pagination_render(results.users) }}
         </div>
@@ -97,7 +97,7 @@
     {% for post in results.posts %}
       {{ include('post/list.html.twig') }}
     {% endfor %}
-    {% if resultsNumber > 5 %}
+    {% if resultsNumber > 9 %}
         <div class="navigation col-md-12">
             {{ knp_pagination_render(results.posts) }}
         </div>

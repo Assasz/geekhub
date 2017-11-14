@@ -52,6 +52,13 @@ class User extends BaseUser
     protected $forename;
 
     /**
+     * @ORM\Column(type="text", nullable=true)
+     * @Assert\NotBlank()
+     * @Assert\Length(max = 500)
+     */
+    protected $about;
+
+    /**
      * @Assert\File(maxSize="2048k")
      * @Assert\Image(mimeTypesMessage="Please upload a valid image.")
      */
@@ -500,5 +507,29 @@ class User extends BaseUser
     public function getFollowers()
     {
         return $this->followers;
+    }
+
+    /**
+     * Set about
+     *
+     * @param string $about
+     *
+     * @return User
+     */
+    public function setAbout($about)
+    {
+        $this->about = $about;
+
+        return $this;
+    }
+
+    /**
+     * Get about
+     *
+     * @return string
+     */
+    public function getAbout()
+    {
+        return $this->about;
     }
 }
