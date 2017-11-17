@@ -1,3 +1,22 @@
+@media(max-width : 608px)
+{
+    .profile-container
+    {
+        .profile-body .profile-stats
+        {
+            .stat-wrapper:last-of-type
+            {
+                margin: 0;
+            }
+
+            .btn
+            {
+                margin-top: 20px;
+            }
+        }
+    }
+}
+
 @media(max-width:767px)
 {
     .navbar-inverse
@@ -44,6 +63,31 @@
                 {
                     width: 90%;
                 }
+            }
+        }
+    }
+
+    .profile-container
+    {
+        .profile-picture-wrapper
+        {
+            padding-bottom: 50%;
+        }
+    }
+}
+
+@media(max-width : 992px)
+{
+    .profile-container
+    {
+        text-align: center;
+
+        .profile-picture-wrapper
+        {
+            .profile-picture
+            {
+                right: 0;
+                margin: 0 auto;
             }
         }
     }

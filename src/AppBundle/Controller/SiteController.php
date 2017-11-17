@@ -44,7 +44,7 @@ class SiteController extends Controller
             $results['posts'] = $paginator->paginate(
                 $query,
                 $request->query->getInt('page', 1),
-                9
+                6
             );
         }
         else
@@ -56,7 +56,7 @@ class SiteController extends Controller
             $results['users'] = $paginator->paginate(
                 $query,
                 $request->query->getInt('page', 1),
-                9
+                6
             );
         }
 

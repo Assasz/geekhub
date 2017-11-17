@@ -53,9 +53,19 @@
     padding: 0 !important;
 }
 
+.no-margin
+{
+    margin: 0 !important;
+}
+
 .clicked
 {
     opacity: 1 !important;
+}
+
+.btn-clicked
+{
+    background-color: $mariner;
 }
 
 .text-container

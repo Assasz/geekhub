@@ -3,7 +3,7 @@
 <div class="post-card-container">
     <div class="post-card-header">
         <a href="{{ path('user', {'user': post[0].author.id}) }}">
-                <img src="{{ asset(post[0].author.profilePicturePath) }}" alt="{{ post[0].author.username }}" class="img-rounded img-responsive post-card-author-img">
+                <img src="{{ asset(post[0].author.profilePicturePath) }}" alt="{{ post[0].author.username }}" class="img-circle img-responsive post-card-author-img">
                 <span class="post-card-author-username">{{ post[0].author.username }}</span>
         </a>
         <span class="post-card-date">{{ post[0].createDate|date('j M') }}</span>

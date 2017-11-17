@@ -98,7 +98,7 @@
     <div class="post-author-container">
         <p>Published {{ post.createDate|date('d M Y') }} by</p>
         <a href="{{ path('user', {'user': post.author.id}) }}">
-            <img src="{{ asset(post.author.profilePicturePath) }}" alt="{{ post.author.username }}" class="img-rounded img-responsive post-author-image">
+            <img src="{{ asset(post.author.profilePicturePath) }}" alt="{{ post.author.username }}" class="img-circle img-responsive post-author-image">
         </a>
         <div class="post-author-caption">
             <a href="{{ path('user', {'user': post.author.id}) }}">

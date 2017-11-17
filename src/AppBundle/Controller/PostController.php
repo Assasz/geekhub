@@ -56,7 +56,7 @@ class PostController extends Controller
         $posts = $paginator->paginate(
           $query,
           $request->query->getInt('page', 1),
-          9
+          6
         );
 
         return $this->render('post/user_list.html.twig', [

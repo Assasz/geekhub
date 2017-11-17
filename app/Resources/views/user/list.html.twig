@@ -1,7 +1,7 @@
 <div class="col col-md-4 col-xs-6">
     <a href="{{ path('user', {'user': user[0].id}) }}">
         <div class="user-card-container">
-            <img src="{{ asset(user[0].profilePicturePath) }}" alt="{{ user[0].username }}" class="img-rounded img-responsive user-card-image">
+            <img src="{{ asset(user[0].profilePicturePath) }}" alt="{{ user[0].username }}" class="img-circle img-responsive user-card-image">
             <div class="user-card-caption">
                 <h3 class="user-card-username">
                     {{ user[0].username }}

@@ -4,23 +4,33 @@
 
 {% block content %}
     <div class="profile-container">
-        <img src="{{ asset(user.profilePicturePath) }}" alt="{{ user.username }}" class="img-responsive profile-picture">
-        <div class="profile-body">
+        <div class="profile-picture-wrapper col-md-4 col-xs-12">
+            <img src="{{ asset(user.profilePicturePath) }}" alt="{{ user.username }}" class="img-responsive profile-picture img-circle">
+        </div>
+        <div class="profile-body col-md-8 col-xs-12">
             <h3 class="username">
                 {{ user.username }}
                 <small>{{ user.forename }} {{ user.surname }}</small>
             </h3>
-            {% if user.about is not null %}
-                <p class="about">{{ user.about }}</p>
-            {% endif %}
             <div class="profile-dates">
                 <span>Last visit {{ user.lastLogin|time_diff }}</span>
                 <span>Joined {{ user.createDate|time_diff }}</span>
             </div>
+            {% if user.about is not null %}
+                <p class="about">{{ user.about }}</p>
+            {% endif %}
             <div class="profile-stats">
                 <div class="stat-wrapper">
                     <span class="stat">{{ user.getPosts|length }}</span>
                     <span class="label">Posts</span>
+                </div>
+                {% set postviews = 0 %}
+                {% for post in user.getPosts %}
+                    {% set postviews = postviews + post.views %}
+                {% endfor %}
+                <div class="stat-wrapper">
+                    <span class="stat">{{ postviews }}</span>
+                    <span class="label">Postviews</span>
                 </div>
                 <div class="stat-wrapper">
                     <span class="stat">{{ user.getFollowers|length }}</span>

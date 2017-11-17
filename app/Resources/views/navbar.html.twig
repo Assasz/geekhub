@@ -33,18 +33,18 @@
         </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-            <img src="{{ asset(app.user.profilePicturePath) }}" alt="{{ app.user.username }} profile picture" class="img-rounded" width="40px" height="40px">
+            <img src="{{ asset(app.user.profilePicturePath) }}" alt="{{ app.user.username }} profile picture" class="img-circle" width="40px" height="40px">
           </a>
           <ul class="dropdown-menu">
             <li class="profile">
-                <img src="{{ asset(app.user.profilePicturePath) }}" alt="{{ app.user.username }} profile picture" class="img-rounded profile-img" width="50px" height="50px">
+                <img src="{{ asset(app.user.profilePicturePath) }}" alt="{{ app.user.username }} profile picture" class="img-circle profile-img" width="50px" height="50px">
                 <div class="img-caption">
                     <p>{{ app.user.username }}
                     <small>{{ app.user.forename }} {{ app.user.surname }}</small></p>
                 </div>
             </li>
             <li>
-                <a href="{{ path('fos_user_profile_show') }}">
+                <a href="{{ path('user', {'user': app.user.id}) }}">
                     <span class="fa fa-fw fa-user" aria-hidden="true"></span>
                     My profile
                 </a>

@@ -10,7 +10,7 @@
 
 <div id="comment-{{ comment.id }}" class="comment-container">
     <a href="{{ path('user', {'user': comment.author.id}) }}">
-        <img src="{{ asset(comment.author.profilePicturePath) }}" alt="{{ comment.author.username }}" class="img-rounded img-responsive comment-author-image">
+        <img src="{{ asset(comment.author.profilePicturePath) }}" alt="{{ comment.author.username }}" class="img-circle img-responsive comment-author-image">
     </a>
     <div class="comment-body">
         <div class="comment-body-header">

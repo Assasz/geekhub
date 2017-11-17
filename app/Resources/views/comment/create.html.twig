@@ -1,7 +1,7 @@
 {% form_theme form 'form/custom.html.twig' %}
 
 <div class="comment-panel">
-    <img src="{{ asset(app.user.profilePicturePath) }}" alt="{{ app.user.username }}" class="img-rounded img-responsive comment-author-image">
+    <img src="{{ asset(app.user.profilePicturePath) }}" alt="{{ app.user.username }}" class="img-circle img-responsive comment-author-image">
 
     {{ form_start(form, {'attr': {'action': path('comment_create', {'post': post.id}), 'novalidate': 'novalidate', 'class':'comment-form', 'data-action': 'comment-post'}}) }}
 

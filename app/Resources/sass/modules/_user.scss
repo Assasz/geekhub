@@ -39,35 +39,39 @@
 {
     @extend .default-container;
     overflow: hidden;
+    position: relative;
+    height: auto;
 
     .profile-body
     {
-        margin-left: 60px;
-        float: left;
         position: relative;
+        padding: 20px;
+        height: 100%;
 
-        .username small
+        .username
         {
-            margin-left: 20px;
+            font-size: 28px;
+
+            small
+            {
+                margin-left: 20px;
+                font-size: 28px;
+            }
         }
 
         .about
         {
-            margin-top: 20px;
-            width: 80%;
+            margin-top: 40px;
         }
 
         .profile-dates
         {
-            font-size: 14px;
-            color: $tundora;
-            position: absolute;
-            top: 0;
-            right: 0;
+            font-size: 12px;
+            color: $boulder;
 
             span
             {
-                margin-left: 20px;
+                margin-right: 20px;
             }
         }
 
@@ -95,24 +99,32 @@
                     color: $dark;
                     text-align: left;
                     padding: 0;
+                    font-weight: normal;
                 }
             }
 
             .btn
             {
-                float: right;
                 width: 200px;
                 height: 55px;
                 font-size: 18px;
+                margin-top: -40px;
             }
         }
     }
 
-    .profile-picture
+    .profile-picture-wrapper
     {
-        width: 250px;
-        height: 250px;
-        margin: -20px;
-        float: left;
+        position:relative;
+        overflow:hidden;
+        padding-bottom:28%;
+
+        .profile-picture
+        {
+            position: absolute;
+            max-height: 100%;
+            left: 0;
+            padding: 20px 15%;
+        }
     }
 }
