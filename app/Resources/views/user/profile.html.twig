@@ -33,17 +33,31 @@
                     <span class="label">Postviews</span>
                 </div>
                 <div class="stat-wrapper">
-                    <span class="stat">{{ user.getFollowers|length }}</span>
+                    <span class="stat" data-followers-counter>{{ user.getFollowers|length }}</span>
                     <span class="label">Followers</span>
                 </div>
-                <button type="button" class="btn btn-primary" data-action="follow" data-user-id="{{ user.id }}">
-                    <span class="fa fa-fw fa-plus" aria-hidden="true"></span>
-                    Follow
-                </button>
+                {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and app.user != user %}
+                    {% if app.user in user.getFollowers %}
+                        <button type="button" class="btn btn-primary btn-clicked" data-action="follow" data-user-id="{{ user.id }}" disabled>
+                            <span class="fa fa-fw fa-check" aria-hidden="true"></span>
+                            Followed
+                        </button>
+                    {% else %}
+                        <button type="button" class="btn btn-primary" data-action="follow" data-user-id="{{ user.id }}">
+                            <span class="fa fa-fw fa-plus" aria-hidden="true"></span>
+                            Follow
+                        </button>
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
     </div>
 
     <h3 class="page-header">{{ user.username }}'s posts</h3>
     {{ render(controller('AppBundle:Post:userList', {'user': user.id, 'request': app.request})) }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/app-userprofile.js') }}"></script>
 {% endblock %}

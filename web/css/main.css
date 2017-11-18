@@ -429,6 +429,19 @@ label {
       justify-content: flex-end; }
       .navbar-inverse .navbar-right .nav span {
         line-height: 30px; }
+  .navbar-inverse .dropdown {
+    margin-right: 20px; }
+    .navbar-inverse .dropdown .dropdown-menu {
+      position: absolute;
+      float: left;
+      right: 0;
+      left: auto;
+      background-color: #263238;
+      width: 300px;
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: 4px;
+      -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175); }
   .navbar-inverse .navbar-form {
     border: none;
     padding-top: 0;

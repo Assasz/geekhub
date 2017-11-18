@@ -21,10 +21,12 @@ security:
                 # if you are using Symfony < 2.8, use the following config instead:
                 # csrf_provider: form.csrf_provider
                 use_referer: true
+                success_handler: login_handler
 
             logout:
                 path:   fos_user_security_logout
                 target: /
+                success_handler: logout_handler
             anonymous:    true
             remember_me:
                 secret:   '%secret%'
