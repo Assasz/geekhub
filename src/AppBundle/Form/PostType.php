@@ -37,7 +37,8 @@ class PostType extends AbstractType
         ->add('add_post', SubmitType::class, [
             'label' => 'Add post',
             'attr' => [
-                'class' => 'btn btn-primary'
+                'class' => 'btn btn-lg btn-primary',
+                'style' => 'margin-top: 15px;'
         ]]);
     }
 }

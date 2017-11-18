@@ -1,12 +1,10 @@
 $(document).ready(function(){
-    var timeout;
-
-    $('#post_title').on('input propertychange', function(){
+    var timeout, validate = function(){
         if(timeout){
             clearTimeout(timeout);
         }
 
-        var field = $(this),
+        var field = $('#post_title'),
             error = $('<p id="title_form_error" class="form-error"></p>'),
             errorSelector = $('#title_form_error'),
             errorContent = 'This title is invalid. Length should be between 3 and 255 characters.';
@@ -29,5 +27,8 @@ $(document).ready(function(){
                 field.removeClass('invalid');
             }
         }, 1000);
-    });
+    }
+
+    $('#post_title').on('input propertychange', validate);
+    $('#post_add_post').click(validate);
 });
