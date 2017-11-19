@@ -17,7 +17,16 @@
                 <span>Joined {{ user.createDate|time_diff }}</span>
             </div>
             {% if user.about is not null %}
-                <p class="about">{{ user.about }}</p>
+                <p class="about">{{ user.about|slice(0, 200) }}
+                {% if user.about|length > 200 %}
+                    ... <a href="#" data-action="toggle-about">Read more</a>
+                    <div class="about-full">
+                        <h3>About</h3>
+                        <p>{{ user.about }}</p>
+                        <a href="#" data-action="toggle-about">Back</a>
+                    </div>
+                {% endif %}
+                </p>
             {% endif %}
             <div class="profile-stats">
                 <div class="stat-wrapper">
@@ -53,7 +62,13 @@
         </div>
     </div>
 
-    <h3 class="page-header">{{ user.username }}'s posts</h3>
+    <h3 class="page-header">
+    {% if user.getPosts|length < 1 %}
+        {{ user.username }} do not post anything yet
+    {% else %}
+        {{ user.username }}'s posts
+    {% endif %}
+    </h3>
     {{ render(controller('AppBundle:Post:userList', {'user': user.id, 'request': app.request})) }}
 {% endblock %}
 

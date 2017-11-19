@@ -54,7 +54,7 @@ class User extends BaseUser
     /**
      * @ORM\Column(type="text", nullable=true)
      * @Assert\NotBlank()
-     * @Assert\Length(max = 500)
+     * @Assert\Length(max = 800)
      */
     protected $about;
 
@@ -71,6 +71,13 @@ class User extends BaseUser
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $profilePicturePath;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\File(maxSize="4048k")
+     * @Assert\Image(mimeTypesMessage="Please upload a valid image.")
+     */
+    protected $profileBackground;
 
     /**
      * @var \DateTime
@@ -531,5 +538,29 @@ class User extends BaseUser
     public function getAbout()
     {
         return $this->about;
+    }
+
+    /**
+     * Set profileBackground
+     *
+     * @param string $profileBackground
+     *
+     * @return User
+     */
+    public function setProfileBackground($profileBackground)
+    {
+        $this->profileBackground = $profileBackground;
+
+        return $this;
+    }
+
+    /**
+     * Get profileBackground
+     *
+     * @return string
+     */
+    public function getProfileBackground()
+    {
+        return $this->profileBackground;
     }
 }

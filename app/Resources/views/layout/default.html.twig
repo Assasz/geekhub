@@ -4,7 +4,11 @@
 
 {{ include('navbar.html.twig') }}
 
-<main class="main" role="main">
+{% if user.profileBackground is defined and user.profileBackground is not null %}
+    <main class="main" role="main" style="background-image: url('{{ asset(user.profileBackground) }}');">
+{% else %}
+    <main class="main" role="main">
+{% endif %}
   <div class="container">
     <div class="row">
       <div class="col-md-12">

@@ -6,6 +6,7 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationSuccessHandlerI
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
+use Symfony\Component\Routing\Router;
 
 class LoginHandler implements AuthenticationSuccessHandlerInterface
 {
@@ -17,7 +18,8 @@ class LoginHandler implements AuthenticationSuccessHandlerInterface
     }
     public function onAuthenticationSuccess(Request $request, TokenInterface $token)
     {
-        $referer = $request->headers->get('referer');
-        return new RedirectResponse($referer);
+        $router = new Router();
+        $redirect = $request->headers->get('referer') ?? $router->generate('home');
+        return new RedirectResponse($redirect);
     }
 }

@@ -104,8 +104,12 @@ body {
     align-self: flex-end; }
 
 .main {
-  margin-top: 74px;
-  min-height: 100vh; }
+  padding-top: 74px;
+  min-height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed; }
   .main .default-container, .main .page-header, .main .post-card-container, .main .post-container, .main .post-header-container, .main .post-author-container, .main .post-related-container, .main .comment-panel, .main .comment-group, .main .user-card-container, .main .profile-container, .main .text-container {
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
     padding: 20px;
@@ -321,6 +325,18 @@ label {
         font-size: 28px; }
     .profile-container .profile-body .about {
       margin-top: 40px; }
+    .profile-container .profile-body .about-full {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 20px;
+      background-color: #fff;
+      z-index: 2;
+      display: none; }
+      .profile-container .profile-body .about-full p {
+        margin: 20px 0; }
     .profile-container .profile-body .profile-dates {
       font-size: 12px;
       color: #777; }

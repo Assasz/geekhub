@@ -19,4 +19,9 @@ $(document).ready(function(){
             ).prop('disabled', true);
         });
     });
+
+    $('[data-action="toggle-about"]').click(function(e){
+        e.preventDefault();
+        $('.about-full').slideToggle("slow");
+    });
 });

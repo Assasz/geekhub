@@ -187,8 +187,12 @@ body
 
 .main
 {
-    margin-top: 74px;
+    padding-top: 74px;
     min-height: 100vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 
     .default-container
     {
