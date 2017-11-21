@@ -4,6 +4,7 @@ namespace AppBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMapping;
+use AppBundle\Entity\User;
 
 /**
  * UserRepository
@@ -33,5 +34,15 @@ class UserRepository extends EntityRepository
         }
 
         return $query->getQuery();
+    }
+
+    public function findFollowedUsers(User $user)
+    {
+        return $this->createQueryBuilder('u')
+            ->leftJoin('u.followers', 'f')
+            ->where('f.id = :id')
+            ->setParameter('id', $user->getId())
+            ->getQuery()
+            ->getResult();
     }
 }

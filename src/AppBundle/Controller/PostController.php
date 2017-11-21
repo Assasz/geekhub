@@ -16,7 +16,7 @@ use AppBundle\Service\FileUploader;
 
 class PostController extends Controller
 {
-    public function popularPostsAction($number)
+    public function popularAction($number)
     {
         $posts = $this->getDoctrine()
             ->getRepository(Post::class)
@@ -27,7 +27,7 @@ class PostController extends Controller
         ]);
     }
 
-    public function lastPostsAction($number)
+    public function latestAction($number)
     {
         $posts = $this->getDoctrine()
             ->getRepository(Post::class)
@@ -254,6 +254,28 @@ class PostController extends Controller
             ->findRelated($post);
 
         return $this->render('post/related.html.twig', [
+            'posts' => $posts
+        ]);
+    }
+
+    public function followedAction(Request $request)
+    {
+        $followedUsers = $this->getDoctrine()->getRepository(User::class)
+             ->findFollowedUsers($this->getUser());
+
+        $followed = [];
+
+        foreach($followedUsers as $user)
+        {
+            $followed[] = $user->getId();
+        }
+
+        $followed = implode(", ", $followed);
+
+        $posts = $this->getDoctrine()->getRepository(Post::class)
+            ->findByFollowedUsers($followed);
+
+        return $this->render('post/followed.html.twig', [
             'posts' => $posts
         ]);
     }

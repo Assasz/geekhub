@@ -56,6 +56,7 @@ services:
 
     login_handler:
         class: AppBundle\EventHandler\LoginHandler
+        arguments: ["@router"]
         tags:
             - { name: kernel.event_listener, event: security.interactive_login, method: onSecurityInteractiveLogin }
     logout_handler:

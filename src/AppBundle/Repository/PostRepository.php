@@ -94,4 +94,15 @@ class PostRepository extends EntityRepository
             ->setParameter('user', $user)
             ->getQuery();
     }
+
+    public function findByFollowedUsers($followed)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.author IN (:followed)')
+            ->orderBy('p.createDate', 'DESC')
+            ->setParameter('followed', $followed)
+            ->getQuery()
+            ->setMaxResults(6)
+            ->getResult();
+    }
 }
