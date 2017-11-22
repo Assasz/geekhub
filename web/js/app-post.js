@@ -143,4 +143,8 @@ $(document).ready(function() {
                 $('.btn-rate').prop('disabled', true);
             });
     });
+
+    $('pre code').each(function(i, e){
+        hljs.highlightBlock(e);
+    });
 });

@@ -12,7 +12,11 @@ $(document).ready(function(){
 
     $('.tokenfield').tokenfield({
         autocomplete: {
-            source: tags,
+            source: function(request, response) {
+                var results = $.ui.autocomplete.filter(tags, request.term);
+
+                response(results.slice(0, 10));
+            },
             delay: 100
         },
         limit: 5,

@@ -53,7 +53,6 @@ class User extends BaseUser
 
     /**
      * @ORM\Column(type="text", nullable=true)
-     * @Assert\NotBlank()
      * @Assert\Length(max = 800)
      */
     protected $about;
@@ -109,6 +108,7 @@ class User extends BaseUser
     {
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->followers = new ArrayCollection();
     }
 
     /**

@@ -1,4 +1,7 @@
-<h3 class="page-header">Popular posts</h3>
+<h3 class="page-header">
+    <span class="fa fa-wf fa-star" aria-hidden="true"></span>
+    Popular posts
+</h3>
 <div class="post-group" id="popular-posts">
   {% for post in posts %}
     {{ include('post/list.html.twig') }}

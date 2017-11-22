@@ -63,7 +63,6 @@ class PostRepository extends EntityRepository
         $tags = $post->getTags()->map(function($entity){
                 return $entity->getId();
             })->toArray();
-        $tags = implode(', ', $tags);
         $id = $post->getId();
         $title = $post->getTitle();
         $author = $post->getAuthor()->getId();

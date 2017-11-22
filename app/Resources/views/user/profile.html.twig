@@ -13,16 +13,16 @@
                 <small>{{ user.forename }} {{ user.surname }}</small>
             </h3>
             <div class="profile-dates">
-                <span>Last visit {{ user.lastLogin|time_diff }}</span>
+                <span>Last visit {{ user.lastLogin|time_diff|default('never') }}</span>
                 <span>Joined {{ user.createDate|time_diff }}</span>
             </div>
             {% if user.about is not null %}
-                <p class="about">{{ user.about|slice(0, 200) }}
+                <p class="about">{{ user.about|slice(0, 200)|raw }}
                 {% if user.about|length > 200 %}
                     ... <a href="#" data-action="toggle-about">Read more</a>
                     <div class="about-full">
                         <h3>About</h3>
-                        <p>{{ user.about }}</p>
+                        <p>{{ user.about|raw }}</p>
                         <a href="#" data-action="toggle-about">Back</a>
                     </div>
                 {% endif %}

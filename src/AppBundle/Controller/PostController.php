@@ -22,7 +22,7 @@ class PostController extends Controller
             ->getRepository(Post::class)
             ->findPopularPosts($number);
 
-        return $this->render('post/popular_posts.html.twig', [
+        return $this->render('post/popular.html.twig', [
             'posts' => $posts
         ]);
     }
@@ -33,7 +33,7 @@ class PostController extends Controller
             ->getRepository(Post::class)
             ->findLastPosts($number);
 
-        return $this->render('post/last_posts.html.twig', [
+        return $this->render('post/latest.html.twig', [
             'posts' => $posts
         ]);
     }
@@ -269,8 +269,6 @@ class PostController extends Controller
         {
             $followed[] = $user->getId();
         }
-
-        $followed = implode(", ", $followed);
 
         $posts = $this->getDoctrine()->getRepository(Post::class)
             ->findByFollowedUsers($followed);

@@ -207,6 +207,13 @@ body
     .page-header
     {
         @extend .default-container;
+        font-size: 18px;
+        text-transform: uppercase;
+
+        span
+        {
+            margin-right: 10px;
+        }
     }
 
     h2, h3

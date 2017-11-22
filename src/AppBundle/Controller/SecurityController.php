@@ -40,8 +40,10 @@ class SecurityController extends BaseController
 
             return $this->redirectToRoute('home');
         }
-
-        $session->set('referer', $request->headers->get('referer'));
+        else
+        {
+            $session->set('referer', $request->headers->get('referer'));
+        }
 
         $authErrorKey = Security::AUTHENTICATION_ERROR;
         $lastUsernameKey = Security::LAST_USERNAME;

@@ -1,5 +1,8 @@
-{% if posts|length > 5 %}
-    <h3 class="page-header">New from followed users</h3>
+{% if posts|length > 0 %}
+    <h3 class="page-header">
+        <span class="fa fa-wf fa-bell" aria-hidden="true"></span>
+        New from followed users
+    </h3>
     <div class="post-group" id="followed-users-posts">
       {% for post in posts %}
         {{ include('post/list.html.twig') }}

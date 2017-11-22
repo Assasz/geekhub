@@ -72,6 +72,18 @@
 .post-container
 {
     @extend .default-container;
+    position: relative;
+
+    .post-body
+    {
+        overflow: hidden;
+
+        img
+        {
+            max-width: 100%;
+            height: auto;
+        }
+    }
 
     .post-footer
     {
