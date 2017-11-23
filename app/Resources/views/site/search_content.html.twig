@@ -1,0 +1,84 @@
+<div class="search-content">
+    {% if results.users is defined %}
+        {% set resultsNumber = results.users.getTotalItemCount %}
+    {% else %}
+        {% set resultsNumber = results.posts.getTotalItemCount %}
+    {% endif %}
+
+    <h3 class="page-header">
+        {{ resultsNumber }}
+        {% if resultsNumber == 1 %}
+            result
+        {% else %}
+            results
+        {% endif %}
+        for {{ results.for }}
+    </h3>
+
+    <ul class="nav nav-tabs">
+        <li role="presentation" {% if results.posts is defined %} class="active" {% endif %}>
+            <a href="#" data-action="search" data-type="posts" data-sort="createDate">Posts</a>
+        </li>
+        <li role="presentation" {% if results.users is defined %} class="active" {% endif %}>
+            <a href="#" data-action="search" data-type="users" data-sort="createDate">Users</a>
+        </li>
+        <li role="presentation" class="dropdown pull-right
+        {% if resultsNumber < 2 %}
+            disabled
+        {% endif %}
+        ">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+          Sort by
+          <span class="caret"></span>
+        </a>
+        <ul class="dropdown-menu">
+            {% if results.posts is defined %}
+                <li {% if results.sort == 'createDate' %} class="active" {% endif %}>
+                    <a href="#" data-action="search" data-type="posts" data-sort="createDate">Creation date</a>
+                </li>
+                <li {% if results.sort == 'rating' %} class="active" {% endif %}>
+                    <a href="#" data-action="search" data-type="posts" data-sort="rating">Rating</a>
+                </li>
+                <li {% if results.sort == 'views' %} class="active" {% endif %}>
+                    <a href="#" data-action="search" data-type="posts" data-sort="views">Views</a>
+                </li>
+            {% else %}
+                <li {% if results.sort == 'createDate' %} class="active" {% endif %}>
+                    <a href="#" data-action="search" data-type="users" data-sort="createDate">Creation date</a>
+                </li>
+                <li {% if results.sort == 'posts' %} class="active" {% endif %}>
+                    <a href="#" data-action="search" data-type="users" data-sort="posts">Posts</a>
+                </li>
+                <li {% if results.sort == 'followers' %} class="active" {% endif %}>
+                    <a href="#" data-action="search" data-type="users" data-sort="followers">Followers</a>
+                </li>
+            {% endif %}
+        </ul>
+      </li>
+    </ul>
+
+    <div class="post-group">
+        {% if resultsNumber == 0 %}
+            <p class="panel-body">Your search returned no results.</p>
+        {% endif %}
+        {% if results.users is defined %}
+            {% for user in results.users %}
+                {{ include('user/list.html.twig') }}
+            {% endfor %}
+            {% if resultsNumber > 6 %}
+                <div class="navigation col-md-12">
+                    {{ knp_pagination_render(results.users) }}
+                </div>
+            {% endif %}
+        {% else %}
+            {% for post in results.posts %}
+                {{ include('post/list.html.twig') }}
+            {% endfor %}
+            {% if resultsNumber > 6 %}
+                <div class="navigation col-md-12">
+                    {{ knp_pagination_render(results.posts) }}
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</div>

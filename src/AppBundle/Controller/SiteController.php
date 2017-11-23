@@ -5,6 +5,7 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Session\Session;
 use AppBundle\Form\SearchType;
 use AppBundle\Entity\Post;
@@ -21,7 +22,7 @@ class SiteController extends Controller
     }
 
     /**
-     * @Route("/search/{type}/{sort}", name="search", requirements={"type": "posts|users"})
+     * @Route("/search/{type}/{sort}", name="search", requirements={"type": "posts|users"}, options={"expose"=true})
      */
     public function searchAction(Request $request, $type = 'posts', $sort = 'createDate')
     {
@@ -61,6 +62,16 @@ class SiteController extends Controller
         }
 
         $results['for'] = $input;
+        $results['sort'] = $sort;
+
+        if($request->isXmlHttpRequest())
+        {
+            $view = $this->renderView('site/search_content.html.twig', [
+                'results' => $results
+            ]);
+
+            return new JsonResponse(['view' => $view]);
+        }
 
         return $this->render('site/search.html.twig', [
             'results' => $results
