@@ -1,0 +1,48 @@
+<?php
+
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * SearchActivity
+ *
+ * @ORM\Table(name="search_activity")
+ * @ORM\HasLifecycleCallbacks()
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\SearchActivityRepository")
+ */
+class SearchActivity
+{
+    /**
+     * @var int
+     *
+     * @ORM\Id()
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="searchActivity")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     */
+    private $user;
+
+    /**
+     * @var int
+     *
+     * @ORM\Id()
+     * @ORM\ManyToOne(targetEntity="Tag")
+     * @ORM\JoinColumn(name="tag_id", referencedColumnName="id", nullable=false)
+     */
+    private $tag;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="createDate", type="datetime")
+     */
+    private $createDate;
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreateDateValue()
+    {
+        $this->createDate = new \DateTime('now');
+    }
+}

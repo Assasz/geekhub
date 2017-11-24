@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Entity\Tag;
 use AppBundle\Entity\Post;
+use AppBundle\Service\SearchActivityRecorder;
 
 class TagController extends Controller
 {
@@ -37,7 +38,7 @@ class TagController extends Controller
     /**
      * @Route("/tag/search/{tag}/{sort}", name="tag_search", requirements={"tag": "\d+", "sort": "createDate|rating|views"})
      */
-    public function searchAction(Request $request, Tag $tag, $sort = 'createDate')
+    public function searchAction(Request $request, SearchActivityRecorder $recorder, Tag $tag, $sort = 'createDate')
     {
         $paginator = $this->get('knp_paginator');
 
@@ -50,6 +51,13 @@ class TagController extends Controller
             $request->query->getInt('page', 1),
             9
         );
+
+        $securityChecker = $this->get('security.authorization_checker');
+
+        if($securityChecker->isGranted('IS_AUTHENTICATED_REMEMBERED'))
+        {
+            $recorder->record($tag->getName(), $this->getUser());
+        }
 
         return $this->render('tag/search.html.twig', [
             'posts' => $posts,

@@ -104,6 +104,11 @@ class User extends BaseUser
      **/
     private $followers;
 
+    /**
+    * @ORM\OneToMany(targetEntity="SearchActivity", mappedBy="user")
+    */
+    private $searchActivity;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -562,5 +567,39 @@ class User extends BaseUser
     public function getProfileBackground()
     {
         return $this->profileBackground;
+    }
+
+    /**
+     * Add searchActivity
+     *
+     * @param \AppBundle\Entity\SearchActivity $searchActivity
+     *
+     * @return User
+     */
+    public function addSearchActivity(\AppBundle\Entity\SearchActivity $searchActivity)
+    {
+        $this->searchActivity[] = $searchActivity;
+
+        return $this;
+    }
+
+    /**
+     * Remove searchActivity
+     *
+     * @param \AppBundle\Entity\SearchActivity $searchActivity
+     */
+    public function removeSearchActivity(\AppBundle\Entity\SearchActivity $searchActivity)
+    {
+        $this->searchActivity->removeElement($searchActivity);
+    }
+
+    /**
+     * Get searchActivity
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getSearchActivity()
+    {
+        return $this->searchActivity;
     }
 }

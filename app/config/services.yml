@@ -48,6 +48,9 @@ services:
         arguments:
             $targetDir: '%upload_directory%'
 
+    AppBundle\Service\SearchActivityRecorder:
+        arguments: ['@doctrine.orm.entity_manager']
+
     app.twig.extension.date:
         class:        Twig_Extensions_Extension_Date
         arguments: ["@translator"]
