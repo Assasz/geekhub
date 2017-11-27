@@ -2,7 +2,7 @@
     <span class="fa fa-wf fa-star" aria-hidden="true"></span>
     Popular now
 </h3>
-<div id="carousel-popular-posts" class="carousel slide" data-ride="carousel">
+<div id="carousel-popular-posts" class="carousel slide carousel-fade" data-ride="carousel">
     <div class="carousel-inner" role="listbox">
         {% for post in posts %}
             <div class="item {% if loop.index == 1 %} active {% endif %}">
