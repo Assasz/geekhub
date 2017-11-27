@@ -10,30 +10,53 @@ use AppBundle\Entity\Post;
 use AppBundle\Entity\User;
 use AppBundle\Entity\PostVoter;
 use AppBundle\Entity\Tag;
+use AppBundle\Entity\SearchActivity;
 use AppBundle\Form\PostType;
 use AppBundle\Form\RatingType;
 use AppBundle\Service\FileUploader;
 
 class PostController extends Controller
 {
-    public function popularAction($number)
+    public function popularAction()
     {
         $posts = $this->getDoctrine()
             ->getRepository(Post::class)
-            ->findPopularPosts($number);
+            ->findPopular();
 
         return $this->render('post/popular.html.twig', [
             'posts' => $posts
         ]);
     }
 
-    public function latestAction($number)
+    public function latestAction()
     {
         $posts = $this->getDoctrine()
             ->getRepository(Post::class)
-            ->findLastPosts($number);
+            ->findLatest();
 
         return $this->render('post/latest.html.twig', [
+            'posts' => $posts
+        ]);
+    }
+
+    public function recommendedAction()
+    {
+        $searchActivity = $this->getDoctrine()
+            ->getRepository(SearchActivity::class)
+            ->findByUser($this->getUser());
+
+        $tags = [];
+
+        foreach($searchActivity as $activity)
+        {
+            $tags[] = $activity->getTag()->getId();
+        }
+
+        $posts = $this->getDoctrine()
+            ->getRepository(Post::class)
+            ->findRecommended($tags);
+
+        return $this->render('post/recommended.html.twig', [
             'posts' => $posts
         ]);
     }

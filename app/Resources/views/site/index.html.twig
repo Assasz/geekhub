@@ -3,12 +3,17 @@
 {% block title %}GeekHub{% endblock %}
 
 {% block content %}
+    {{ render(controller('AppBundle:Post:popular')) }}
 
-{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-    {{ render(controller('AppBundle:Post:followed')) }}
-{% endif %}
+    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+        {{ render(controller('AppBundle:Post:recommended')) }}
+        {{ render(controller('AppBundle:Post:followed')) }}
+    {% endif %}
 
-{{ render(controller('AppBundle:Post:popular', {'number': 6})) }}
-{{ render(controller('AppBundle:Post:latest', {'number': 6})) }}
+    {{ render(controller('AppBundle:Post:latest')) }}
+{% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/app-index.js') }}"></script>
 {% endblock %}

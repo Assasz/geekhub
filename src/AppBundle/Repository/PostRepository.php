@@ -15,29 +15,29 @@ use AppBundle\Entity\User;
  */
 class PostRepository extends EntityRepository
 {
-    public function findPopularPosts($number)
+    public function findPopular()
     {
-        $query = $this->createQueryBuilder('p')
+        return $this->createQueryBuilder('p')
           ->orderBy('p.views', 'DESC')
-          ->getQuery();
-
-        return $query->setMaxResults($number)->getResult();
+          ->getQuery()
+          ->setMaxResults(6)
+          ->getResult();
     }
 
-    public function findLastPosts($number)
+    public function findLatest()
     {
-        $query = $this->createQueryBuilder('p')
+        return $this->createQueryBuilder('p')
           ->orderBy('p.createDate', 'DESC')
-          ->getQuery();
-
-        return $query->setMaxResults($number)->getResult();
+          ->getQuery()
+          ->setMaxResults(6)
+          ->getResult();
     }
 
     public function searchForPostsQuery($input, $sort)
     {
         $tags = explode(" ", $input);
 
-        return $query = $this->createQueryBuilder('p')
+        return $this->createQueryBuilder('p')
           ->Where('p.title LIKE :input')
           ->leftJoin('p.tags', 't')
           ->orWhere('t.name IN(:tags)')
@@ -100,6 +100,20 @@ class PostRepository extends EntityRepository
             ->where('p.author IN (:followed)')
             ->orderBy('p.createDate', 'DESC')
             ->setParameter('followed', $followed)
+            ->getQuery()
+            ->setMaxResults(6)
+            ->getResult();
+    }
+
+    public function findRecommended($tags)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p, sum(case when t.id in (:tags) then 1 else 0 end) as tags_num')
+            ->leftJoin('p.tags', 't')
+            ->where('t.id IN (:tags)')
+            ->setParameter('tags', $tags)
+            ->orderBy('tags_num', 'DESC')
+            ->groupBy('p.id')
             ->getQuery()
             ->setMaxResults(6)
             ->getResult();

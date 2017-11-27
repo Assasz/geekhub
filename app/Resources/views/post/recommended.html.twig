@@ -1,0 +1,13 @@
+{% if posts|length > 5 %}
+    <h3 class="page-header">
+        <span class="fa fa-wf fa-thumbs-up" aria-hidden="true"></span>
+        You may like
+    </h3>
+    <div class="post-group" id="followed-users-posts">
+    {% for post in posts %}
+        <div class="col col-md-4 col-sm-6 col-xs-12">
+            {{ include('post/list_alt.html.twig') }}
+        </div>
+    {% endfor %}
+    </div>
+{% endif %}

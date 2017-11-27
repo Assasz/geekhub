@@ -93,6 +93,33 @@
             padding-bottom: 50%;
         }
     }
+
+    .carousel
+    {
+        .item
+        {
+            height: 270px;
+        }
+
+        .carousel-image
+        {
+            height: 150px;
+        }
+
+        .carousel-caption
+        {
+            bottom: 0;
+            left: 0;
+            background-color: #fff;
+            width: 100%;
+            height: 120px;
+
+            .post-title
+            {
+                font-size: 20px;
+            }
+        }
+    }
 }
 
 @media(max-width : 992px)

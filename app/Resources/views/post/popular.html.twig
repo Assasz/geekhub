@@ -1,9 +1,33 @@
 <h3 class="page-header">
     <span class="fa fa-wf fa-star" aria-hidden="true"></span>
-    Popular posts
+    Popular now
 </h3>
-<div class="post-group" id="popular-posts">
-  {% for post in posts %}
-    {{ include('post/list.html.twig') }}
-  {% endfor %}
+<div id="carousel-popular-posts" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner" role="listbox">
+        {% for post in posts %}
+            <div class="item {% if loop.index == 1 %} active {% endif %}">
+                <a href="{{ path('post', {'post': post.id}) }}" title="{{ post.title }}">
+                    <div style="background-image: url('{{ asset(post.image) }}');" class="carousel-image"></div>
+                    <div class="carousel-caption">
+                        <h2 class="post-title">{{ post.title|slice(0, 80) }}</h2>
+                        <a href="{{ path('user', {'user': post.author.id}) }}">
+                            <img src="{{ asset(post.author.profilePicturePath) }}" alt="{{ post.author.username }}" class="img-circle img-responsive post-author-img">
+                            <span class="post-author-username">
+                                {{post.author.username }}
+                            </span>
+                        </a>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+
+    <a class="left carousel-control" href="#carousel-popular-posts" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#carousel-popular-posts" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
 </div>

@@ -1,6 +1,7 @@
 <?php
-
 namespace AppBundle\Repository;
+
+use AppBundle\Entity\User;
 
 /**
  * SearchActivityRepository
@@ -10,9 +11,11 @@ namespace AppBundle\Repository;
  */
 class SearchActivityRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findLast()
+    public function findLast(User $user)
     {
         return $this->createQueryBuilder('sa')
+            ->where('sa.user = :user')
+            ->setParameter('user', $user)
             ->orderBy('sa.searchDate', 'ASC')
             ->getQuery()
             ->setMaxResults(1)

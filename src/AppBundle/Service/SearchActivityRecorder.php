@@ -27,7 +27,7 @@ class SearchActivityRecorder
             $searchActivity = $user->getSearchActivity()->toArray();
 
             $lastActivity = $this->em->getRepository(SearchActivity::class)
-                ->findLast();
+                ->findLast($user);
 
             $activityTags = [];
 
