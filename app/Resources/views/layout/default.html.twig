@@ -29,3 +29,10 @@
 {{ include('footer.html.twig') }}
 
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/autobahn.min.js') }}"></script>
+    <script src="{{ asset('js/gos-websocket-client.js') }}"></script>
+    <script src="{{ asset('js/app-chat.js') }}"></script>
+{% endblock %}

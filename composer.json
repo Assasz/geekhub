@@ -20,6 +20,7 @@
         "egeloen/ckeditor-bundle": "^4.0",
         "friendsofsymfony/jsrouting-bundle": "^1.6",
         "friendsofsymfony/user-bundle": "~2.0",
+        "gos/web-socket-bundle": "^1.8",
         "incenteev/composer-parameter-handler": "^2.0",
         "kartik-v/bootstrap-fileinput": "@dev",
         "knplabs/knp-paginator-bundle": "^2.6",
