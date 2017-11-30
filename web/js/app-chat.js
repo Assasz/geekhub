@@ -1,17 +1,22 @@
 $(document).ready(function(){
-    var webSocket = WS.connect("ws://127.0.0.1:8888");
+    var conn = new WebSocket('ws://localhost:8888');
 
-    webSocket.on("socket/connect", function(session){
-        console.log("Successfully Connected!");
+    conn.onopen = function(e) {
+        console.log("Connection established!");
+    };
 
-        session.subscribe("chat/channel", function(uri, payload){
-            console.log("Received message", payload.msg);
-        });
+    conn.onmessage = function(e) {
+        var response = JSON.parse(e.data);
 
-        session.publish("chat/channel", {msg: "This is a message!"});
-    })
+        $('#chat').append(response.user+': '+response.msg);
+    };
 
-    webSocket.on("socket/disconnect", function(error){
-        console.log("Disconnected for " + error.reason + " with code " + error.code);
-    })
+    $('[data-action="send-msg"]').click(function(){
+        var msg = {
+            "body": $('#chat_message').val(),
+            "user": $(this).data('user')
+        };
+
+        conn.send(JSON.stringify(msg));
+    });
 });

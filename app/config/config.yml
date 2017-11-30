@@ -117,11 +117,3 @@ ivory_ck_editor:
         widgetselection:
             path: "/ckeditor/plugins/widgetselection/"
             filename: "plugin.js"
-
-gos_web_socket:
-    server:
-        port: 8888
-        host: 127.0.0.1
-        router:
-            resources:
-                - Resources/config/routing.yml
