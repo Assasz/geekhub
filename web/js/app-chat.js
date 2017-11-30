@@ -8,15 +8,39 @@ $(document).ready(function(){
     conn.onmessage = function(e) {
         var response = JSON.parse(e.data);
 
-        $('#chat').append(response.user+': '+response.msg);
+        $('.chat-container').append(response.user+': '+response.msg);
     };
 
-    $('[data-action="send-msg"]').click(function(){
+    $('button[data-action="send-msg"]').click(function(){
+        var body = $('.chat-control').val(),
+            user = $('.chat-control').data('user');
+
+        if(body.length > 0){
+            sendMessage(body, user);
+        }
+    });
+
+    $('textarea[data-action="send-msg"]').keypress(function(e){
+        var body = $(this).val(),
+            user = $(this).data('user');
+
+        if(e.keyCode == 13 && body.length > 0){
+            e.preventDefault();
+            $(this).val('');
+            sendMessage(body, user);
+        }
+    });
+
+    $('[data-action="toggle-chat"]').click(function(){
+        $('#chat').toggleClass('toggled');
+    });
+
+    function sendMessage(body, user){
         var msg = {
-            "body": $('#chat_message').val(),
-            "user": $(this).data('user')
+            "body": body,
+            "user": user
         };
 
         conn.send(JSON.stringify(msg));
-    });
+    }
 });

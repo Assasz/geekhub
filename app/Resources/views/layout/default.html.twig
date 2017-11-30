@@ -3,6 +3,7 @@
 {% block layout %}
 
 {{ include('navbar.html.twig') }}
+{{ include('site/chat.html.twig') }}
 
 {% if user.profileBackground is defined and user.profileBackground is not null %}
     <main class="main" role="main" style="background-image: url('{{ asset(user.profileBackground) }}');">

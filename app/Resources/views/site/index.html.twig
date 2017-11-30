@@ -3,7 +3,6 @@
 {% block title %}GeekHub{% endblock %}
 
 {% block content %}
-    {{ include('site/chat.html.twig') }}
     {{ render(controller('AppBundle:Post:popular')) }}
 
     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}

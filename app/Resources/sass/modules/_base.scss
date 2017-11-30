@@ -3,6 +3,7 @@ body
     background-color: $porcelain;
     position: relative;
     font-family: "Varela Round", sans-serif;
+    overflow-x: hidden;
 
     a
     {
@@ -202,6 +203,7 @@ body
         border-radius: 2px;
         border: none;
         background-color: #fff;
+        transition: all .3s ease;
     }
 
     .page-header
