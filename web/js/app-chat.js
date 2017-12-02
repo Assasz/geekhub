@@ -6,16 +6,35 @@ $(document).ready(function(){
     };
 
     conn.onmessage = function(e) {
-        var response = JSON.parse(e.data);
+        var response = JSON.parse(e.data),
+            message = $(
+                '<div class="chat-message">'+
+                    '<img src="'+response.profilePicture+'" class="message-author-img img-circle" alt="'+response.username+'">'+
+                    '<div class="message-body">'+
+                        '<p>'+response.body+'</p>'+
+                        '<div class="message-caption">'+
+                            '<span>'+response.username+'</span>'+
+                            '<time>'+response.date+'</time>'+
+                        '</div>'+
+                    '</div>'+
+                '</div>'
+            );
 
-        $('.chat-container').append(response.user+': '+response.msg);
+        if($('.chat-control').data('user') == response.userID){
+            message.addClass('user-message');
+        }
+
+        $('.chat-container').append(message);
+        $('.chat-container').scrollTop($('.chat-container')[0].scrollHeight);
     };
 
     $('button[data-action="send-msg"]').click(function(){
-        var body = $('.chat-control').val(),
-            user = $('.chat-control').data('user');
+        var chatControl = $('.chat-control');
+            body = chatControl.val(),
+            user = chatControl.data('user');
 
         if(body.length > 0){
+            chatControl.val('');
             sendMessage(body, user);
         }
     });
@@ -33,6 +52,7 @@ $(document).ready(function(){
 
     $('[data-action="toggle-chat"]').click(function(){
         $('#chat').toggleClass('toggled');
+        $('.chat-control').focus();
     });
 
     function sendMessage(body, user){

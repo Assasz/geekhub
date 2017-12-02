@@ -44,11 +44,15 @@ class Chat implements MessageComponentInterface
 
         $msg = json_decode($msg, true);
         $user = $this->getUser($msg['user']);
+        $date = new \DateTime();
+        $date = $date->format('H:i');
 
         $response = [
-            'msg' => $msg['body'],
-            'user' => $user->getUsername(),
-            'date' => new \DateTime('now')
+            'body' => $msg['body'],
+            'username' => $user->getUsername(),
+            'profilePicture' => $user->getProfilePicturePath(),
+            'date' => $date,
+            'userID' => $user->getId()
         ];
 
         $response = json_encode($response);

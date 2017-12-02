@@ -22,6 +22,8 @@
         box-sizing: content-box;
         height: 60px;
         margin-bottom: 10px;
+        position: absolute;
+        top: 60px;
 
         h3
         {
@@ -54,7 +56,104 @@
         width: 100%;
         order: 2;
         flex-grow: 2;
-        padding: 0 20px;;
+        padding: 0 20px 20px 20px;
+        position: absolute;
+        bottom: 70px;
+        overflow: auto;
+        max-height: calc(100% - 190px);
+
+        .chat-message
+        {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            margin-top: 25px;
+
+            .message-author-img
+            {
+                height: 50px;
+                width: 50px;
+                order: 1;
+                margin-right: 10px;
+            }
+
+            .message-body
+            {
+                order: 2;
+                flex-grow: 2;
+                background-color: $chambray;
+                padding: 15px;
+                border-radius: 2px;
+                position: relative;
+                min-height: 50px;
+
+                p
+                {
+                    width: 100%;
+                    color: $porcelain;
+                    margin: 0;
+                    word-break: break-all;
+                    white-space: -moz-pre-wrap;
+                    white-space: -o-pre-wrap;
+                    white-space: pre-wrap;
+                    white-space: pre-line;
+                    word-wrap: break-word;
+                }
+
+                .message-caption
+                {
+                    font-size: 12px;
+                    opacity: 0.8;
+                    position: absolute;
+                    bottom: -17px;
+                    right: 0;
+
+                    time
+                    {
+                        margin-left: 10px;
+                    }
+                }
+
+                &::before
+                {
+                    content: '';
+                    @include triangle(10px, $chambray, left);
+                    position: absolute;
+                    top: 22px;
+                    left: -5px;
+                }
+            }
+        }
+
+        .user-message
+        {
+            .message-author-img
+            {
+                order: 2;
+                margin-left: 10px;
+                margin-right: 0;
+            }
+
+            .message-body
+            {
+                order: 1;
+                background-color: $mariner;
+
+                .message-caption
+                {
+                    right: auto;
+                    left: 0;
+                }
+
+                &::before
+                {
+                    @include triangle(10px, $mariner, right);
+                    left: auto;
+                    right: -5px;
+                    border-right: none;
+                }
+            }
+        }
     }
 
     .chat-control-wrapper
