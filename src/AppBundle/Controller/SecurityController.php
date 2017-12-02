@@ -42,7 +42,10 @@ class SecurityController extends BaseController
         }
         else
         {
-            $session->set('referer', $request->headers->get('referer'));
+            if(empty($session->get('referer')))
+            {
+                $session->set('referer', $request->headers->get('referer'));
+            }
         }
 
         $authErrorKey = Security::AUTHENTICATION_ERROR;
