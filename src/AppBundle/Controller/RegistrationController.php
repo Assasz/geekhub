@@ -32,7 +32,7 @@ class RegistrationController extends BaseController
 
         if($securityChecker->isGranted('IS_AUTHENTICATED_REMEMBERED'))
         {
-            throw $this->createAccessDeniedException();
+            return $this->redirectToRoute('home');
         }
 
         /** @var $formFactory FactoryInterface */
