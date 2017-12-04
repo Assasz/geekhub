@@ -5,7 +5,9 @@
             <p>{{ message.body }}</p>
             <div class="message-caption">
                 <span>{{ message.author.username }}</span>
-                <time>{{ message.createDate|date('H:i') }}</time>
+                <time>
+                    {{ (message.createDate|date('d m') < "- 1 day"|date('d m')) ? message.createDate|time_diff : message.createDate|date('H:i') }}
+                </time>
             </div>
         </div>
     </div>

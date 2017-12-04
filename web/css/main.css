@@ -601,17 +601,27 @@ label {
   background-color: #263238;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
   border-top-left-radius: 2px;
-  border-bottom-left-radius: 2px;
   box-sizing: content-box;
-  z-index: 1000; }
+  z-index: 1000;
+  text-align: center; }
   .toggle-chat span {
     font-size: 20px;
     line-height: 20px;
     color: #ECEFF1;
     transition: all .3s ease; }
+  .toggle-chat .newmessages {
+    font-size: 12px;
+    width: 100%;
+    background-color: #383B9F;
+    position: absolute;
+    top: 48px;
+    left: 0;
+    border-radius: 0;
+    border-bottom-left-radius: 2px;
+    transition: all .5s ease; }
   .toggle-chat:hover {
     cursor: pointer; }
-  .toggle-chat:hover span {
+  .toggle-chat:hover .fa {
     opacity: 0.6; }
 
 .loader {

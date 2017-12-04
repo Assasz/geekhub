@@ -2,7 +2,8 @@ $(document).ready(function(){
     var conn = new WebSocket('ws://localhost:8888'),
         loadResults = true,
         offset = 20,
-        container = $('.chat-container');
+        container = $('.chat-container'),
+        newMessages = 0;
 
     conn.onopen = function(e) {
         console.log("Connection established!");
@@ -12,7 +13,7 @@ $(document).ready(function(){
         var response = JSON.parse(e.data),
             message = $(
                 '<div class="chat-message">'+
-                    '<img src="'+response.profilePicture+'" class="message-author-img img-circle" alt="'+response.username+'">'+
+                    '<img src="'+imgDir+response.profilePicture+'" class="message-author-img img-circle" alt="'+response.username+'">'+
                     '<div class="message-body">'+
                         '<p>'+response.body+'</p>'+
                         '<div class="message-caption">'+
@@ -26,6 +27,16 @@ $(document).ready(function(){
         if($('.chat-control').data('user') == response.userID){
             message.addClass('user-message');
         }
+
+        if(!container.hasClass('toggled')){
+            newMessages++;
+        } else {
+            newMessages = 0;
+        }
+
+        console.log(newMessages);
+
+        $('.newmessages').html(newMessages).css('background-color', '#2772DD');
 
         container.append(message);
         container.scrollTop(container[0].scrollHeight);
@@ -64,6 +75,10 @@ $(document).ready(function(){
             $('.chat-control').focus();
             container.scrollTop(container[0].scrollHeight);
         }
+
+        newMessages = 0;
+        
+        $('.newmessages').html('0').css('background-color', '#383B9F');
     });
 
     $('.chat-container').scroll(function(){
