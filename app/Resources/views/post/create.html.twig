@@ -5,7 +5,10 @@
 {% form_theme form 'form/custom.html.twig' %}
 
 {% block content %}
-    <h3 class="page-header">Add post</h3>
+    <h3 class="page-header">
+        <span class="fa fa-fw fa-pencil" aria-hidden="true"></span>
+        Add post
+    </h3>
     <div class="form-wrapper">
       {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 

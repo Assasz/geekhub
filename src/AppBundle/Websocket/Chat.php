@@ -5,6 +5,7 @@ use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use AppBundle\Entity\User;
+use AppBundle\Entity\ChatMessage;
 
 class Chat implements MessageComponentInterface
 {
@@ -55,6 +56,13 @@ class Chat implements MessageComponentInterface
             'userID' => $user->getId()
         ];
 
+        $message = [
+            'user' => $user,
+            'body' => $msg['body']
+        ];
+
+        $this->saveMessage($message);
+
         $response = json_encode($response);
 
         foreach ($this->clients as $client)
@@ -95,5 +103,17 @@ class Chat implements MessageComponentInterface
             ->find($id);
 
         return $user;
+    }
+
+    public function saveMessage($message)
+    {
+        $em = $this->container->get('doctrine.orm.entity_manager');
+
+        $chatMessage = new ChatMessage();
+        $chatMessage->setAuthor($message['user']);
+        $chatMessage->setBody($message['body']);
+
+        $em->persist($chatMessage);
+        $em->flush();
     }
 }

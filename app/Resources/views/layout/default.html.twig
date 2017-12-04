@@ -3,7 +3,7 @@
 {% block layout %}
 
 {{ include('navbar.html.twig') }}
-{{ include('site/chat.html.twig') }}
+{{ include('chat/chat.html.twig') }}
 
 {% if user.profileBackground is defined and user.profileBackground is not null %}
     <main class="main" role="main" style="background-image: url('{{ asset(user.profileBackground) }}');">
@@ -33,7 +33,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('js/autobahn.min.js') }}"></script>
-    <script src="{{ asset('js/gos-websocket-client.js') }}"></script>
     <script src="{{ asset('js/app-chat.js') }}"></script>
 {% endblock %}

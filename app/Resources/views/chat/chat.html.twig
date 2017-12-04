@@ -11,7 +11,9 @@
         <h3>Geeks' chatbox</h3>
     </div>
 
-    <div class="chat-container"></div>
+    <div class="chat-container" data-loader="{{ asset('images/loader.gif') }}">
+        {{ render(controller('AppBundle:ChatMessage:load')) }}
+    </div>
 
     <div class="chat-control-wrapper">
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}

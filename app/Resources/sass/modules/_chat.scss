@@ -13,6 +13,12 @@
     flex-direction: column;
     justify-content: flex-end;
 
+    &:hover .cover-bar
+    {
+        opacity: 0;
+        -webkit-transition: all .5s;
+    }
+
     .chat-header
     {
         order: 1;
@@ -154,6 +160,29 @@
                 }
             }
         }
+
+        &::-webkit-scrollbar
+        {
+            width: 6px;
+            padding: 0 2px;
+        }
+
+        &::-webkit-scrollbar-track
+        {
+            background-color: transparent
+        }
+
+        &::-webkit-scrollbar-thumb
+        {
+            background-color: rgba(0,0,0,0.2);
+            border-radius: 2px;
+            transition: all .3s ease;
+        }
+
+        &:hover::-webkit-scrollbar-thumb
+        {
+            background-color: rgba(0,0,0,0.5);
+        }
     }
 
     .chat-control-wrapper
@@ -238,4 +267,11 @@
     {
         opacity: 0.6;
     }
+}
+
+.loader
+{
+    margin: 0 auto;
+    padding-top: 10px;
+    display: block;
 }

@@ -12,7 +12,6 @@ use AppBundle\Entity\PostVoter;
 use AppBundle\Entity\Tag;
 use AppBundle\Entity\SearchActivity;
 use AppBundle\Form\PostType;
-use AppBundle\Form\RatingType;
 use AppBundle\Service\FileUploader;
 
 class PostController extends Controller

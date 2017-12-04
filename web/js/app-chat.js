@@ -1,5 +1,8 @@
 $(document).ready(function(){
-    var conn = new WebSocket('ws://localhost:8888');
+    var conn = new WebSocket('ws://localhost:8888'),
+        loadResults = true,
+        offset = 20,
+        container = $('.chat-container');
 
     conn.onopen = function(e) {
         console.log("Connection established!");
@@ -24,8 +27,8 @@ $(document).ready(function(){
             message.addClass('user-message');
         }
 
-        $('.chat-container').append(message);
-        $('.chat-container').scrollTop($('.chat-container')[0].scrollHeight);
+        container.append(message);
+        container.scrollTop(container[0].scrollHeight);
     };
 
     $('button[data-action="send-msg"]').click(function(){
@@ -43,17 +46,65 @@ $(document).ready(function(){
         var body = $(this).val(),
             user = $(this).data('user');
 
-        if(e.keyCode == 13 && body.length > 0){
+
+        if(e.keyCode == 13){
             e.preventDefault();
-            $(this).val('');
-            sendMessage(body, user);
+
+            if(body.length > 0){
+                $(this).val('');
+                sendMessage(body, user);
+            }
         }
     });
 
     $('[data-action="toggle-chat"]').click(function(){
         $('#chat').toggleClass('toggled');
-        $('.chat-control').focus();
+
+        if($('#chat').hasClass('toggled')){
+            $('.chat-control').focus();
+            container.scrollTop(container[0].scrollHeight);
+        }
     });
+
+    $('.chat-container').scroll(function(){
+        var scrollPosition = container[0].scrollHeight + container.height();
+
+        if(loadResults){
+            if($(this).scrollTop() == 0){
+
+                $.ajax({
+                    url: Routing.generate('chatmessage_load', {
+                        offset: offset
+                    }),
+                    dataType: "json",
+                })
+                .done(function(response) {
+                    container.prepend(response.newContent);
+                    offset += response.resultsNumber;
+
+                    if(response.resultsNumber < 1){
+                        loadResults = false;
+                    }
+                })
+                .then(function(){
+                    var newScrollPosition = container[0].scrollHeight + container.height();
+
+                    container.scrollTop(newScrollPosition - scrollPosition);
+                });
+            }
+        }
+    });
+
+    var loaderUrl = container.data('loader'),
+        loader = $('<img src="'+loaderUrl+'" class="loader" alt="Loading">');
+
+    $(document)
+        .ajaxStart(function () {
+            container.prepend(loader);
+        })
+        .ajaxStop(function () {
+            loader.remove();
+        });
 
     function sendMessage(body, user){
         var msg = {

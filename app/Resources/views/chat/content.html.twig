@@ -1,0 +1,12 @@
+{% for message in messages|reverse %}
+    <div class="chat-message {% if message.author == app.user %} user-message{% endif %}">
+        <img src="{{ asset(message.author.profilePicturePath) }}" class="message-author-img img-circle" alt="{{ message.author.username }}">
+        <div class="message-body">
+            <p>{{ message.body }}</p>
+            <div class="message-caption">
+                <span>{{ message.author.username }}</span>
+                <time>{{ message.createDate|date('H:i') }}</time>
+            </div>
+        </div>
+    </div>
+{% endfor %}

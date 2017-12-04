@@ -15,7 +15,9 @@ class PostType extends AbstractType
     {
         $builder
         ->add('title', TextType::class, ['attr' => [
-            'class' => 'form-control'
+            'class' => 'form-control',
+            'autofocus' => 'autofocus',
+            'placeholder' => 'Min 3 characters, max 255.'
         ]])
         ->add('image', FileType::class, [
             'label' => 'Post image'
