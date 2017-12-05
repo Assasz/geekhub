@@ -5,9 +5,9 @@ use Ratchet\ConnectionInterface;
 use Ratchet\MessageComponentInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use AppBundle\Entity\User;
-use AppBundle\Entity\ChatMessage;
+use AppBundle\Entity\Notification;
 
-class Chat implements MessageComponentInterface
+class NotificationServer implements MessageComponentInterface
 {
     protected $clients;
     protected $container;
@@ -43,32 +43,16 @@ class Chat implements MessageComponentInterface
         echo sprintf('Connection %d sending message "%s" to %d other connection%s' . "\n"
             , $from->resourceId, $msg, $numRecv, $numRecv == 1 ? '' : 's');
 
-        $msg = json_decode($msg, true);
-        $user = $this->getUser($msg['user']);
-        $date = new \DateTime();
-        $date = $date->format('H:i');
-
-        $response = [
-            'body' => $msg['body'],
-            'username' => $user->getUsername(),
-            'profilePicture' => $user->getProfilePicturePath(),
-            'date' => $date,
-            'userID' => $user->getId()
-        ];
-
-        $message = [
-            'user' => $user,
-            'body' => $msg['body']
-        ];
-
-        $this->saveMessage($message);
-
-        $response = json_encode($response);
-
-        foreach ($this->clients as $client)
-        {
-            $client->send($response);
-        }
+        // $response = [
+        //
+        // ];
+        //
+        // $response = json_encode($response);
+        //
+        // foreach ($this->clients as $client)
+        // {
+        //     $client->send($response);
+        // }
     }
 
     /**
@@ -103,17 +87,5 @@ class Chat implements MessageComponentInterface
             ->find($id);
 
         return $user;
-    }
-
-    public function saveMessage($message)
-    {
-        $em = $this->container->get('doctrine.orm.entity_manager');
-
-        $chatMessage = new ChatMessage();
-        $chatMessage->setAuthor($message['user']);
-        $chatMessage->setBody($message['body']);
-
-        $em->persist($chatMessage);
-        $em->flush();
     }
 }

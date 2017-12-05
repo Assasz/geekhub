@@ -607,38 +607,4 @@ class User extends BaseUser
     {
         return $this->searchActivity;
     }
-
-    /**
-     * Add notification
-     *
-     * @param \AppBundle\Entity\Notification $notification
-     *
-     * @return User
-     */
-    public function addNotification(\AppBundle\Entity\Notification $notification)
-    {
-        $this->notifications[] = $notification;
-
-        return $this;
-    }
-
-    /**
-     * Remove notification
-     *
-     * @param \AppBundle\Entity\Notification $notification
-     */
-    public function removeNotification(\AppBundle\Entity\Notification $notification)
-    {
-        $this->notifications->removeElement($notification);
-    }
-
-    /**
-     * Get notifications
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getNotifications()
-    {
-        return $this->notifications;
-    }
 }

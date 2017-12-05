@@ -1,13 +1,16 @@
 <?php
 namespace AppBundle\Websocket;
 
-use AppBundle\Websocket\Chat;
+use AppBundle\Websocket\ChatServer;
+use AppBundle\Websocket\NotificationServer;
 use Ratchet\Http\HttpServer;
 use Ratchet\Server\IoServer;
 use Ratchet\WebSocket\WsServer;
+use Ratchet\App;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Fr\DiffSocket;
 
 class ServerCommand extends ContainerAwareCommand
 {
@@ -25,12 +28,11 @@ class ServerCommand extends ContainerAwareCommand
     {
         $output->writeln('Websocket server has stated!');
 
-        $server = IoServer::factory(new HttpServer(
-            new WsServer(
-                new Chat($this->getContainer())
-            )
-        ), 8888);
+        $app = new App('localhost', 8888);
 
-        $server->run();
+        $app->route('/chat', new ChatServer($this->getContainer()));
+        $app->route('/notification', new NotificationServer($this->getContainer()));
+
+        $app->run();
     }
 }

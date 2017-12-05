@@ -1,12 +1,12 @@
 $(document).ready(function(){
-    var conn = new WebSocket('ws://localhost:8888'),
+    var conn = new WebSocket('ws://localhost:8888/chat'),
         loadResults = true,
         offset = 20,
         container = $('.chat-container'),
         newMessages = 0;
 
     conn.onopen = function(e) {
-        console.log("Connection established!");
+        console.log("Connection with chat established!");
     };
 
     conn.onmessage = function(e) {
@@ -77,7 +77,7 @@ $(document).ready(function(){
         }
 
         newMessages = 0;
-        
+
         $('.newmessages').html('0').css('background-color', '#383B9F');
     });
 
