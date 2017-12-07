@@ -26,8 +26,6 @@ body {
     transition: all .3s ease; }
     .navbar-inverse a:hover {
       opacity: 0.6; }
-  .navbar-inverse .dropdown:last-of-type {
-    padding-right: 0; }
   .navbar-inverse .dropdown a:focus {
     background-color: #263238 !important; }
   .navbar-inverse .dropdown-menu {
@@ -66,48 +64,65 @@ body {
         padding-bottom: 0; }
         .navbar-inverse .dropdown-menu li a:hover {
           background-color: #263238; }
-  .navbar-inverse .notifications {
+  .navbar-inverse .notifications .label-notifications {
+    position: absolute;
+    top: 5px;
+    right: 0;
+    background-color: #2772DD;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 18px; }
+  .navbar-inverse .notifications .dropdown-toggle {
+    padding: 0 15px; }
+  .navbar-inverse .notifications .dropdown-menu {
     max-height: 360px;
     overflow: auto;
     width: 350px; }
-    .navbar-inverse .notifications .no-notifications {
+    .navbar-inverse .notifications .dropdown-menu .no-notifications {
       font-size: 16px;
       color: #E0E0E0;
       line-height: 40px;
       text-align: center; }
-    .navbar-inverse .notifications li {
-      padding: 10px 0;
-      height: 60px; }
-      .navbar-inverse .notifications li a {
+    .navbar-inverse .notifications .dropdown-menu .active {
+      background-color: #424242;
+      border-bottom: 1px solid #263238; }
+      .navbar-inverse .notifications .dropdown-menu .active a {
+        background-color: #424242; }
+    .navbar-inverse .notifications .dropdown-menu li {
+      padding: 15px 0;
+      height: 70px; }
+      .navbar-inverse .notifications .dropdown-menu li a {
         overflow: hidden;
         position: relative; }
-        .navbar-inverse .notifications li a .user-img {
+        .navbar-inverse .notifications .dropdown-menu li a .user-img {
           width: 40px;
           height: 40px;
           float: left;
           margin-right: 20px; }
-        .navbar-inverse .notifications li a .notification-caption {
+        .navbar-inverse .notifications .dropdown-menu li a .notification-caption {
           float: left;
           line-height: normal; }
-          .navbar-inverse .notifications li a .notification-caption p {
+          .navbar-inverse .notifications .dropdown-menu li a .notification-caption p {
             font-size: 14px;
             margin-bottom: 5px; }
-          .navbar-inverse .notifications li a .notification-caption time {
+          .navbar-inverse .notifications .dropdown-menu li a .notification-caption time {
             font-size: 12px;
             color: #E0E0E0; }
-    .navbar-inverse .notifications::-webkit-scrollbar {
+    .navbar-inverse .notifications .dropdown-menu::-webkit-scrollbar {
       width: 6px;
       padding: 0 2px; }
-    .navbar-inverse .notifications::-webkit-scrollbar-track {
+    .navbar-inverse .notifications .dropdown-menu::-webkit-scrollbar-track {
       background-color: transparent; }
-    .navbar-inverse .notifications::-webkit-scrollbar-thumb {
+    .navbar-inverse .notifications .dropdown-menu::-webkit-scrollbar-thumb {
       background-color: rgba(0, 0, 0, 0.2);
       border-radius: 2px;
       transition: all .3s ease; }
-    .navbar-inverse .notifications:hover::-webkit-scrollbar-thumb {
+    .navbar-inverse .notifications .dropdown-menu:hover::-webkit-scrollbar-thumb {
       background-color: rgba(0, 0, 0, 0.5); }
   .navbar-inverse .dropdown-toggle {
-    padding: 0 10px;
+    padding: 0 0 0 15px;
     line-height: 50px; }
   .navbar-inverse .navbar-header {
     order: 1; }
@@ -646,7 +661,7 @@ label {
     line-height: 20px;
     color: #ECEFF1;
     transition: all .3s ease; }
-  .toggle-chat .newmessages {
+  .toggle-chat .label-chat {
     font-size: 12px;
     width: 100%;
     background-color: #383B9F;

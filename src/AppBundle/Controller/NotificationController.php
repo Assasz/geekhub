@@ -55,4 +55,30 @@ class NotificationController extends Controller
              'notifications' => $notifications
          ]);
      }
+
+     /**
+      * @Route("/notification/disactivate/{user}",  name="notification_disactivate", requirements={"user": "\d+"}, options={"expose": true})
+      */
+      public function disactivateAction(Request $request, User $user)
+      {
+          if(!$request->isXmlHttpRequest())
+          {
+              throw new \Exception('This action is forbidden');
+          }
+
+          $notifications = $user->getNotifications()->toArray();
+
+          foreach ($notifications as $notification)
+          {
+              if($notification->getActive() == 1)
+              {
+                  $notification->setActive(0);
+              }
+          }
+
+          $em = $this->getDoctrine()->getManager();
+          $em->flush();
+
+          return new JsonResponse();
+      }
 }

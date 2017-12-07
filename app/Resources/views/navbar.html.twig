@@ -19,57 +19,51 @@
     <div id="navbar" class="navbar-collapse collapse navbar-right">
       <ul class="nav navbar-nav">
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-        <li>
-          <a href="{{ path('post_create') }}">
-            <span class="fa fa-fw fa-lg fa-pencil" aria-hidden="true" title="Add post"></span>
-            <span class="visually-hidden">Add post</span>
-          </a>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-            <span class="fa fa-fw fa-lg fa-bell" aria-hidden="true" title="Notifications"></span>
-            <span class="visually-hidden">Notifications</span>
-          </a>
-          <ul class="dropdown-menu notifications">
-            {{ render(controller('AppBundle:Notification:list', {'user': app.user.id })) }}
-          </ul>
-        </li>
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-            <img src="{{ asset(app.user.profilePicturePath) }}" alt="{{ app.user.username }} profile picture" class="img-circle" width="40px" height="40px">
-          </a>
-          <ul class="dropdown-menu">
-            <li class="profile">
-                <img src="{{ asset(app.user.profilePicturePath) }}" alt="{{ app.user.username }} profile picture" class="img-circle profile-img" width="50px" height="50px">
-                <div class="img-caption">
-                    <p>{{ app.user.username }}
-                    <small>{{ app.user.forename }} {{ app.user.surname }}</small></p>
-                </div>
-            </li>
             <li>
-                <a href="{{ path('user', {'user': app.user.id}) }}">
-                    <span class="fa fa-fw fa-user" aria-hidden="true"></span>
-                    My profile
-                </a>
+              <a href="{{ path('post_create') }}">
+                <span class="fa fa-fw fa-lg fa-pencil" aria-hidden="true" title="Add post"></span>
+                <span class="visually-hidden">Add post</span>
+              </a>
             </li>
-            <li>
-                <a href="#">
-                    <span class="fa fa-fw fa-cog" aria-hidden="true"></span>
-                    Account settings
-                </a>
+            <li class="dropdown notifications">
+                {{ render(controller('AppBundle:Notification:list', {'user': app.user.id })) }}
             </li>
-            <li>
-                <a href="{{ path('fos_user_security_logout') }}">
-                    <span class="fa fa-fw fa-sign-out" aria-hidden="true"></span>
-                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-                </a>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <img src="{{ asset(app.user.profilePicturePath) }}" alt="{{ app.user.username }} profile picture" class="img-circle" width="40px" height="40px">
+              </a>
+              <ul class="dropdown-menu">
+                <li class="profile">
+                    <img src="{{ asset(app.user.profilePicturePath) }}" alt="{{ app.user.username }} profile picture" class="img-circle profile-img" width="50px" height="50px">
+                    <div class="img-caption">
+                        <p>{{ app.user.username }}
+                        <small>{{ app.user.forename }} {{ app.user.surname }}</small></p>
+                    </div>
+                </li>
+                <li>
+                    <a href="{{ path('user', {'user': app.user.id}) }}">
+                        <span class="fa fa-fw fa-user" aria-hidden="true"></span>
+                        My profile
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="fa fa-fw fa-cog" aria-hidden="true"></span>
+                        Account settings
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('fos_user_security_logout') }}">
+                        <span class="fa fa-fw fa-sign-out" aria-hidden="true"></span>
+                        {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                    </a>
+                </li>
+              </ul>
             </li>
           </ul>
-        </li>
-      </ul>
       {% else %}
-      <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
-      <li><a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a></li>
+          <li><a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a></li>
+          <li><a href="{{ path('fos_user_registration_register') }}">{{ 'layout.register'|trans({}, 'FOSUserBundle') }}</a></li>
       {% endif %}
       </ul>
     </div>

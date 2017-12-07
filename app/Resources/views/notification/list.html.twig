@@ -1,9 +1,25 @@
-{% if notifications|length < 1 %}
-    <li>
-        <p class="no-notifications">No notifications</p>
-    </li>
-{% endif %}
-
-{% for notification in notifications|reverse|slice(0, 50) %}
-    {{ include('notification/content.html.twig') }}
+{% set activeNotifications = {} %}
+{% for notification in notifications %}
+    {% if notification.active == 1 %}
+        {% set activeNotifications = activeNotifications|merge({(loop.index0):notification}) %}
+    {% endif %}
 {% endfor %}
+
+<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+    <span class="fa fa-fw fa-lg fa-bell" aria-hidden="true" title="Notifications"></span>
+    <span class="visually-hidden">Notifications</span>
+    {% if activeNotifications|length > 0 %}
+        <span class="label label-notifications">{{ activeNotifications|length }}</span>
+    {% endif %}
+</a>
+<ul class="dropdown-menu">
+    {% if notifications|length < 1 %}
+        <li>
+            <p class="no-notifications">No notifications</p>
+        </li>
+    {% endif %}
+
+    {% for notification in notifications|reverse|slice(0, 50) %}
+        {{ include('notification/content.html.twig') }}
+    {% endfor %}
+</ul>

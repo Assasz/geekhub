@@ -95,7 +95,7 @@ class Notification
      */
     public function setActiveValue()
     {
-        $this->active = 0;
+        $this->active = 1;
     }
 
     /**

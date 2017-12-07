@@ -12,7 +12,7 @@
     path('post', {'post': notification.comment.post.id }) ~ '#comment-' ~ notification.comment.id,  notification.triggeringUser.username ~ ' replied to your comment' %}
 {% endif %}
 
-<li>
+<li {% if notification.active == 1 %} class="active" {% endif %}>
     <a href="{{ link }}" title="{{ text }}">
         <img src="{{ asset(notification.triggeringUser.profilePicturePath) }}" alt="{{ notification.triggeringUser.username }}" class="img-responsive img-circle user-img">
         <div class="notification-caption">
