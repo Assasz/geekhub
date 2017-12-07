@@ -25,11 +25,14 @@
             <span class="visually-hidden">Add post</span>
           </a>
         </li>
-        <li>
-          <a href="#">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
             <span class="fa fa-fw fa-lg fa-bell" aria-hidden="true" title="Notifications"></span>
             <span class="visually-hidden">Notifications</span>
           </a>
+          <ul class="dropdown-menu notifications">
+            {{ render(controller('AppBundle:Notification:list', {'user': app.user.id })) }}
+          </ul>
         </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">

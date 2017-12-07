@@ -12,13 +12,13 @@
         <h3>Geeks' chatbox</h3>
     </div>
 
-    <div class="chat-container" data-loader="{{ asset('images/loader.gif') }}">
+    <div class="chat-container">
         {{ render(controller('AppBundle:ChatMessage:load')) }}
     </div>
 
     <div class="chat-control-wrapper">
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            <textarea data-action="send-msg" data-user="{{ app.user.id }}" class="chat-control" rows="1" placeholder="Say hello!"></textarea>
+            <textarea data-action="send-msg" class="chat-control" rows="1" placeholder="Say hello!"></textarea>
             <button type="button" data-action="send-msg" class="btn-send" title="Send message">
                 <span class="fa fa-fw fa-paper-plane" aria-hidden="true"></span>
                 <span class="visually-hidden">Send message</span>

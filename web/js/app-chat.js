@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    var conn = new WebSocket('ws://localhost:8888/chat'),
+    var conn = new WebSocket('ws://localhost:8888'),
         loadResults = true,
         offset = 20,
         container = $('.chat-container'),
@@ -13,7 +13,7 @@ $(document).ready(function(){
         var response = JSON.parse(e.data),
             message = $(
                 '<div class="chat-message">'+
-                    '<img src="'+imgDir+response.profilePicture+'" class="message-author-img img-circle" alt="'+response.username+'">'+
+                    '<img src="'+assetDir+response.profilePicture+'" class="message-author-img img-circle" alt="'+response.username+'">'+
                     '<div class="message-body">'+
                         '<p>'+response.body+'</p>'+
                         '<div class="message-caption">'+
@@ -24,7 +24,7 @@ $(document).ready(function(){
                 '</div>'
             );
 
-        if($('.chat-control').data('user') == response.userID){
+        if(user == response.userID){
             message.addClass('user-message');
         }
 
@@ -110,8 +110,7 @@ $(document).ready(function(){
         }
     });
 
-    var loaderUrl = container.data('loader'),
-        loader = $('<img src="'+loaderUrl+'" class="loader" alt="Loading">');
+    var loader = $('<img src="'+assetDir+'images/loader.gif" class="loader" alt="Loading">');
 
     $(document)
         .ajaxStart(function () {

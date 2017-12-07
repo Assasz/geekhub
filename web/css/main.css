@@ -26,10 +26,10 @@ body {
     transition: all .3s ease; }
     .navbar-inverse a:hover {
       opacity: 0.6; }
-  .navbar-inverse .dropdown a {
+  .navbar-inverse .dropdown:last-of-type {
     padding-right: 0; }
-    .navbar-inverse .dropdown a:focus {
-      background-color: #263238 !important; }
+  .navbar-inverse .dropdown a:focus {
+    background-color: #263238 !important; }
   .navbar-inverse .dropdown-menu {
     background-color: #263238;
     width: 300px; }
@@ -66,6 +66,46 @@ body {
         padding-bottom: 0; }
         .navbar-inverse .dropdown-menu li a:hover {
           background-color: #263238; }
+  .navbar-inverse .notifications {
+    max-height: 360px;
+    overflow: auto;
+    width: 350px; }
+    .navbar-inverse .notifications .no-notifications {
+      font-size: 16px;
+      color: #E0E0E0;
+      line-height: 40px;
+      text-align: center; }
+    .navbar-inverse .notifications li {
+      padding: 10px 0;
+      height: 60px; }
+      .navbar-inverse .notifications li a {
+        overflow: hidden;
+        position: relative; }
+        .navbar-inverse .notifications li a .user-img {
+          width: 40px;
+          height: 40px;
+          float: left;
+          margin-right: 20px; }
+        .navbar-inverse .notifications li a .notification-caption {
+          float: left;
+          line-height: normal; }
+          .navbar-inverse .notifications li a .notification-caption p {
+            font-size: 14px;
+            margin-bottom: 5px; }
+          .navbar-inverse .notifications li a .notification-caption time {
+            font-size: 12px;
+            color: #E0E0E0; }
+    .navbar-inverse .notifications::-webkit-scrollbar {
+      width: 6px;
+      padding: 0 2px; }
+    .navbar-inverse .notifications::-webkit-scrollbar-track {
+      background-color: transparent; }
+    .navbar-inverse .notifications::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.2);
+      border-radius: 2px;
+      transition: all .3s ease; }
+    .navbar-inverse .notifications:hover::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.5); }
   .navbar-inverse .dropdown-toggle {
     padding: 0 10px;
     line-height: 50px; }
@@ -447,9 +487,6 @@ label {
   display: flex;
   flex-direction: column;
   justify-content: flex-end; }
-  .chat-wrapper:hover .cover-bar {
-    opacity: 0;
-    -webkit-transition: all .5s; }
   .chat-wrapper .chat-header {
     order: 1;
     width: 100%;

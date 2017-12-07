@@ -283,28 +283,4 @@ class Notification
     {
         return $this->comment;
     }
-
-    /**
-     * Set pushed
-     *
-     * @param integer $pushed
-     *
-     * @return Notification
-     */
-    public function setPushed($pushed)
-    {
-        $this->pushed = $pushed;
-
-        return $this;
-    }
-
-    /**
-     * Get pushed
-     *
-     * @return integer
-     */
-    public function getPushed()
-    {
-        return $this->pushed;
-    }
 }

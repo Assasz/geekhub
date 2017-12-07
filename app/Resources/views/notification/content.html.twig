@@ -1,0 +1,23 @@
+{% if notification.type == 'new_post' %}
+    {% set link, text =
+    path('post', {'post': notification.post.id }),  'New post from ' ~ notification.triggeringUser.username %}
+{% elseif notification.type == 'new_comment' %}
+    {% set link, text =
+    path('post', {'post': notification.comment.post.id }) ~ '#comment-' ~ notification.comment.id,  notification.triggeringUser.username ~ ' commented your post' %}
+{% elseif notification.type == 'new_follower' %}
+    {% set link, text =
+    path('user', {'user': notification.triggeringUser.id }),  notification.triggeringUser.username ~ ' is following you' %}
+{% else %}
+    {% set link, text =
+    path('post', {'post': notification.comment.post.id }) ~ '#comment-' ~ notification.comment.id,  notification.triggeringUser.username ~ ' replied to your comment' %}
+{% endif %}
+
+<li>
+    <a href="{{ link }}" title="{{ text }}">
+        <img src="{{ asset(notification.triggeringUser.profilePicturePath) }}" alt="{{ notification.triggeringUser.username }}" class="img-responsive img-circle user-img">
+        <div class="notification-caption">
+            <p>{{ text|length > 30 ? text|slice(0, 30) ~ '...' : text }}</p>
+            <time>{{ notification.date|time_diff }}</time>
+        </div>
+    </a>
+</li>

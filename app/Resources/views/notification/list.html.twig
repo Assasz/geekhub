@@ -1,0 +1,9 @@
+{% if notifications|length < 1 %}
+    <li>
+        <p class="no-notifications">No notifications</p>
+    </li>
+{% endif %}
+
+{% for notification in notifications|reverse|slice(0, 50) %}
+    {{ include('notification/content.html.twig') }}
+{% endfor %}
