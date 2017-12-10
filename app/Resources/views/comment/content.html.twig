@@ -22,7 +22,7 @@
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 <a href="#" class="separated-link" data-action="comment-reply" data-comment-author="{{ comment.author }}"
                 {% if comment.parent is not null %}
-                    data-comment-id="{{ comment.parent }}"
+                    data-comment-id="{{ comment.parent.id }}"
                 {% else %}
                     data-comment-id="{{ comment.id }}"
                 {% endif %}

@@ -13,6 +13,7 @@ use AppBundle\Entity\Tag;
 use AppBundle\Entity\SearchActivity;
 use AppBundle\Form\PostType;
 use AppBundle\Service\FileUploader;
+use AppBundle\Service\NotificationManager;
 
 class PostController extends Controller
 {
@@ -89,7 +90,7 @@ class PostController extends Controller
     /**
      * @Route("/post/create", name="post_create")
      */
-    public function createAction(Request $request, FileUploader $fileUploader)
+    public function createAction(Request $request, FileUploader $fileUploader, NotificationManager $notificationManager)
     {
         $securityChecker = $this->get('security.authorization_checker');
 
@@ -143,6 +144,9 @@ class PostController extends Controller
             $em->flush();
 
             $this->addFlash('success', 'Post added successfuly');
+
+            $notificationManager->addNewPostNotification($post);
+            $notificationManager->save();
 
             return $this->redirectToRoute('post', ['post' => $post->getId()]);
         }

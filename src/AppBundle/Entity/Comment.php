@@ -68,9 +68,15 @@ class Comment
     /**
      * @var int
      *
-     * @ORM\Column(name="parent_id", type="integer", nullable=true)
+     * @ORM\ManyToOne(targetEntity="Comment", inversedBy="replies")
+     * @ORM\JoinColumn(name="parent_id", referencedColumnName="id", nullable=true)
      */
     private $parent;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="parent")
+     */
+    private $replies;
 
     /**
      * @var int
@@ -208,30 +214,6 @@ class Comment
     }
 
     /**
-     * Set parent
-     *
-     * @param integer $parent
-     *
-     * @return int
-     */
-    public function setParent($parent)
-    {
-        $this->parent = $parent;
-
-        return $this;
-    }
-
-    /**
-     * Get parent
-     *
-     * @return int
-     */
-    public function getParent()
-    {
-        return $this->parent;
-    }
-
-    /**
      * Set post
      *
      * @param Post $post
@@ -287,5 +269,63 @@ class Comment
     public function getVoters()
     {
         return $this->voters;
+    }
+
+    /**
+     * Set parent
+     *
+     * @param \AppBundle\Entity\Comment $parent
+     *
+     * @return Comment
+     */
+    public function setParent(\AppBundle\Entity\Comment $parent = null)
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * Get parent
+     *
+     * @return \AppBundle\Entity\Comment
+     */
+    public function getParent()
+    {
+        return $this->parent;
+    }
+
+    /**
+     * Add reply
+     *
+     * @param \AppBundle\Entity\Comment $reply
+     *
+     * @return Comment
+     */
+    public function addReply(\AppBundle\Entity\Comment $reply)
+    {
+        $this->replies[] = $reply;
+
+        return $this;
+    }
+
+    /**
+     * Remove reply
+     *
+     * @param \AppBundle\Entity\Comment $reply
+     */
+    public function removeReply(\AppBundle\Entity\Comment $reply)
+    {
+        $this->replies->removeElement($reply);
+    }
+
+    /**
+     * Get replies
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReplies()
+    {
+        return $this->replies;
     }
 }

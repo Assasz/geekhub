@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use AppBundle\Entity\User;
+use AppBundle\Service\NotificationManager;
 
 class UserController extends Controller
 {
@@ -28,7 +29,7 @@ class UserController extends Controller
     /**
      * @Route("/user/follow/{user}", name="user_follow", requirements={"user": "\d+"}, options={"expose"=true})
      */
-    public function followAction(Request $request, User $user)
+    public function followAction(Request $request, User $user, NotificationManager $notificationManager)
     {
         if(!$request->isXmlHttpRequest())
         {
@@ -49,6 +50,9 @@ class UserController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $em->flush();
+
+            $notificationManager->addNewFollowerNotification($user);
+            $notificationManager->save();
         }
 
         return new JsonResponse();

@@ -10,6 +10,8 @@ use AppBundle\Form\CommentType;
 use AppBundle\Entity\Post;
 use AppBundle\Entity\User;
 use AppBundle\Entity\Comment;
+use AppBundle\Service\NotificationManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 class CommentController extends Controller
 {
@@ -109,8 +111,9 @@ class CommentController extends Controller
 
     /**
      * @Route("/comment/create/{post}/{parent}",  name="comment_create", requirements={"post": "\d+", "parent": "\d+"})
+     * @ParamConverter("parent", class="AppBundle:Comment", options={"id" = "parent"})
      */
-    public function createAction(Request $request, Post $post, $parent = null)
+    public function createAction(Request $request, Post $post, Comment $parent = null, NotificationManager $notificationManager)
     {
         $securityChecker = $this->get('security.authorization_checker');
 
@@ -137,9 +140,23 @@ class CommentController extends Controller
             $em->persist($comment);
             $em->flush();
 
+            if(empty($parent) && $user != $post->getAuthor())
+            {
+                $notificationManager->addNewCommentNotification($comment);
+                $notificationManager->save();
+            }
+
+            if(!empty($parent))
+            {
+                $notificationManager->addNewReplyNotification($comment);
+                $notificationManager->save();
+            }
+
             $response = $this->renderView('comment/content.html.twig', [
                 'comment' => $comment
             ]);
+
+            $parent = (empty($parent)) ? null : $parent->getId();
 
             return new JsonResponse([
                 'comment' => $response,

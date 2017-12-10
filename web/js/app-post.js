@@ -18,7 +18,15 @@ $(document).ready(function() {
         form.find('button').html('Add reply');
 
         if ($('#replies-' + id).length) {
-            panel.appendTo('#replies-' + id);
+            if(!$('#replies-' + id).is(':visible')){
+                var btn = $('[data-action="show-comment-replies"][data-comment-id="' + id + '"]');
+
+                btn.html('Hide replies');
+                btn.attr('data-action', 'hide-comment-replies');
+                $('#replies-' + id).show();
+            }
+
+            panel.insertAfter('#replies-' + id);
         } else {
             panel.insertAfter('#comment-' + id);
         }
@@ -62,8 +70,11 @@ $(document).ready(function() {
                     var commentsNumber = parseFloat($('[data-comments-number]').html());
                     $('[data-comments-number]').html(commentsNumber + 1);
                 } else {
-                    $('<div id="replies-' + response.parent + '" class="replies"></div>').insertAfter('#comment-' + response.parent);
-                    $(response.comment).appendTo('#replies-' + response.parent);
+                    if(!$('#replies-'+response.parent).length){
+                        $('<div id="replies-' + response.parent + '" class="replies"></div>').insertAfter('#comment-' + response.parent);
+                    }
+
+                    $(response.comment).appendTo($('#replies-' + response.parent));
                 }
             });
     });
@@ -78,15 +89,16 @@ $(document).ready(function() {
         }
     });
 
-    $(document).on('click', '[data-action="show-comment-replies"]', function(event) {
+    $(document).on('click', '[data-action="show-comment-replies"]', function(event, id) {
         event.preventDefault();
-        var id = $(this).data('comment-id'),
+        var id = id || $(this).data('comment-id'),
             btn = $('[data-action="show-comment-replies"][data-comment-id="' + id + '"]');
 
         btn.html('Hide replies');
         btn.attr('data-action', 'hide-comment-replies');
 
-        $.ajax({
+        if(!$('#replies-'+id).length){
+            $.ajax({
                 url: Routing.generate('comment_list_replies', {
                     parent: id,
                     show: 1
@@ -101,6 +113,9 @@ $(document).ready(function() {
                     $(response.replies).appendTo('#replies-' + id);
                 }
             });
+        } else {
+            $('#replies-'+id).show();
+        }
     });
 
     $(document).on('click', '[data-action="hide-comment-replies"]', function(event) {
@@ -109,9 +124,13 @@ $(document).ready(function() {
             repliesNumber = $('#replies-' + id + ' .comment-container').length,
             btn = $('[data-action="hide-comment-replies"][data-comment-id="' + id + '"]');
 
-        $('#replies-' + id).remove();
+        $('#replies-' + id).hide();
         btn.html('Show replies (' + repliesNumber + ')');
         btn.attr('data-action', 'show-comment-replies');
+
+        if($('.reply-panel').length){
+            $('.reply-panel').remove();
+        }
     });
 
     $('[data-action="post-like"]').click(function() {
@@ -147,4 +166,20 @@ $(document).ready(function() {
     $('pre code').each(function(i, e){
         hljs.highlightBlock(e);
     });
+
+    $(document).on('click', 'a[href^="#"]', function(event) {
+        window.setTimeout(function() {
+        offsetAnchor();
+        }, 0);
+    });
+
+    window.setTimeout(offsetAnchor, 0);
+
+    function offsetAnchor() {
+        if(location.hash.length !== 0) {
+            var id = window.location.hash.substring(9);
+
+            window.scrollTo(window.scrollX, window.scrollY - 70);
+        }
+    }
 });

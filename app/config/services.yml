@@ -44,11 +44,20 @@ services:
             - { name: doctrine.orm.entity_listener }
             - { name: doctrine.orm.entity_listener, entity_manager: custom }
 
+    notification_listener:
+        class: AppBundle\EntityListener\NotificationListener
+        tags:
+            - { name: doctrine.orm.entity_listener }
+            - { name: doctrine.orm.entity_listener, entity_manager: custom }
+
     AppBundle\Service\FileUploader:
         arguments:
             $targetDir: '%upload_directory%'
 
     AppBundle\Service\SearchActivityRecorder:
+        arguments: ['@doctrine.orm.entity_manager']
+
+    AppBundle\Service\NotificationManager:
         arguments: ['@doctrine.orm.entity_manager']
 
     app.twig.extension.date:

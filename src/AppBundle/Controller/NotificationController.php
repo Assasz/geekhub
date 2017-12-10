@@ -50,9 +50,18 @@ class NotificationController extends Controller
      public function listAction(Request $request, User $user)
      {
          $notifications = $user->getNotifications()->toArray();
+         $pushedNotifications = [];
+
+         foreach ($notifications as $notification)
+         {
+             if($notification->getPushed() == 1)
+             {
+                 $pushedNotifications[] = $notification;
+             }
+         }
 
          return $this->render('notification/list.html.twig', [
-             'notifications' => $notifications
+             'notifications' => $pushedNotifications
          ]);
      }
 

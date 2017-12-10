@@ -9,7 +9,7 @@
     path('user', {'user': notification.triggeringUser.id }),  notification.triggeringUser.username ~ ' is following you' %}
 {% else %}
     {% set link, text =
-    path('post', {'post': notification.comment.post.id }) ~ '#comment-' ~ notification.comment.id,  notification.triggeringUser.username ~ ' replied to your comment' %}
+    path('post', {'post': notification.comment.post.id }) ~ '#comment-' ~ notification.comment.parent.id,  notification.triggeringUser.username ~ ' replied to your comment' %}
 {% endif %}
 
 <li {% if notification.active == 1 %} class="active" {% endif %}>

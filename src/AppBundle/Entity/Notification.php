@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="notification")
  * @ORM\HasLifecycleCallbacks()
  * @ORM\Entity(repositoryClass="AppBundle\Repository\NotificationRepository")
+ * @ORM\EntityListeners({"AppBundle\EntityListener\NotificationListener"})
  */
 class Notification
 {

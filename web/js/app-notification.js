@@ -19,6 +19,10 @@ $(document).ready(function(){
 
             $('.notifications .dropdown-menu').prepend($(response));
 
+            if($('.no-notifications').length){
+                $('.no-notifications').remove();
+            }
+
             if(!$('.notifications').hasClass('show')){
                 if (!$('.label-notifications').length) {
                     $('.notifications .dropdown-toggle').append($('<span class="label label-notifications">0</span>'));
@@ -27,20 +31,22 @@ $(document).ready(function(){
                 notificationsNumber++;
 
                 $('.label-notifications').html(notificationsNumber);
-                document.title = '(' + notificationsNumber + ') ' + document.title;
+                document.title = '(' + notificationsNumber + ') ' + initialTitle;
             }
         };
 
         $('.notifications').click(function(){
-            $('.label-notifications').remove();
-            document.title = initialTitle;
+            if ($('.label-notifications').length) {
+                $('.label-notifications').remove();
+                document.title = initialTitle;
 
-            $.ajax({
-                url: Routing.generate('notification_disactivate', {
-                    user: user
-                }),
-                dataType: "json",
-            });
+                $.ajax({
+                    url: Routing.generate('notification_disactivate', {
+                        user: user
+                    }),
+                    dataType: "json",
+                });
+            }
         });
     }
 });
