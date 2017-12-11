@@ -62,6 +62,14 @@
         overflow: auto;
         max-height: calc(100% - 190px);
 
+        .chat-welcome-message
+        {
+            padding-top: 30px;
+            text-align: center;
+            color: $boulder;
+            margin-bottom: -20px;
+        }
+
         .chat-message
         {
             width: 100%;

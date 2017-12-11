@@ -64,63 +64,68 @@ body {
         padding-bottom: 0; }
         .navbar-inverse .dropdown-menu li a:hover {
           background-color: #263238; }
-  .navbar-inverse .notifications .label-notifications {
-    position: absolute;
-    top: 5px;
-    right: 0;
-    background-color: #2772DD;
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    text-align: center;
-    line-height: 18px; }
-  .navbar-inverse .notifications .dropdown-toggle {
-    padding: 0 15px; }
-  .navbar-inverse .notifications .dropdown-menu {
-    max-height: 360px;
-    overflow: auto;
-    width: 350px; }
-    .navbar-inverse .notifications .dropdown-menu .no-notifications p {
-      font-size: 16px;
-      color: #E0E0E0;
-      line-height: 40px;
-      text-align: center; }
-    .navbar-inverse .notifications .dropdown-menu .active {
-      background-color: #424242;
-      border-bottom: 1px solid #263238; }
-      .navbar-inverse .notifications .dropdown-menu .active a {
-        background-color: #424242; }
-    .navbar-inverse .notifications .dropdown-menu li {
-      padding: 15px 0;
-      height: 70px; }
-      .navbar-inverse .notifications .dropdown-menu li a {
-        overflow: hidden;
-        position: relative; }
-        .navbar-inverse .notifications .dropdown-menu li a .user-img {
-          width: 40px;
-          height: 40px;
-          float: left;
-          margin-right: 20px; }
-        .navbar-inverse .notifications .dropdown-menu li a .notification-caption {
-          float: left;
-          line-height: normal; }
-          .navbar-inverse .notifications .dropdown-menu li a .notification-caption p {
-            font-size: 14px;
-            margin-bottom: 5px; }
-          .navbar-inverse .notifications .dropdown-menu li a .notification-caption time {
-            font-size: 12px;
-            color: #E0E0E0; }
-    .navbar-inverse .notifications .dropdown-menu::-webkit-scrollbar {
-      width: 6px;
-      padding: 0 2px; }
-    .navbar-inverse .notifications .dropdown-menu::-webkit-scrollbar-track {
-      background-color: transparent; }
-    .navbar-inverse .notifications .dropdown-menu::-webkit-scrollbar-thumb {
-      background-color: rgba(0, 0, 0, 0.2);
-      border-radius: 2px;
-      transition: all .3s ease; }
-    .navbar-inverse .notifications .dropdown-menu:hover::-webkit-scrollbar-thumb {
-      background-color: rgba(0, 0, 0, 0.5); }
+  .navbar-inverse .notifications {
+    margin-right: 0 !important; }
+    .navbar-inverse .notifications .label-notifications {
+      position: absolute;
+      top: 5px;
+      right: 0;
+      background-color: #2772DD;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      text-align: center;
+      line-height: 18px; }
+    .navbar-inverse .notifications .dropdown-toggle {
+      padding: 0 15px; }
+    .navbar-inverse .notifications .dropdown-menu {
+      max-height: 360px;
+      overflow: auto;
+      width: 350px; }
+      .navbar-inverse .notifications .dropdown-menu .no-notifications p {
+        font-size: 16px;
+        color: #E0E0E0;
+        line-height: 40px;
+        text-align: center; }
+      .navbar-inverse .notifications .dropdown-menu .active {
+        background-color: #424242;
+        border-bottom: 1px solid #263238; }
+        .navbar-inverse .notifications .dropdown-menu .active a {
+          background-color: #424242; }
+      .navbar-inverse .notifications .dropdown-menu li {
+        padding: 15px 0;
+        height: 70px; }
+        .navbar-inverse .notifications .dropdown-menu li a {
+          overflow: hidden;
+          position: relative;
+          display: flex;
+          flex-direction: row; }
+          .navbar-inverse .notifications .dropdown-menu li a .user-img {
+            width: 40px;
+            height: 40px;
+            margin-right: 20px;
+            order: 1; }
+          .navbar-inverse .notifications .dropdown-menu li a .notification-caption {
+            line-height: normal;
+            order: 2;
+            flex-grow: 2; }
+            .navbar-inverse .notifications .dropdown-menu li a .notification-caption p {
+              font-size: 14px;
+              margin-bottom: 5px; }
+            .navbar-inverse .notifications .dropdown-menu li a .notification-caption time {
+              font-size: 12px;
+              color: #E0E0E0; }
+      .navbar-inverse .notifications .dropdown-menu::-webkit-scrollbar {
+        width: 6px;
+        padding: 0 2px; }
+      .navbar-inverse .notifications .dropdown-menu::-webkit-scrollbar-track {
+        background-color: transparent; }
+      .navbar-inverse .notifications .dropdown-menu::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.2);
+        border-radius: 2px;
+        transition: all .3s ease; }
+      .navbar-inverse .notifications .dropdown-menu:hover::-webkit-scrollbar-thumb {
+        background-color: rgba(0, 0, 0, 0.5); }
   .navbar-inverse .dropdown-toggle {
     padding: 0 0 0 15px;
     line-height: 50px; }
@@ -537,6 +542,11 @@ label {
     bottom: 70px;
     overflow: auto;
     max-height: calc(100% - 190px); }
+    .chat-wrapper .chat-container .chat-welcome-message {
+      padding-top: 30px;
+      text-align: center;
+      color: #777;
+      margin-bottom: -20px; }
     .chat-wrapper .chat-container .chat-message {
       width: 100%;
       display: flex;
@@ -793,6 +803,8 @@ label {
       border-radius: 4px;
       -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
       box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175); }
+  .navbar-inverse .notifications .dropdown-menu {
+    width: 330px; }
   .navbar-inverse .navbar-form {
     border: none;
     padding-top: 0;

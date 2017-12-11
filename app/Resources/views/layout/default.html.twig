@@ -33,8 +33,6 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('js/app-chat.js') }}"></script>
-    <script src="{{ asset('js/app-notification.js') }}"></script>
     <script>
         var assetDir = '{{ asset('') }}';
 
@@ -42,4 +40,6 @@
             var user = '{{ app.user.id }}';
         '{% endif %}'
     </script>
+    <script src="{{ asset('js/app-chat.js') }}"></script>
+    <script src="{{ asset('js/app-notification.js') }}"></script>
 {% endblock %}

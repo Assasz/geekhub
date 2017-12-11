@@ -177,8 +177,6 @@ $(document).ready(function() {
 
     function offsetAnchor() {
         if(location.hash.length !== 0) {
-            var id = window.location.hash.substring(9);
-
             window.scrollTo(window.scrollX, window.scrollY - 70);
         }
     }

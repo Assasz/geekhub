@@ -124,6 +124,8 @@ body
 
     .notifications
     {
+        margin-right: 0 !important;
+
         .label-notifications
         {
             position: absolute;
@@ -176,19 +178,24 @@ body
                 {
                     overflow: hidden;
                     position: relative;
+                    display: flex;
+                    flex-direction: row;
 
                     .user-img
                     {
                         width: 40px;
                         height: 40px;
-                        float: left;
+                        //float: left;
                         margin-right: 20px;
+                        order: 1;
                     }
 
                     .notification-caption
                     {
-                        float: left;
+                        //float: left;
                         line-height: normal;
+                        order: 2;
+                        flex-grow: 2;
 
                         p
                         {

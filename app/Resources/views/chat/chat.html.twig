@@ -18,13 +18,13 @@
 
     <div class="chat-control-wrapper">
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-            <textarea data-action="send-msg" class="chat-control" rows="1" placeholder="Say hello!"></textarea>
+            <textarea data-action="send-msg" class="chat-control" rows="1" placeholder="Type something here..."></textarea>
             <button type="button" data-action="send-msg" class="btn-send" title="Send message">
                 <span class="fa fa-fw fa-paper-plane" aria-hidden="true"></span>
                 <span class="visually-hidden">Send message</span>
             </button>
         {% else %}
-            <textarea class="chat-control" rows="1" placeholder="Sign in to chat" disabled></textarea>
+            <textarea class="chat-control" rows="1" placeholder="Sign in to join chat" disabled></textarea>
         {% endif %}
     </div>
 </aside>

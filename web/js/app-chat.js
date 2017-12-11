@@ -1,12 +1,13 @@
 $(document).ready(function(){
-    var conn = new WebSocket('ws://localhost:8888'),
-        loadResults = true,
+    var loadResults = true,
         offset = 20,
         container = $('.chat-container'),
-        newMessages = 0;
+        newMessages = 0,
+        conn = new WebSocket('ws://localhost:8888');;
 
     conn.onopen = function(e) {
         console.log("Connection with chat established!");
+        container.append('<p class="chat-welcome-message">You have joined chat. Say hello!</p>');
     };
 
     conn.onmessage = function(e) {
@@ -34,8 +35,6 @@ $(document).ready(function(){
             newMessages = 0;
         }
 
-        console.log(newMessages);
-
         $('.newmessages').html(newMessages).css('background-color', '#2772DD');
 
         container.append(message);
@@ -44,8 +43,7 @@ $(document).ready(function(){
 
     $('button[data-action="send-msg"]').click(function(){
         var chatControl = $('.chat-control');
-            body = chatControl.val(),
-            user = chatControl.data('user');
+            body = chatControl.val();
 
         if(body.length > 0){
             chatControl.val('');
@@ -54,9 +52,7 @@ $(document).ready(function(){
     });
 
     $('textarea[data-action="send-msg"]').keypress(function(e){
-        var body = $(this).val(),
-            user = $(this).data('user');
-
+        var body = $(this).val();
 
         if(e.keyCode == 13){
             e.preventDefault();
@@ -121,6 +117,10 @@ $(document).ready(function(){
         });
 
     function sendMessage(body, user){
+        if($('.chat-welcome-message').length){
+            $('.chat-welcome-message').remove();
+        }
+
         var msg = {
             "body": body,
             "user": user
