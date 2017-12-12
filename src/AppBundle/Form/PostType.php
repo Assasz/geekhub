@@ -6,6 +6,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
 use Ivory\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 
@@ -39,8 +40,15 @@ class PostType extends AbstractType
         ->add('add_post', SubmitType::class, [
             'label' => 'Add post',
             'attr' => [
-                'class' => 'btn btn-lg btn-primary',
-                'style' => 'margin-top: 15px;'
+                'class' => 'btn btn-lg btn-primary pull-left',
+                'style' => 'margin-top: 15px; margin-right: 20px;'
+        ]])
+        ->add('preview_post', ButtonType::class, [
+            'label' => 'Preview',
+            'attr' => [
+                'class' => 'btn btn-lg btn-default pull-left',
+                'style' => 'margin-top: 15px;',
+                'data-action' => 'post-preview'
         ]]);
     }
 }

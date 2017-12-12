@@ -8,6 +8,7 @@
     color: $dark;
     margin-bottom: 50px;
     box-shadow: 0 1px 2px rgba(0,0,0,.1);
+    overflow: hidden;
 
     .form-header
     {
@@ -54,4 +55,11 @@ label
         background-color: $mariner;
         outline: none;
     }
+}
+
+.btn-default
+{
+    border-radius: 2px;
+    transition: all .3s ease;
+    outline: none !important;
 }

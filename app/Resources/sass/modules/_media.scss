@@ -67,6 +67,8 @@
         .notifications .dropdown-menu
         {
             width: 330px;
+            left: -220px;
+            right: auto;
         }
 
         .navbar-form
@@ -122,8 +124,14 @@
             .post-title
             {
                 font-size: 20px;
+                word-break: break-all;
             }
         }
+    }
+
+    .post-card-container .post-card-footer h3
+    {
+        word-break: break-all;
     }
 }
 

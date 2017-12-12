@@ -1,17 +1,17 @@
 <div class="post-card-container">
     <div class="post-card-header">
         <a href="{{ path('user', {'user': post[0].author.id}) }}">
-                <img src="{{ asset(post[0].author.profilePicturePath) }}" alt="{{ post[0].author.username }}" class="img-circle img-responsive post-card-author-img">
-                <span class="post-card-author-username">{{ post[0].author.username }}</span>
+            <img src="{{ asset(post[0].author.profilePicturePath) }}" alt="{{ post[0].author.username }}" class="img-circle img-responsive post-card-author-img">
+            <span class="post-card-author-username">{{ post[0].author.username }}</span>
         </a>
-        <span class="post-card-date">{{ post[0].createDate|date('j M') }}</span>
+        <span class="post-card-date">{{ post[0].createDate|time_diff }}</span>
     </div>
     <div class="post-card-image">
         <a href="{{ path('post', {'post': post[0].id}) }}" style="background-image: url('{{ app.request.scheme ~'://' ~ app.request.httpHost ~ asset(post[0].image) }}')" role="image" title="{{ post[0].title }}"></a>
     </div>
     <div class="post-card-footer">
         <a href="{{ path('post', {'post': post[0].id}) }}" title="{{ post[0].title }}">
-            <h3>{{ post[0].title|slice(0, 80) }}</h3>
+            <h3>{{ (post[0].title|length > 60) ? post[0].title|slice(0, 60) ~ '...' :  post[0].title }}</h3>
         </a>
         <p>
             <span class="fa fa-fw fa-eye" aria-hidden="true"></span>

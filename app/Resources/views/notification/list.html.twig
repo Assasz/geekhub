@@ -13,10 +13,9 @@
     {% endif %}
 </a>
 <ul class="dropdown-menu">
+    <li class="dropdown-header">Notifications</li>
     {% if notifications|length < 1 %}
-        <li class="no-notifications">
-            <p>No notifications</p>
-        </li>
+        <li class="no-notifications">No notifications</li>
     {% endif %}
 
     {% for notification in notifications|reverse|slice(0, 50) %}

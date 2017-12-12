@@ -26,9 +26,6 @@ class SearchActivityRecorder
         {
             $searchActivity = $user->getSearchActivity()->toArray();
 
-            $lastActivity = $this->em->getRepository(SearchActivity::class)
-                ->findLast($user);
-
             $activityTags = [];
 
             foreach($searchActivity as $activity)
@@ -44,6 +41,9 @@ class SearchActivityRecorder
 
                 if(count($searchActivity) > 9)
                 {
+                    $lastActivity = $this->em->getRepository(SearchActivity::class)
+                        ->findLast($user);
+
                     $user->removeSearchActivity($lastActivity);
                     $this->em->remove($lastActivity);
                 }

@@ -68,4 +68,15 @@ $(document).ready(function(){
 
     $('#post_title').on('input propertychange', validate);
     $('#post_add_post').click(validate);
+
+    $('[data-action="post-preview"]').click(function () {
+        var editorText = CKEDITOR.instances.post_content.getData();
+
+        $('#post-preview').modal();
+        $('.modal-body').html(editorText);
+
+        $('pre code').each(function(i, e){
+            hljs.highlightBlock(e);
+        });
+    });
 });

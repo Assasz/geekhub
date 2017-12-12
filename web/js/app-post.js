@@ -145,6 +145,7 @@ $(document).ready(function() {
             .done(function(response) {
                 $('[data-post-likes]').html(response.likes);
                 $('.btn-rate').prop('disabled', true);
+                $('[data-action="post-like"]').addClass('clicked');
             });
     });
 
@@ -160,6 +161,7 @@ $(document).ready(function() {
             .done(function(response) {
                 $('[data-post-dislikes]').html(response.dislikes);
                 $('.btn-rate').prop('disabled', true);
+                $('[data-action="post-dislike"]').addClass('clicked');
             });
     });
 

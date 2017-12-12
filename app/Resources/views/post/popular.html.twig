@@ -9,7 +9,7 @@
                 <a href="{{ path('post', {'post': post.id}) }}" title="{{ post.title }}">
                     <div style="background-image: url('{{ asset(post.image) }}');" class="carousel-image"></div>
                     <div class="carousel-caption">
-                        <h2 class="post-title">{{ post.title|slice(0, 80) }}</h2>
+                        <h2 class="post-title" title="{{ post.title }}">{{ (post.title|length > 60) ? post.title|slice(0, 60) ~ '...' :  post.title }}</h2>
                         <a href="{{ path('user', {'user': post.author.id}) }}">
                             <img src="{{ asset(post.author.profilePicturePath) }}" alt="{{ post.author.username }}" class="img-circle img-responsive post-author-img">
                             <span class="post-author-username">

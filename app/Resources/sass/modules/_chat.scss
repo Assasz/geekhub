@@ -62,14 +62,6 @@
         overflow: auto;
         max-height: calc(100% - 190px);
 
-        .chat-welcome-message
-        {
-            padding-top: 30px;
-            text-align: center;
-            color: $boulder;
-            margin-bottom: -20px;
-        }
-
         .chat-message
         {
             width: 100%;
@@ -191,16 +183,18 @@
     {
         order: 3;
         position: relative;
+        height: 60px;
 
         .chat-control
         {
             width: 100%;
-            padding: 20px 60px 10px 20px;
+            padding: 20px 60px 20px 20px;
             border: none;
             outline: none;
             resize: none;
             border-top: 1px solid $alto;
             transition: all .3s ease;
+            height: 100%;
 
             &:focus
             {

@@ -12,7 +12,7 @@
         </div>
         <div class="post-card-footer">
             <a href="{{ path('post', {'post': post.id}) }}" title="{{ post.title }}">
-                <h3>{{ post.title|slice(0, 80) }}</h3>
+                <h3>{{ (post.title|length > 60) ? post.title|slice(0, 60) ~ '...' :  post.title }}</h3>
             </a>
             <p>
                 <span class="fa fa-fw fa-eye" aria-hidden="true"></span>

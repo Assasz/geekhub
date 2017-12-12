@@ -15,9 +15,10 @@
     <div class="comment-body">
         <div class="comment-body-header">
             <a href="{{ path('user', {'user': comment.author.id}) }}">{{ comment.author.username }}</a>
-            <span class="comment-date">{{ comment.createDate|date('d M G:i')}}</span>
+            <span class="comment-date">{{
+            (comment.createDate|date('d m') < "- 1 day"|date('d m')) ? comment.createDate|date('d M G:i') : comment.createDate|time_diff }}</span>
         </div>
-        <p>{{ comment.content }}</p>
+        <p>{{ comment.content|nl2br }}</p>
         <div class="comment-body-footer">
             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                 <a href="#" class="separated-link" data-action="comment-reply" data-comment-author="{{ comment.author }}"

@@ -136,7 +136,7 @@ body
             width: 20px;
             height: 20px;
             text-align: center;
-            line-height: 18px;
+            line-height: 18px !important;
         }
 
         .dropdown-toggle
@@ -146,11 +146,23 @@ body
 
         .dropdown-menu
         {
-            max-height: 360px;
+            height: 360px;
             overflow: auto;
             width: 350px;
 
-            .no-notifications p
+            .dropdown-header
+            {
+                height: 20px;
+                line-height: 20px;
+                text-transform: uppercase;
+                font-weight: bold;
+                border-bottom: 1px solid $dark !important;
+                padding: 10px 20px;
+                box-sizing: content-box;
+                background-color: $tundora;
+            }
+
+            .no-notifications
             {
                 font-size: 16px;
                 color: $alto;
@@ -180,19 +192,18 @@ body
                     position: relative;
                     display: flex;
                     flex-direction: row;
+                    background-color: inherit !important;
 
                     .user-img
                     {
                         width: 40px;
                         height: 40px;
-                        //float: left;
                         margin-right: 20px;
                         order: 1;
                     }
 
                     .notification-caption
                     {
-                        //float: left;
                         line-height: normal;
                         order: 2;
                         flex-grow: 2;
@@ -340,6 +351,11 @@ body
     .navigation
     {
         padding: 0 7px;
+    }
+
+    .modal-content
+    {
+        border-radius: 2px;
     }
 }
 

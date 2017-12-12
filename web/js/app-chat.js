@@ -7,7 +7,6 @@ $(document).ready(function(){
 
     conn.onopen = function(e) {
         console.log("Connection with chat established!");
-        container.append('<p class="chat-welcome-message">You have joined chat. Say hello!</p>');
     };
 
     conn.onmessage = function(e) {
@@ -35,7 +34,7 @@ $(document).ready(function(){
             newMessages = 0;
         }
 
-        $('.newmessages').html(newMessages).css('background-color', '#2772DD');
+        $('.label-chat').html(newMessages).css('background-color', '#2772DD');
 
         container.append(message);
         container.scrollTop(container[0].scrollHeight);
@@ -117,10 +116,6 @@ $(document).ready(function(){
         });
 
     function sendMessage(body, user){
-        if($('.chat-welcome-message').length){
-            $('.chat-welcome-message').remove();
-        }
-
         var msg = {
             "body": body,
             "user": user

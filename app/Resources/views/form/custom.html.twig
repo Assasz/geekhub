@@ -9,3 +9,7 @@
         {% endif %}
     {% endspaceless %}
 {% endblock form_errors %}
+
+{%- block button_row -%}
+        {{- form_widget(form) -}}
+{%- endblock button_row -%}
